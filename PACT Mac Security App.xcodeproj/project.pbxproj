@@ -1,0 +1,329 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		470942FC1DD5E87A0099BDA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */; };
+		470942FE1DD5E87A0099BDA6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470942FD1DD5E87A0099BDA6 /* ViewController.swift */; };
+		470943001DD5E87A0099BDA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 470942FF1DD5E87A0099BDA6 /* Assets.xcassets */; };
+		470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 470943011DD5E87A0099BDA6 /* Main.storyboard */; };
+		4709430B1DD65EAB0099BDA6 /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709430A1DD65EAB0099BDA6 /* PreferencesVC.swift */; };
+		4709430D1DD8E9F20099BDA6 /* ExecuteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709430C1DD8E9F20099BDA6 /* ExecuteVC.swift */; };
+		470943111DD9040D0099BDA6 /* ls.command in Resources */ = {isa = PBXBuildFile; fileRef = 470943101DD9040D0099BDA6 /* ls.command */; };
+		474663E11DDA3F06007FAC94 /* FitIt3VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474663E01DDA3F06007FAC94 /* FitIt3VC.swift */; };
+		474663E31DDABA8D007FAC94 /* screensaver5sec.sh in Resources */ = {isa = PBXBuildFile; fileRef = 474663E21DDABA8D007FAC94 /* screensaver5sec.sh */; };
+		474663E81DDB0824007FAC94 /* screensaver10min.sh in Resources */ = {isa = PBXBuildFile; fileRef = 474663E71DDB0824007FAC94 /* screensaver10min.sh */; };
+		47A626071DD9D2AF00E0CCE3 /* FixItVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A626061DD9D2AF00E0CCE3 /* FixItVC.swift */; };
+		47A626091DD9DA2000E0CCE3 /* FixIt2VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A626081DD9DA2000E0CCE3 /* FixIt2VC.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		470942F81DD5E87A0099BDA6 /* PACT Mac Security App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PACT Mac Security App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		470942FD1DD5E87A0099BDA6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		470942FF1DD5E87A0099BDA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		470943021DD5E87A0099BDA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		470943041DD5E87A0099BDA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4709430A1DD65EAB0099BDA6 /* PreferencesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
+		4709430C1DD8E9F20099BDA6 /* ExecuteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecuteVC.swift; sourceTree = "<group>"; };
+		470943101DD9040D0099BDA6 /* ls.command */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = ls.command; sourceTree = "<group>"; };
+		474663E01DDA3F06007FAC94 /* FitIt3VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitIt3VC.swift; sourceTree = "<group>"; };
+		474663E21DDABA8D007FAC94 /* screensaver5sec.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screensaver5sec.sh; sourceTree = "<group>"; };
+		474663E71DDB0824007FAC94 /* screensaver10min.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screensaver10min.sh; sourceTree = "<group>"; };
+		47A626061DD9D2AF00E0CCE3 /* FixItVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixItVC.swift; sourceTree = "<group>"; };
+		47A626081DD9DA2000E0CCE3 /* FixIt2VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixIt2VC.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		470942F51DD5E87A0099BDA6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		470942EF1DD5E87A0099BDA6 = {
+			isa = PBXGroup;
+			children = (
+				470942FA1DD5E87A0099BDA6 /* PACT Mac Security App */,
+				470942F91DD5E87A0099BDA6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		470942F91DD5E87A0099BDA6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				470942F81DD5E87A0099BDA6 /* PACT Mac Security App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		470942FA1DD5E87A0099BDA6 /* PACT Mac Security App */ = {
+			isa = PBXGroup;
+			children = (
+				470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */,
+				470942FD1DD5E87A0099BDA6 /* ViewController.swift */,
+				470942FF1DD5E87A0099BDA6 /* Assets.xcassets */,
+				470943011DD5E87A0099BDA6 /* Main.storyboard */,
+				474663E01DDA3F06007FAC94 /* FitIt3VC.swift */,
+				47A626081DD9DA2000E0CCE3 /* FixIt2VC.swift */,
+				47A626061DD9D2AF00E0CCE3 /* FixItVC.swift */,
+				4709430C1DD8E9F20099BDA6 /* ExecuteVC.swift */,
+				470943101DD9040D0099BDA6 /* ls.command */,
+				474663E21DDABA8D007FAC94 /* screensaver5sec.sh */,
+				474663E71DDB0824007FAC94 /* screensaver10min.sh */,
+				4709430A1DD65EAB0099BDA6 /* PreferencesVC.swift */,
+				470943041DD5E87A0099BDA6 /* Info.plist */,
+			);
+			path = "PACT Mac Security App";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		470942F71DD5E87A0099BDA6 /* PACT Mac Security App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 470943071DD5E87A0099BDA6 /* Build configuration list for PBXNativeTarget "PACT Mac Security App" */;
+			buildPhases = (
+				470942F41DD5E87A0099BDA6 /* Sources */,
+				470942F51DD5E87A0099BDA6 /* Frameworks */,
+				470942F61DD5E87A0099BDA6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PACT Mac Security App";
+			productName = "PACT Mac Security App";
+			productReference = 470942F81DD5E87A0099BDA6 /* PACT Mac Security App.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		470942F01DD5E87A0099BDA6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "Mark Briggs";
+				TargetAttributes = {
+					470942F71DD5E87A0099BDA6 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = FQ6JHNT6KD;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 470942F31DD5E87A0099BDA6 /* Build configuration list for PBXProject "PACT Mac Security App" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 470942EF1DD5E87A0099BDA6;
+			productRefGroup = 470942F91DD5E87A0099BDA6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				470942F71DD5E87A0099BDA6 /* PACT Mac Security App */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		470942F61DD5E87A0099BDA6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				474663E81DDB0824007FAC94 /* screensaver10min.sh in Resources */,
+				474663E31DDABA8D007FAC94 /* screensaver5sec.sh in Resources */,
+				470943001DD5E87A0099BDA6 /* Assets.xcassets in Resources */,
+				470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */,
+				470943111DD9040D0099BDA6 /* ls.command in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		470942F41DD5E87A0099BDA6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4709430B1DD65EAB0099BDA6 /* PreferencesVC.swift in Sources */,
+				470942FE1DD5E87A0099BDA6 /* ViewController.swift in Sources */,
+				47A626091DD9DA2000E0CCE3 /* FixIt2VC.swift in Sources */,
+				47A626071DD9D2AF00E0CCE3 /* FixItVC.swift in Sources */,
+				474663E11DDA3F06007FAC94 /* FitIt3VC.swift in Sources */,
+				4709430D1DD8E9F20099BDA6 /* ExecuteVC.swift in Sources */,
+				470942FC1DD5E87A0099BDA6 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		470943011DD5E87A0099BDA6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				470943021DD5E87A0099BDA6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		470943051DD5E87A0099BDA6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		470943061DD5E87A0099BDA6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		470943081DD5E87A0099BDA6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = FQ6JHNT6KD;
+				INFOPLIST_FILE = "PACT Mac Security App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "briggs-inc.PACT-Mac-Security-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		470943091DD5E87A0099BDA6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = FQ6JHNT6KD;
+				INFOPLIST_FILE = "PACT Mac Security App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "briggs-inc.PACT-Mac-Security-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		470942F31DD5E87A0099BDA6 /* Build configuration list for PBXProject "PACT Mac Security App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				470943051DD5E87A0099BDA6 /* Debug */,
+				470943061DD5E87A0099BDA6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		470943071DD5E87A0099BDA6 /* Build configuration list for PBXNativeTarget "PACT Mac Security App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				470943081DD5E87A0099BDA6 /* Debug */,
+				470943091DD5E87A0099BDA6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 470942F01DD5E87A0099BDA6 /* Project object */;
+}
