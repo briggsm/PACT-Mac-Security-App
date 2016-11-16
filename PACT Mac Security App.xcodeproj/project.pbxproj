@@ -8,34 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		470942FC1DD5E87A0099BDA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */; };
-		470942FE1DD5E87A0099BDA6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470942FD1DD5E87A0099BDA6 /* ViewController.swift */; };
 		470943001DD5E87A0099BDA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 470942FF1DD5E87A0099BDA6 /* Assets.xcassets */; };
 		470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 470943011DD5E87A0099BDA6 /* Main.storyboard */; };
 		4709430B1DD65EAB0099BDA6 /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709430A1DD65EAB0099BDA6 /* PreferencesVC.swift */; };
-		4709430D1DD8E9F20099BDA6 /* ExecuteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709430C1DD8E9F20099BDA6 /* ExecuteVC.swift */; };
-		470943111DD9040D0099BDA6 /* ls.command in Resources */ = {isa = PBXBuildFile; fileRef = 470943101DD9040D0099BDA6 /* ls.command */; };
-		474663E11DDA3F06007FAC94 /* FitIt3VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474663E01DDA3F06007FAC94 /* FitIt3VC.swift */; };
+		474663E11DDA3F06007FAC94 /* FixSecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */; };
 		474663E31DDABA8D007FAC94 /* screensaver5sec.sh in Resources */ = {isa = PBXBuildFile; fileRef = 474663E21DDABA8D007FAC94 /* screensaver5sec.sh */; };
 		474663E81DDB0824007FAC94 /* screensaver10min.sh in Resources */ = {isa = PBXBuildFile; fileRef = 474663E71DDB0824007FAC94 /* screensaver10min.sh */; };
-		47A626071DD9D2AF00E0CCE3 /* FixItVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A626061DD9D2AF00E0CCE3 /* FixItVC.swift */; };
-		47A626091DD9DA2000E0CCE3 /* FixIt2VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A626081DD9DA2000E0CCE3 /* FixIt2VC.swift */; };
+		47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */; };
+		47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		470942F81DD5E87A0099BDA6 /* PACT Mac Security App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PACT Mac Security App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		470942FD1DD5E87A0099BDA6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		470942FF1DD5E87A0099BDA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		470943021DD5E87A0099BDA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		470943041DD5E87A0099BDA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4709430A1DD65EAB0099BDA6 /* PreferencesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
-		4709430C1DD8E9F20099BDA6 /* ExecuteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecuteVC.swift; sourceTree = "<group>"; };
-		470943101DD9040D0099BDA6 /* ls.command */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = ls.command; sourceTree = "<group>"; };
-		474663E01DDA3F06007FAC94 /* FitIt3VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitIt3VC.swift; sourceTree = "<group>"; };
+		474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixSecuritySettingsVC.swift; sourceTree = "<group>"; };
 		474663E21DDABA8D007FAC94 /* screensaver5sec.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screensaver5sec.sh; sourceTree = "<group>"; };
 		474663E71DDB0824007FAC94 /* screensaver10min.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screensaver10min.sh; sourceTree = "<group>"; };
-		47A626061DD9D2AF00E0CCE3 /* FixItVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixItVC.swift; sourceTree = "<group>"; };
-		47A626081DD9DA2000E0CCE3 /* FixIt2VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixIt2VC.swift; sourceTree = "<group>"; };
+		47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = restoreMarksOrigSettings.sh; sourceTree = "<group>"; };
+		47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = viewCurrentSettings.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,20 +63,33 @@
 			isa = PBXGroup;
 			children = (
 				470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */,
-				470942FD1DD5E87A0099BDA6 /* ViewController.swift */,
 				470942FF1DD5E87A0099BDA6 /* Assets.xcassets */,
 				470943011DD5E87A0099BDA6 /* Main.storyboard */,
-				474663E01DDA3F06007FAC94 /* FitIt3VC.swift */,
-				47A626081DD9DA2000E0CCE3 /* FixIt2VC.swift */,
-				47A626061DD9D2AF00E0CCE3 /* FixItVC.swift */,
-				4709430C1DD8E9F20099BDA6 /* ExecuteVC.swift */,
-				470943101DD9040D0099BDA6 /* ls.command */,
-				474663E21DDABA8D007FAC94 /* screensaver5sec.sh */,
-				474663E71DDB0824007FAC94 /* screensaver10min.sh */,
+				474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */,
+				47F089D21DDCA9E100171D0D /* Security Setting Scripts */,
+				47F089D31DDCAA1300171D0D /* Misc Scripts */,
 				4709430A1DD65EAB0099BDA6 /* PreferencesVC.swift */,
 				470943041DD5E87A0099BDA6 /* Info.plist */,
 			);
 			path = "PACT Mac Security App";
+			sourceTree = "<group>";
+		};
+		47F089D21DDCA9E100171D0D /* Security Setting Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				474663E21DDABA8D007FAC94 /* screensaver5sec.sh */,
+				474663E71DDB0824007FAC94 /* screensaver10min.sh */,
+			);
+			name = "Security Setting Scripts";
+			sourceTree = "<group>";
+		};
+		47F089D31DDCAA1300171D0D /* Misc Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */,
+				47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */,
+			);
+			name = "Misc Scripts";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,10 +153,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				474663E81DDB0824007FAC94 /* screensaver10min.sh in Resources */,
+				47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */,
 				474663E31DDABA8D007FAC94 /* screensaver5sec.sh in Resources */,
+				47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */,
 				470943001DD5E87A0099BDA6 /* Assets.xcassets in Resources */,
 				470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */,
-				470943111DD9040D0099BDA6 /* ls.command in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,11 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4709430B1DD65EAB0099BDA6 /* PreferencesVC.swift in Sources */,
-				470942FE1DD5E87A0099BDA6 /* ViewController.swift in Sources */,
-				47A626091DD9DA2000E0CCE3 /* FixIt2VC.swift in Sources */,
-				47A626071DD9D2AF00E0CCE3 /* FixItVC.swift in Sources */,
-				474663E11DDA3F06007FAC94 /* FitIt3VC.swift in Sources */,
-				4709430D1DD8E9F20099BDA6 /* ExecuteVC.swift in Sources */,
+				474663E11DDA3F06007FAC94 /* FixSecuritySettingsVC.swift in Sources */,
 				470942FC1DD5E87A0099BDA6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
