@@ -35,4 +35,5 @@ if [ "$1" == "-w" ]; then
 
     # Note: Mark's setting
     #defaults write com.apple.screensaver askForPasswordDelay -int 5
+	exit 0
 fi

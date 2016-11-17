@@ -16,6 +16,7 @@
 		474663E81DDB0824007FAC94 /* screensaver10min.sh in Resources */ = {isa = PBXBuildFile; fileRef = 474663E71DDB0824007FAC94 /* screensaver10min.sh */; };
 		47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */; };
 		47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */; };
+		47F089D51DDD5F9900171D0D /* template.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D41DDD5F9900171D0D /* template.sh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		474663E71DDB0824007FAC94 /* screensaver10min.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screensaver10min.sh; sourceTree = "<group>"; };
 		47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = restoreMarksOrigSettings.sh; sourceTree = "<group>"; };
 		47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = viewCurrentSettings.sh; sourceTree = "<group>"; };
+		47F089D41DDD5F9900171D0D /* template.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = template.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 		47F089D31DDCAA1300171D0D /* Misc Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				47F089D41DDD5F9900171D0D /* template.sh */,
 				47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */,
 				47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */,
 			);
@@ -154,6 +157,7 @@
 			files = (
 				474663E81DDB0824007FAC94 /* screensaver10min.sh in Resources */,
 				47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */,
+				47F089D51DDD5F9900171D0D /* template.sh in Resources */,
 				474663E31DDABA8D007FAC94 /* screensaver5sec.sh in Resources */,
 				47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */,
 				470943001DD5E87A0099BDA6 /* Assets.xcassets in Resources */,

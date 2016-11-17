@@ -75,7 +75,7 @@ class FixSecuritySettingsVC: NSViewController {
         
         getDescriptionTask = Process()
         getDescriptionTask.launchPath = path
-        getDescriptionTask.arguments = arguments  // -d => Get Description, -r => Read Setting, -w => Write Setting
+        getDescriptionTask.arguments = arguments
         
         let outputPipe = Pipe()
         getDescriptionTask.standardOutput = outputPipe

@@ -34,4 +34,5 @@ if [ "$1" == "-w" ]; then
 
     # Note: Mark's setting
     #defaults -currentHost write com.apple.screensaver idleTime 1800
+	exit 0
 fi
