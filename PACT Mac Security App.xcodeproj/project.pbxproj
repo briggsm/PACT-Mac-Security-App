@@ -10,7 +10,6 @@
 		470942FC1DD5E87A0099BDA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */; };
 		470943001DD5E87A0099BDA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 470942FF1DD5E87A0099BDA6 /* Assets.xcassets */; };
 		470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 470943011DD5E87A0099BDA6 /* Main.storyboard */; };
-		4709430B1DD65EAB0099BDA6 /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709430A1DD65EAB0099BDA6 /* PreferencesVC.swift */; };
 		474663E11DDA3F06007FAC94 /* FixSecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */; };
 		474663E31DDABA8D007FAC94 /* screensaver5sec.sh in Resources */ = {isa = PBXBuildFile; fileRef = 474663E21DDABA8D007FAC94 /* screensaver5sec.sh */; };
 		474663E81DDB0824007FAC94 /* screensaver10min.sh in Resources */ = {isa = PBXBuildFile; fileRef = 474663E71DDB0824007FAC94 /* screensaver10min.sh */; };
@@ -25,7 +24,6 @@
 		470942FF1DD5E87A0099BDA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		470943021DD5E87A0099BDA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		470943041DD5E87A0099BDA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4709430A1DD65EAB0099BDA6 /* PreferencesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
 		474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixSecuritySettingsVC.swift; sourceTree = "<group>"; };
 		474663E21DDABA8D007FAC94 /* screensaver5sec.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screensaver5sec.sh; sourceTree = "<group>"; };
 		474663E71DDB0824007FAC94 /* screensaver10min.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screensaver10min.sh; sourceTree = "<group>"; };
@@ -70,7 +68,6 @@
 				474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */,
 				47F089D21DDCA9E100171D0D /* Security Setting Scripts */,
 				47F089D31DDCAA1300171D0D /* Misc Scripts */,
-				4709430A1DD65EAB0099BDA6 /* PreferencesVC.swift */,
 				470943041DD5E87A0099BDA6 /* Info.plist */,
 			);
 			path = "PACT Mac Security App";
@@ -172,7 +169,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4709430B1DD65EAB0099BDA6 /* PreferencesVC.swift in Sources */,
 				474663E11DDA3F06007FAC94 /* FixSecuritySettingsVC.swift in Sources */,
 				470942FC1DD5E87A0099BDA6 /* AppDelegate.swift in Sources */,
 			);

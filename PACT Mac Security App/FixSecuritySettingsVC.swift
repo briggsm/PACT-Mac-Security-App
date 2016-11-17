@@ -15,6 +15,12 @@ class FixSecuritySettingsVC: NSViewController {
     
     let settingsToQuery = ["screensaver5sec.sh", "screensaver10min.sh"]
     
+    override func viewDidAppear() {
+        let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
+        let appVersion = Bundle.main.infoDictionary![kCFBundleVersionKey as String] as! String
+        self.view.window?.title = "\(appName) (v\(appVersion))"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

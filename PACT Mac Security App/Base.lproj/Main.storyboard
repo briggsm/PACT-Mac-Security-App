@@ -23,11 +23,7 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                                        <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
-                                            <connections>
-                                                <segue destination="99x-1m-PGb" kind="modal" id="3aQ-rt-a5i"/>
-                                            </connections>
-                                        </menuItem>
+                                        <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -663,61 +659,6 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
-        </scene>
-        <!--Preferences-->
-        <scene sceneID="1cK-ea-Hen">
-            <objects>
-                <viewController title="Preferences" id="99x-1m-PGb" customClass="PreferencesVC" customModule="PACT_Mac_Security_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="lo5-pc-sig">
-                        <rect key="frame" x="0.0" y="0.0" width="588" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mtb-za-eQx">
-                                <rect key="frame" x="18" y="260" width="191" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Save Downloads to this Folder:" id="7uH-6x-kfj">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sfZ-A5-cxS">
-                                <rect key="frame" x="215" y="258" width="259" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="2Rv-bH-ywn">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s98-Ej-p2o">
-                                <rect key="frame" x="476" y="251" width="96" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Browse..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fh9-0z-WaL">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="browseBtnClicked:" target="99x-1m-PGb" id="12z-7N-05r"/>
-                                </connections>
-                            </button>
-                            <pathControl verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="odv-ft-MTt">
-                                <rect key="frame" x="20" y="196" width="208" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <pathCell key="cell" selectable="YES" editable="YES" alignment="left" pathStyle="popUp" id="hJH-Cy-JsJ">
-                                    <font key="font" metaFont="system"/>
-                                    <url key="url" string="file://localhost/Applications/"/>
-                                </pathCell>
-                            </pathControl>
-                        </subviews>
-                    </view>
-                    <connections>
-                        <outlet property="saveToFolderTF" destination="sfZ-A5-cxS" id="0f0-gT-P5m"/>
-                    </connections>
-                </viewController>
-                <customObject id="YhD-KD-sGh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="736" y="0.0"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
