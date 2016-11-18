@@ -1,5 +1,8 @@
 #!/bin/sh
-
+# -a = OS Version check
+# -d = Discription
+# -pf = APAss Fail
+# -w = Write (changes the settings)
 if [ "$1" != "-a" ] && [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
     echo "Usage: $0 [-a|-d|-pf|-w]"
     exit 1
