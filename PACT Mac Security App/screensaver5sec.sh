@@ -1,21 +1,13 @@
 #!/bin/sh
-# -a = OS Version check
-# -d = Discription
-# -pf = Pass Fail
-# -w = Write (changes the settings)
+
 if [ "$1" != "-a" ] && [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
     echo "Usage: $0 [-a|-d|-pf|-w]"
     exit 1
 fi
 
 if [ "$1" == "-a" ]; then
-#	osversionlong=$(uname -r)
-#	osvers=${osversionlong/.*/}
-#	if [[ ${osvers} -ge 16 ]]; then
     	echo "true"
-#    # Don't really know what to do next here.
     exit 0
-#    fi
 fi
 
 if [ "$1" == "-d" ]; then
