@@ -11,21 +11,22 @@ if [ "$1" == "-a" ]; then
 fi
 
 if [ "$1" == "-d" ]; then
-    echo "Creation of .DS_Store files on network volumes Disabled"
+    echo "Auto Login Disabled"
     exit 0
 fi
 
 if [ "$1" == "-pf" ]; then
-	ds=$(defaults read com.apple.desktopservices DSDontWriteNetworkStores)
-	if [ $ds == "1" ]; then
-        echo "pass"
-    else
+	ald=$(defaults read /Library/Preferences/com.apple.loginwindow autoLoginUser)
+	if [ $ald == "1" ]; then
         echo "fail"
+    else
+        echo "pass"
     fi
     exit 0
 fi
 
 if [ "$1" == "-w" ]; then
-	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+	defaults delete /Library/Preferences/com.apple.loginwindow autoLoginUser
+	rm /etc/kcpassword
     exit 0
 fi
