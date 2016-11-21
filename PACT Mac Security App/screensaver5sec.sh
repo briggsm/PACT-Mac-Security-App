@@ -11,7 +11,7 @@ fi
 if [ "$1" == "-a" ]; then
 #	osversionlong=$(uname -r)
 #	osvers=${osversionlong/.*/}
-#	if [[ ${osvers} -eq 16 ]]; then
+#	if [[ ${osvers} -ge 16 ]]; then
     	echo "true"
 #    # Don't really know what to do next here.
     exit 0
@@ -26,7 +26,7 @@ fi
 if [ "$1" == "-pf" ]; then
 	afp=$(defaults read com.apple.screensaver askForPassword)
 	afpd=$(defaults read com.apple.screensaver askForPasswordDelay)
-    if [ $afp == "1" ] && [ $afpd > "6" ]; then
+    if [ $afp == "1" ] && [ $afpd -le "5" ]; then
         echo "pass"
     else
         echo "fail"
