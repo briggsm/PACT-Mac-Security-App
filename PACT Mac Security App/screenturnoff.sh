@@ -6,18 +6,18 @@ if [ "$1" != "-a" ] && [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]
 fi
 
 if [ "$1" == "-a" ]; then
-    echo "true"
+    	echo "true"
     exit 0
 fi
 
 if [ "$1" == "-d" ]; then
-    echo "Screensaver is set to activate after 10 minutes of inactivity"
+    echo ".DS_Store files on network volumes Disabled"
     exit 0
 fi
 
 if [ "$1" == "-pf" ]; then
-    it=$(defaults -currentHost read com.apple.screensaver idleTime)
-    if [ $it -le "600" ]; then
+	ds=$(defaults read com.apple.desktopservices DSDontWriteNetworkStores)
+	if [ $ds == "1" ]; then
         echo "pass"
     else
         echo "fail"
@@ -26,6 +26,6 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-    defaults -currentHost write com.apple.screensaver idleTime 600
-	exit 0
+	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+    exit 0
 fi
