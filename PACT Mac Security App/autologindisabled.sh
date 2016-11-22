@@ -17,7 +17,7 @@ fi
 
 if [ "$1" == "-pf" ]; then
 	ald=$(defaults read /Library/Preferences/com.apple.loginwindow autoLoginUser)
-	if [ $ald == "1" ]; then
+	if [ "$ald" = "1" ]; then
         echo "fail"
     else
         echo "pass"
