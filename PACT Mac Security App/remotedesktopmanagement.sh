@@ -11,13 +11,13 @@ if [ "$1" == "-a" ]; then
 fi
 
 if [ "$1" == "-d" ]; then
-    echo ".DS_Store files on network volumes Disabled"
+    echo "Remote Management Disabled"
     exit 0
 fi
 
 if [ "$1" == "-pf" ]; then
-	ds=$(defaults read com.apple.desktopservices DSDontWriteNetworkStores)
-	if [ $ds == "1" ]; then
+	rdm=$(launchctl list | grep '^\d.*RemoteDesktop.*')
+	if [ "$rdm" = "" ]; then
         echo "pass"
     else
         echo "fail"
@@ -26,6 +26,6 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+	/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop >/dev/null
     exit 0
 fi

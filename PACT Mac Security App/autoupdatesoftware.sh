@@ -11,7 +11,7 @@ if [ "$1" == "-a" ]; then
 fi
 
 if [ "$1" == "-d" ]; then
-    echo "Software Update On"
+    echo "Software Update Enabled"
     exit 0
 fi
 
