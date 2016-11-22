@@ -5,7 +5,7 @@
 # -w = Write (changes the settings)
 
 if [ "$1" != "-a" ] && [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
-    echo "Usage: $0 [-a|-d|-pf|-w]"
+    echo "Usage: $0 [-a | -d [en|tr|ru] | -pf | -w]"
     exit 1
 fi
 
@@ -25,8 +25,21 @@ fi
 
 if [ "$1" == "-d" ]; then
 	# -d => This Security Setting's Description (will show up as the line-item in the GUI)
-    echo "Security Setting Description"
-    exit 0
+	# Turkish
+	if [ "$2" == "tr" ]; then
+		echo "[tr]Security Setting Description"
+		exit 0
+	fi
+	
+	# Russian
+	if [ "$2" == "ru" ]; then
+		echo "[ru]Security Setting Description"
+		exit 0
+	fi
+	
+	# English
+	echo "Security Setting Description"
+	exit 0
 fi
 
 if [ "$1" == "-pf" ]; then

@@ -6,12 +6,25 @@ if [ "$1" != "-a" ] && [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]
 fi
 
 if [ "$1" == "-a" ]; then
-    	echo "true"
+    echo "true"
     exit 0
 fi
 
 if [ "$1" == "-d" ]; then
-    echo "Require password 5 seconds or less after sleep or screensaver is activated"
+	# Turkish
+    if [ "$2" == "tr" ]; then
+		echo "[tr]Require password 5 seconds or less after sleep or screensaver is activated"
+		exit 0
+	fi
+	
+	# Russian
+	if [ "$2" == "ru" ]; then
+		echo "[ru]Require password 5 seconds or less after sleep or screensaver is activated"
+		exit 0
+	fi
+	
+	# English
+	echo "Require password 5 seconds or less after sleep or screensaver is activated"
     exit 0
 fi
 

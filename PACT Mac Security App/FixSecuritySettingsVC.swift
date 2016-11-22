@@ -10,7 +10,18 @@ import Cocoa
 
 class FixSecuritySettingsVC: NSViewController {
 
-    let settingsToQuery = ["screensaver5sec.sh", "screensaver10min.sh"]
+    let settingsToQuery = ["screensaver5sec.sh",
+                           "screensaver10min.sh",
+                           //"autologindisabled.sh",
+                           "autoupdatesoftware.sh",
+                           "bluetoothsharing.sh",
+                           "ds_store.sh",
+                           "firewallenabled.sh",
+                           "firewallstealth.sh",
+                           "guestaccount.sh",
+                           "networkguestshared.sh",
+                           "remotedesktopmanagement.sh"]
+    //let settingsToQuery = ["screensaver5sec.sh", "screensaver10min.sh", "autologindisabled.sh"]
     
     @IBOutlet weak var settingsStackView: NSStackView!
     @IBOutlet weak var fixAllBtn: NSButton!
@@ -49,7 +60,7 @@ class FixSecuritySettingsVC: NSViewController {
                 statusImgView.identifier = settingToQuery
                 
                 // Setup Setting Description Label
-                let dTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-d"])  // -d => Get Description
+                let dTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-d", getCurrLangIso()])  // -d => Get Description, getCurrLangIso returns "en" or "tr" or "ru"
                 let settingDescLabel = NSTextField(labelWithString: dTaskOutput)
 
                 // Setup FixIt Button
@@ -169,20 +180,26 @@ class FixSecuritySettingsVC: NSViewController {
         }
     }
     
-    func langSelectionButtonsAlert() {
-        let alert: NSAlert = NSAlert()
+    func getCurrLangIso() -> String {
         let currLangArr = UserDefaults.standard.value(forKey: "AppleLanguages") as! Array<String>
-        let currLangIso = currLangArr[0]
-        //print("currLangIso: \(currLangIso)")
+        return currLangArr[0]
+    }
+    
+    func langSelectionButtonsAlert() {
+
         var currLangPretty = ""
-        switch currLangArr[0] {
+        switch getCurrLangIso() {
+        case "en":
+            currLangPretty = "English"
         case "tr":
             currLangPretty = "Türkçe"
         case "ru":
             currLangPretty = "Русский"
         default:
-            currLangPretty = "English"
+            currLangPretty = getCurrLangIso()
         }
+
+        let alert: NSAlert = NSAlert()
         alert.messageText = "Current Language: \(currLangPretty)"
         alert.informativeText = "If you choose a DIFFERENT language, this box will disappear and you must RESTART THE APP!"
         alert.addButton(withTitle: "English")
@@ -193,19 +210,19 @@ class FixSecuritySettingsVC: NSViewController {
         // Note on res: 1000 => 1st button (on far right), 1001 => 2nd button, 1002 => 3rd, etc
         switch res {
         case 1000:  // English
-            if currLangIso != "en" {
+            if getCurrLangIso() != "en" {
                 UserDefaults.standard.setValue(["en"], forKey: "AppleLanguages")
                 UserDefaults.standard.synchronize()
                 NSApplication.shared().terminate(self)
             }
         case 1001:  // Turkish
-            if currLangIso != "tr" {
+            if getCurrLangIso() != "tr" {
                 UserDefaults.standard.setValue(["tr"], forKey: "AppleLanguages")
                 UserDefaults.standard.synchronize()
                 NSApplication.shared().terminate(self)
             }
         case 1002:  // Russian
-            if currLangIso != "ru" {
+            if getCurrLangIso() != "ru" {
                 UserDefaults.standard.setValue(["ru"], forKey: "AppleLanguages")
                 UserDefaults.standard.synchronize()
                 NSApplication.shared().terminate(self)
