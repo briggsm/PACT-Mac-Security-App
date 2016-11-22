@@ -1,0 +1,39 @@
+/* Class = "NSMenuItem"; title = "Quit Security Fixer-Upper"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "Завершить Утилиту Security Fixer-Upper";
+
+/* Class = "NSMenuItem"; title = "About Security Fixer-Upper"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "Об Утилите Security Fixer-Upper";
+
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "BOF-NM-1cW"; */
+"BOF-NM-1cW.title" = "Настройки…";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
+"F2S-fz-NVQ.title" = "Справка";
+
+/* Class = "NSMenuItem"; title = "Security Fixer-Upper Help"; ObjectID = "FKE-Sm-Kum"; */
+"FKE-Sm-Kum.title" = "Security Fixer-Upper Справка";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
+"Kd2-mp-pUS.title" = "Показать все";
+
+/* Class = "NSTextFieldCell"; title = "Security Settings Checklist"; ObjectID = "MRl-OD-mG2"; */
+"MRl-OD-mG2.title" = "Параметры безопасности Контрольный список";
+
+/* Class = "NSMenuItem"; title = "Services"; ObjectID = "NMo-om-nkz"; */
+"NMo-om-nkz.title" = "Службы";
+
+/* Class = "NSMenuItem"; title = "Hide Security Fixer-Upper"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "Скрыть Утилиту Security Fixer-Upper";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
+"Vdr-fp-XzO.title" = "Скрыть остальные";
+
+/* Class = "NSButtonCell"; title = "Fix All"; ObjectID = "fD8-jE-8Xg"; */
+"fD8-jE-8Xg.title" = "Исправь все";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "hz9-B4-Xy5"; */
+"hz9-B4-Xy5.title" = "Службы ";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
+"wpr-3q-Mcd.title" = "Справка";
+

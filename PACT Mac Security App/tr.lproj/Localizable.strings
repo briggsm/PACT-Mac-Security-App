@@ -1,0 +1,12 @@
+/* button text */
+"Fix It!" = "Düzelt!";
+
+/* os outdated */
+"Operating System Outdated" = "İşletim Sistemi Çok Eski";
+
+/* No comment provided by engineer. */
+"Quit" = "Kapat";
+
+/* os too old message */
+"Your operating system is too old. It must first be updated to AT LEAST Mountain Lion (10.8) before this app will run. Your OS Version is: [%d.%d.%d]" = "İşletim sisteminiz çok eski. Bu uygulama çalıştırmadan önce ilk en az Mountain Lion (10.8) güncelleştirilmesi gerekir. Sizin OS Versiyonunuz: [%1$d.%2$d.%3$d]";
+

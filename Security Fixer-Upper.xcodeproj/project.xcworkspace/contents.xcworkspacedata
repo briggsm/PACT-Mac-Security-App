@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:PACT Mac Security App.xcodeproj">
+      location = "self:/Users/briggsm/Xcode Projects/PACT Mac Security App/Security Fixer-Upper.xcodeproj">
    </FileRef>
 </Workspace>

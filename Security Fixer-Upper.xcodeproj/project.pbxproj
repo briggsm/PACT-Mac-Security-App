@@ -16,10 +16,12 @@
 		47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */; };
 		47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */; };
 		47F089D51DDD5F9900171D0D /* template.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D41DDD5F9900171D0D /* template.sh */; };
+		47F08A031DE4543800171D0D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 47F08A051DE4543800171D0D /* Localizable.strings */; };
+		47F08A091DE4543900171D0D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 47F08A0B1DE4543900171D0D /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		470942F81DD5E87A0099BDA6 /* PACT Mac Security App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PACT Mac Security App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		470942F81DD5E87A0099BDA6 /* Security Fixer-Upper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Security Fixer-Upper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		470942FF1DD5E87A0099BDA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		470943021DD5E87A0099BDA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -30,6 +32,12 @@
 		47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = restoreMarksOrigSettings.sh; sourceTree = "<group>"; };
 		47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = viewCurrentSettings.sh; sourceTree = "<group>"; };
 		47F089D41DDD5F9900171D0D /* template.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = template.sh; sourceTree = "<group>"; };
+		47F08A041DE4543800171D0D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		47F08A061DE4543800171D0D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
+		47F08A0A1DE4543900171D0D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		47F08A0C1DE4852D00171D0D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		47F08A0D1DE4852D00171D0D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		47F08A0E1DE4852D00171D0D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +54,7 @@
 		470942EF1DD5E87A0099BDA6 = {
 			isa = PBXGroup;
 			children = (
-				470942FA1DD5E87A0099BDA6 /* PACT Mac Security App */,
+				470942FA1DD5E87A0099BDA6 /* Security Fixer-Upper */,
 				470942F91DD5E87A0099BDA6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,14 +62,16 @@
 		470942F91DD5E87A0099BDA6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				470942F81DD5E87A0099BDA6 /* PACT Mac Security App.app */,
+				470942F81DD5E87A0099BDA6 /* Security Fixer-Upper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		470942FA1DD5E87A0099BDA6 /* PACT Mac Security App */ = {
+		470942FA1DD5E87A0099BDA6 /* Security Fixer-Upper */ = {
 			isa = PBXGroup;
 			children = (
+				47F08A0B1DE4543900171D0D /* InfoPlist.strings */,
+				47F08A051DE4543800171D0D /* Localizable.strings */,
 				470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */,
 				470942FF1DD5E87A0099BDA6 /* Assets.xcassets */,
 				470943011DD5E87A0099BDA6 /* Main.storyboard */,
@@ -70,6 +80,7 @@
 				47F089D31DDCAA1300171D0D /* Misc Scripts */,
 				470943041DD5E87A0099BDA6 /* Info.plist */,
 			);
+			name = "Security Fixer-Upper";
 			path = "PACT Mac Security App";
 			sourceTree = "<group>";
 		};
@@ -95,9 +106,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		470942F71DD5E87A0099BDA6 /* PACT Mac Security App */ = {
+		470942F71DD5E87A0099BDA6 /* Security Fixer-Upper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 470943071DD5E87A0099BDA6 /* Build configuration list for PBXNativeTarget "PACT Mac Security App" */;
+			buildConfigurationList = 470943071DD5E87A0099BDA6 /* Build configuration list for PBXNativeTarget "Security Fixer-Upper" */;
 			buildPhases = (
 				470942F41DD5E87A0099BDA6 /* Sources */,
 				470942F51DD5E87A0099BDA6 /* Frameworks */,
@@ -107,9 +118,9 @@
 			);
 			dependencies = (
 			);
-			name = "PACT Mac Security App";
+			name = "Security Fixer-Upper";
 			productName = "PACT Mac Security App";
-			productReference = 470942F81DD5E87A0099BDA6 /* PACT Mac Security App.app */;
+			productReference = 470942F81DD5E87A0099BDA6 /* Security Fixer-Upper.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -129,7 +140,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 470942F31DD5E87A0099BDA6 /* Build configuration list for PBXProject "PACT Mac Security App" */;
+			buildConfigurationList = 470942F31DD5E87A0099BDA6 /* Build configuration list for PBXProject "Security Fixer-Upper" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -142,7 +153,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				470942F71DD5E87A0099BDA6 /* PACT Mac Security App */,
+				470942F71DD5E87A0099BDA6 /* Security Fixer-Upper */,
 			);
 		};
 /* End PBXProject section */
@@ -157,7 +168,9 @@
 				47F089D51DDD5F9900171D0D /* template.sh in Resources */,
 				474663E31DDABA8D007FAC94 /* screensaver5sec.sh in Resources */,
 				47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */,
+				47F08A031DE4543800171D0D /* Localizable.strings in Resources */,
 				470943001DD5E87A0099BDA6 /* Assets.xcassets in Resources */,
+				47F08A091DE4543900171D0D /* InfoPlist.strings in Resources */,
 				470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,8 +194,28 @@
 			isa = PBXVariantGroup;
 			children = (
 				470943021DD5E87A0099BDA6 /* Base */,
+				47F08A061DE4543800171D0D /* tr */,
+				47F08A0D1DE4852D00171D0D /* ru */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		47F08A051DE4543800171D0D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47F08A041DE4543800171D0D /* tr */,
+				47F08A0C1DE4852D00171D0D /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		47F08A0B1DE4543900171D0D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47F08A0A1DE4543900171D0D /* tr */,
+				47F08A0E1DE4852D00171D0D /* ru */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -286,7 +319,7 @@
 				DEVELOPMENT_TEAM = FQ6JHNT6KD;
 				INFOPLIST_FILE = "PACT Mac Security App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "briggs-inc.PACT-Mac-Security-App";
+				PRODUCT_BUNDLE_IDENTIFIER = "briggs-inc.security-fixer-upper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -300,7 +333,7 @@
 				DEVELOPMENT_TEAM = FQ6JHNT6KD;
 				INFOPLIST_FILE = "PACT Mac Security App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "briggs-inc.PACT-Mac-Security-App";
+				PRODUCT_BUNDLE_IDENTIFIER = "briggs-inc.security-fixer-upper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -309,7 +342,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		470942F31DD5E87A0099BDA6 /* Build configuration list for PBXProject "PACT Mac Security App" */ = {
+		470942F31DD5E87A0099BDA6 /* Build configuration list for PBXProject "Security Fixer-Upper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				470943051DD5E87A0099BDA6 /* Debug */,
@@ -318,7 +351,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		470943071DD5E87A0099BDA6 /* Build configuration list for PBXNativeTarget "PACT Mac Security App" */ = {
+		470943071DD5E87A0099BDA6 /* Build configuration list for PBXNativeTarget "Security Fixer-Upper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				470943081DD5E87A0099BDA6 /* Debug */,

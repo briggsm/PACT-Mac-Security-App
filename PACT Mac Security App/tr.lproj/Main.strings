@@ -1,0 +1,39 @@
+/* Class = "NSMenuItem"; title = "Quit Security Fixer-Upper"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "Security Fixer-Upper'den Çık";
+
+/* Class = "NSMenuItem"; title = "About Security Fixer-Upper"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "Security Fixer-Upper hakkında";
+
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "BOF-NM-1cW"; */
+"BOF-NM-1cW.title" = "Tercihler…";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
+"F2S-fz-NVQ.title" = "Yardım";
+
+/* Class = "NSMenuItem"; title = "Security Fixer-Upper Help"; ObjectID = "FKE-Sm-Kum"; */
+"FKE-Sm-Kum.title" = "Security Fixer-Upper Yardım";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
+"Kd2-mp-pUS.title" = "Tümünü Göster";
+
+/* Class = "NSTextFieldCell"; title = "Security Settings Checklist"; ObjectID = "MRl-OD-mG2"; */
+"MRl-OD-mG2.title" = "Güvenlik Ayarları Kontrol Listesi";
+
+/* Class = "NSMenuItem"; title = "Services"; ObjectID = "NMo-om-nkz"; */
+"NMo-om-nkz.title" = "Servisler";
+
+/* Class = "NSMenuItem"; title = "Hide Security Fixer-Upper"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "Security Fixer-Upper'i Gizle";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
+"Vdr-fp-XzO.title" = "Diğerlerini Gizle";
+
+/* Class = "NSButtonCell"; title = "Fix All"; ObjectID = "fD8-jE-8Xg"; */
+"fD8-jE-8Xg.title" = "Hepsini Düzelt";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "hz9-B4-Xy5"; */
+"hz9-B4-Xy5.title" = "Servisler";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
+"wpr-3q-Mcd.title" = "Yardim";
+
