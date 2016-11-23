@@ -49,6 +49,21 @@ class FixSecuritySettingsVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        let myAppleScript = "do shell script \"'/Users/briggsm/Xcode Projects/Security Fixer-Upper/PACT Mac Security App/firewallenabled.sh' -w\" with administrator privileges"
+        var error: NSDictionary?
+        if let scriptObject = NSAppleScript(source: myAppleScript) {
+            let output: NSAppleEventDescriptor = scriptObject.executeAndReturnError(&error)
+            
+            if let err = error {
+                print("error: \(err)")
+            } else {
+                print(output.stringValue ?? "Note!: Output has no stringValue")
+            }
+        }
+        
+        
+        
         // Build the list of Security Settings for the Main GUI
         for settingToQuery in settingsToQuery {
             
