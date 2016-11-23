@@ -31,10 +31,6 @@ class FixSecuritySettingsVC: NSViewController {
         let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
         let appVersion = Bundle.main.infoDictionary![kCFBundleVersionKey as String] as! String
         self.view.window?.title = "\(appName) (v\(appVersion))"
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
         
         // Ask user their language preference
         //setGuiLanguage(langInt: langSelectionButtonsAlert())
@@ -48,6 +44,10 @@ class FixSecuritySettingsVC: NSViewController {
             _ = osVerTooOldAlert(userOsVer: userOsVer)
             NSApplication.shared().terminate(self)  // Quit App no matter what.
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         // Build the list of Security Settings for the Main GUI
         for settingToQuery in settingsToQuery {
@@ -200,8 +200,8 @@ class FixSecuritySettingsVC: NSViewController {
         }
 
         let alert: NSAlert = NSAlert()
-        alert.messageText = "Current Language: \(currLangPretty)"
-        alert.informativeText = "If you choose a DIFFERENT language, this box will disappear and you must RESTART THE APP!"
+        alert.messageText = "Current Language: \(currLangPretty)\nMevcut dil: \(currLangPretty)\nтекущий язык: \(currLangPretty)"
+        alert.informativeText = "If you choose a DIFFERENT language, this box will disappear and you must RESTART THE APP!\n\nBir FARKLI dili seçerseniz, bu kutu kaybolur ve UYGULAMAYI YENIDEN BAŞLATIN gerekir!\n\nЕсли вы выберите другой язык, это окно исчезнет, и вы должны перезапустить приложение!"
         alert.addButton(withTitle: "English")
         alert.addButton(withTitle: "Türkçe")
         alert.addButton(withTitle: "Русский")

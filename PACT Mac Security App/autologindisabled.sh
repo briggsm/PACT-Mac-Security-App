@@ -29,23 +29,17 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [ "$1" == "-pf" ]; then
-	ald=$(defaults read /Library/Preferences/com.apple.loginwindow autoLoginUser)
-	if [[ $ald == *"does not exist"* ]]; then
+	ald=$(defaults read /Library/Preferences/com.apple.loginwindow autoLoginUser 2>&1)
+	if [[ $ald == *"does not exist"* ]] && [[ ! -e /etc/kcpassword ]]; then
 		echo "pass"
-		exit 0
+	else
+		echo "fail"
 	fi
-	# ??????????????? Also want to check for existance of /etc/kcpassword? ?????????????????
-	
-	if [ "$ald" = "1" ]; then
-        echo "fail"
-    else
-        echo "pass"
-    fi
-    exit 0
+	exit 0
 fi
 
 if [ "$1" == "-w" ]; then
 	defaults delete /Library/Preferences/com.apple.loginwindow autoLoginUser
-	rm /etc/kcpassword
+	sudo rm /etc/kcpassword
     exit 0
 fi
