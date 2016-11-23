@@ -28,7 +28,7 @@ if [ "$1" == "-d" ]; then
     exit 0
 fi
 
-if [ "$1" == "-pf" ]; then
+if [[ "$1" == "-pf" ]]; then
 	osversionlong=$(uname -r)
 	osvers=${osversionlong/.*/}
 	if [[ ${osvers} -ge 12 ]]; then
@@ -36,7 +36,7 @@ if [ "$1" == "-pf" ]; then
 	else
 		ds=$(defaults -currentHost read com.apple.Bluetooth PrefKeyServicesEnabled)
 	fi
-	if [ $ds == "1" ]; then
+	if [[ $ds == "1" ]]; then
         echo "pass"
     else
         echo "fail"
@@ -44,7 +44,7 @@ if [ "$1" == "-pf" ]; then
     exit 0
 fi
 
-if [ "$1" == "-w" ]; then
+if [[ "$1" == "-w" ]]; then
 	osversionlong=$(uname -r)
 	osvers=${osversionlong/.*/}
 	if [[ ${osvers} -ge 12 ]]; then
