@@ -30,7 +30,7 @@ fi
 
 if [ "$1" == "-pf" ]; then
 	fe=$(/usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate)
-	if [[ "$fe" == "Firewall is enabled. (State = 1)" ]]; then
+	if [[ $fe == *"Firewall is enabled. (State = 1)"* ]]; then
         echo "pass"
     else
         echo "fail"
@@ -39,6 +39,7 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-	/usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on >/dev/null
+    # Note: need to run this with administrator privileges!
+    /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on >/dev/null
     exit 0
 fi
