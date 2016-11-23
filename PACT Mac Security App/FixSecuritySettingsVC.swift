@@ -12,7 +12,7 @@ class FixSecuritySettingsVC: NSViewController {
 
     let settingsToQuery = ["screensaver5sec.sh",
                            "screensaver10min.sh",
-                           //"autologindisabled.sh",
+                           "autologindisabled.sh",
                            "autoupdatesoftware.sh",
                            "bluetoothsharing.sh",
                            "ds_store.sh",

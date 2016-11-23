@@ -5,3 +5,9 @@ defaults write com.apple.screensaver askForPasswordDelay -int 5
 
 # Screensaver is set to activate after 10 minutes of inactivity
 defaults -currentHost write com.apple.screensaver idleTime 1800
+
+# autologindisabled
+defaults delete /Library/Preferences/com.apple.loginwindow autoLoginUser
+rm /etc/kcpassword
+
+

@@ -22,6 +22,7 @@
 		476007D21DE496E0004FAADA /* guestaccount.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007C91DE496E0004FAADA /* guestaccount.sh */; };
 		476007D31DE496E0004FAADA /* networkguestshared.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007CA1DE496E0004FAADA /* networkguestshared.sh */; };
 		476007D41DE496E0004FAADA /* remotedesktopmanagement.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007CB1DE496E0004FAADA /* remotedesktopmanagement.sh */; };
+		476007D61DE5901E004FAADA /* screenturnoff.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007D51DE5901E004FAADA /* screenturnoff.sh */; };
 		47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */; };
 		47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */; };
 		47F089D51DDD5F9900171D0D /* template.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D41DDD5F9900171D0D /* template.sh */; };
@@ -47,6 +48,7 @@
 		476007C91DE496E0004FAADA /* guestaccount.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = guestaccount.sh; sourceTree = "<group>"; };
 		476007CA1DE496E0004FAADA /* networkguestshared.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = networkguestshared.sh; sourceTree = "<group>"; };
 		476007CB1DE496E0004FAADA /* remotedesktopmanagement.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = remotedesktopmanagement.sh; sourceTree = "<group>"; };
+		476007D51DE5901E004FAADA /* screenturnoff.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screenturnoff.sh; sourceTree = "<group>"; };
 		47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = restoreMarksOrigSettings.sh; sourceTree = "<group>"; };
 		47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = viewCurrentSettings.sh; sourceTree = "<group>"; };
 		47F089D41DDD5F9900171D0D /* template.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = template.sh; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				476007CB1DE496E0004FAADA /* remotedesktopmanagement.sh */,
 				474663E21DDABA8D007FAC94 /* screensaver5sec.sh */,
 				474663E71DDB0824007FAC94 /* screensaver10min.sh */,
+				476007D51DE5901E004FAADA /* screenturnoff.sh */,
 			);
 			name = "Security Setting Scripts";
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 				476007D21DE496E0004FAADA /* guestaccount.sh in Resources */,
 				476007CF1DE496E0004FAADA /* ds_store.sh in Resources */,
 				470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */,
+				476007D61DE5901E004FAADA /* screenturnoff.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

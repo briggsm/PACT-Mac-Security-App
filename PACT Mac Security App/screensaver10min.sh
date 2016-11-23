@@ -11,6 +11,19 @@ if [ "$1" == "-a" ]; then
 fi
 
 if [ "$1" == "-d" ]; then
+	# Turkish
+	if [ "$2" == "tr" ]; then
+		echo "[tr]Screensaver is set to activate after 10 minutes of inactivity"
+		exit 0
+	fi
+	
+	# Russian
+	if [ "$2" == "ru" ]; then
+		echo "[ru]Screensaver is set to activate after 10 minutes of inactivity"
+		exit 0
+	fi
+	
+	# English
     echo "Screensaver is set to activate after 10 minutes of inactivity"
     exit 0
 fi

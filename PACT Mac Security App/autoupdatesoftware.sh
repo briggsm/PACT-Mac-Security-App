@@ -11,6 +11,19 @@ if [ "$1" == "-a" ]; then
 fi
 
 if [ "$1" == "-d" ]; then
+	# Turkish
+	if [ "$2" == "tr" ]; then
+		echo "[tr]Software Update Enabled"
+		exit 0
+	fi
+	
+	# Russian
+	if [ "$2" == "ru" ]; then
+		echo "[ru]Software Update Enabled"
+		exit 0
+	fi
+	
+	# English
     echo "Software Update Enabled"
     exit 0
 fi

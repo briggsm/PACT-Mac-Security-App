@@ -11,6 +11,19 @@ if [ "$1" == "-a" ]; then
 fi
 
 if [ "$1" == "-d" ]; then
+	# Turkish
+	if [ "$2" == "tr" ]; then
+		echo "[tr].DS_Store files on network volumes Disabled"
+		exit 0
+	fi
+	
+	# Russian
+	if [ "$2" == "ru" ]; then
+		echo "[ru].DS_Store files on network volumes Disabled"
+		exit 0
+	fi
+	
+	# English
     echo ".DS_Store files on network volumes Disabled"
     exit 0
 fi
