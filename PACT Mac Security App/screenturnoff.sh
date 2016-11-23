@@ -13,24 +13,27 @@ fi
 if [ "$1" == "-d" ]; then
 	# Turkish
 	if [ "$2" == "tr" ]; then
-		echo "[tr].DS_Store files on network volumes Disabled"
+		echo "[tk]Screen Turn off 5 min or less"
 		exit 0
 	fi
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "[ru].DS_Store files on network volumes Disabled"
+		echo "[ru]Screen Turn off 5 min or less"
 		exit 0
 	fi
 	
 	# English
-    echo ".DS_Store files on network volumes Disabled"
+    echo "Screen Turn off 5 min or less"
     exit 0
 fi
 
 if [ "$1" == "-pf" ]; then
-	ds=$(defaults read com.apple.desktopservices DSDontWriteNetworkStores)
-	if [ $ds == "1" ]; then
+	cst=$(sudo pmset -g | awk '$1=="sleep" {print $2}')
+	dst=$(sudo pmset -g | awk '$1=="displaysleep" {print $2}')
+	echo "$cst"
+	echo "$dst"
+	if [[ $cst -le 5 ]] && [[ $dst -le 5  ]]; then
         echo "pass"
     else
         echo "fail"

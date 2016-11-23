@@ -13,24 +13,24 @@ fi
 if [ "$1" == "-d" ]; then
 	# Turkish
 	if [ "$2" == "tr" ]; then
-		echo "[tr].DS_Store files on network volumes Disabled"
+		echo "[tr]Network .DS_Store Disabled"
 		exit 0
 	fi
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "[ru].DS_Store files on network volumes Disabled"
+		echo "[ru]Network .DS_Store Disabled"
 		exit 0
 	fi
 	
 	# English
-    echo ".DS_Store files on network volumes Disabled"
+    echo "Network .DS_Store Disabled"
     exit 0
 fi
 
 if [ "$1" == "-pf" ]; then
-	ds=$(defaults read com.apple.desktopservices DSDontWriteNetworkStores)
-	if [ $ds == "1" ]; then
+	ds=$(defaults read com.apple.desktopservices DSDontWriteNetworkStores 2>&1)
+	if [[ $ds == *"does not exist" ]]; then
         echo "pass"
     else
         echo "fail"
