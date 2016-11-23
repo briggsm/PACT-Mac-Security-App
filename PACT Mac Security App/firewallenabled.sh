@@ -39,6 +39,6 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-	/usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on >/dev/null
+	sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on >/dev/null
     exit 0
 fi
