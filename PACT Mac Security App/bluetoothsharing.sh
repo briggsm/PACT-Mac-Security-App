@@ -32,9 +32,9 @@ if [ "$1" == "-pf" ]; then
 	osversionlong=$(uname -r)
 	osvers=${osversionlong/.*/}
 	if [[ ${osvers} -ge 12 ]]; then
-		ds=$(defaults -currentHost read com.apple.bluetooth)
+		ds=$(defaults -currentHost read com.apple.bluetooth PrefKeyServicesEnabled)
 	else
-		ds=$(defaults -currentHost read com.apple.Bluetooth)
+		ds=$(defaults -currentHost read com.apple.Bluetooth PrefKeyServicesEnabled)
 	fi
 	if [ $ds == "1" ]; then
         echo "pass"
