@@ -50,17 +50,7 @@ class FixSecuritySettingsVC: NSViewController {
         super.viewDidLoad()
         
 
-        let myAppleScript = "do shell script \"'/Users/briggsm/Xcode Projects/Security Fixer-Upper/PACT Mac Security App/firewallenabled.sh' -w\" with administrator privileges"
-        var error: NSDictionary?
-        if let scriptObject = NSAppleScript(source: myAppleScript) {
-            let output: NSAppleEventDescriptor = scriptObject.executeAndReturnError(&error)
-            
-            if let err = error {
-                print("error: \(err)")
-            } else {
-                print(output.stringValue ?? "Note!: Output has no stringValue")
-            }
-        }
+        
         
         
         
@@ -149,23 +139,61 @@ class FixSecuritySettingsVC: NSViewController {
     func fixItBtnClicked(btn: NSButton) {
         let settingToQuery = btn.identifier ?? ""
         if !settingToQuery.isEmpty {
-            _ = runTask(taskFilename: settingToQuery, arguments: ["-w"])  // -w => Write Setting
+            //_ = runTask(taskFilename: settingToQuery, arguments: ["-w"])  // -w => Write Setting
+            
+            let relPathToScripts = "./Security-Fixer-Upper.app/Contents/Resources/"
+            let allFixItScriptsStr = relPathToScripts + settingToQuery
+            fixAsRoot(allFixItScriptsStr: allFixItScriptsStr)
+
             updateAllStatusImagesAndFixItBtns()
         }
     }
 
     @IBAction func fixAllBtnClicked(_ sender: NSButton) {
+        // Build list of all scripts which need to be fixed
+        let relPathToScripts = "./Security-Fixer-Upper.app/Contents/Resources/"
+        var allFixItScriptsArr = Array<String>()
         for settingToQuery in settingsToQuery {
             let aTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-a"])  // -a => Applicable given user's OS Version.
             if aTaskOutput == "true" {
                 let pfTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-pf"])  // -pf => Return "pass" or "fail" security test
                 if pfTaskOutput != "pass" {
-                    _ = runTask(taskFilename: settingToQuery, arguments: ["-w"])  // -w => Write Setting
+                    //_ = runTask(taskFilename: settingToQuery, arguments: ["-w"])  // -w => Write Setting
+                    allFixItScriptsArr.append(relPathToScripts + settingToQuery)
                 }
             }
         }
         
+        let allFixItScriptsStr = allFixItScriptsArr.joined(separator: " ")
+        print("allFixItScriptsStr: \(allFixItScriptsStr)")
+
+        // Fix all these scripts with admin priv.
+        fixAsRoot(allFixItScriptsStr: allFixItScriptsStr)
+        
         updateAllStatusImagesAndFixItBtns()
+    }
+    
+    func fixAsRoot(allFixItScriptsStr: String) {
+        print("-----")
+        // Write AppleScript
+        let appleScriptStr =
+            "tell application \"Finder\"\n" +
+                "   set myPath to container of (path to me) as string\n" +
+                "end tell\n" +
+        "do shell script (quoted form of (POSIX path of myPath)) & \"Security-Fixer-Upper.app/Contents/Resources/runWs.sh \(allFixItScriptsStr)\"\n"
+        
+        // Run AppleScript
+        var error: NSDictionary?
+        if let scriptObject = NSAppleScript(source: appleScriptStr) {
+            let output: NSAppleEventDescriptor = scriptObject.executeAndReturnError(&error)
+            
+            if let err = error {
+                print("error: \(err)")
+            } else {
+                print(output.stringValue ?? "Note!: Output has no stringValue")
+            }
+        }
+        print("----------")
     }
     
     func updateAllStatusImagesAndFixItBtns() {

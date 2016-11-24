@@ -23,6 +23,7 @@
 		476007D31DE496E0004FAADA /* networkguestshared.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007CA1DE496E0004FAADA /* networkguestshared.sh */; };
 		476007D41DE496E0004FAADA /* remotedesktopmanagement.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007CB1DE496E0004FAADA /* remotedesktopmanagement.sh */; };
 		476007D61DE5901E004FAADA /* screenturnoff.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007D51DE5901E004FAADA /* screenturnoff.sh */; };
+		476007D81DE6BEE5004FAADA /* runWs.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007D71DE6BEE5004FAADA /* runWs.sh */; };
 		47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */; };
 		47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */; };
 		47F089D51DDD5F9900171D0D /* template.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D41DDD5F9900171D0D /* template.sh */; };
@@ -31,7 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		470942F81DD5E87A0099BDA6 /* Security Fixer-Upper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Security Fixer-Upper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		470942F81DD5E87A0099BDA6 /* Security-Fixer-Upper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Security-Fixer-Upper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		470942FF1DD5E87A0099BDA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		470943021DD5E87A0099BDA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -49,6 +50,7 @@
 		476007CA1DE496E0004FAADA /* networkguestshared.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = networkguestshared.sh; sourceTree = "<group>"; };
 		476007CB1DE496E0004FAADA /* remotedesktopmanagement.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = remotedesktopmanagement.sh; sourceTree = "<group>"; };
 		476007D51DE5901E004FAADA /* screenturnoff.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screenturnoff.sh; sourceTree = "<group>"; };
+		476007D71DE6BEE5004FAADA /* runWs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = runWs.sh; sourceTree = "<group>"; };
 		47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = restoreMarksOrigSettings.sh; sourceTree = "<group>"; };
 		47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = viewCurrentSettings.sh; sourceTree = "<group>"; };
 		47F089D41DDD5F9900171D0D /* template.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = template.sh; sourceTree = "<group>"; };
@@ -74,7 +76,7 @@
 		470942EF1DD5E87A0099BDA6 = {
 			isa = PBXGroup;
 			children = (
-				470942FA1DD5E87A0099BDA6 /* Security Fixer-Upper */,
+				470942FA1DD5E87A0099BDA6 /* Security-Fixer-Upper */,
 				470942F91DD5E87A0099BDA6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,12 +84,12 @@
 		470942F91DD5E87A0099BDA6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				470942F81DD5E87A0099BDA6 /* Security Fixer-Upper.app */,
+				470942F81DD5E87A0099BDA6 /* Security-Fixer-Upper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		470942FA1DD5E87A0099BDA6 /* Security Fixer-Upper */ = {
+		470942FA1DD5E87A0099BDA6 /* Security-Fixer-Upper */ = {
 			isa = PBXGroup;
 			children = (
 				474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */,
@@ -100,7 +102,7 @@
 				47F089D31DDCAA1300171D0D /* Misc Scripts */,
 				470943041DD5E87A0099BDA6 /* Info.plist */,
 			);
-			name = "Security Fixer-Upper";
+			name = "Security-Fixer-Upper";
 			path = "PACT Mac Security App";
 			sourceTree = "<group>";
 		};
@@ -119,6 +121,7 @@
 				474663E21DDABA8D007FAC94 /* screensaver5sec.sh */,
 				474663E71DDB0824007FAC94 /* screensaver10min.sh */,
 				476007D51DE5901E004FAADA /* screenturnoff.sh */,
+				476007D71DE6BEE5004FAADA /* runWs.sh */,
 			);
 			name = "Security Setting Scripts";
 			sourceTree = "<group>";
@@ -136,9 +139,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		470942F71DD5E87A0099BDA6 /* Security Fixer-Upper */ = {
+		470942F71DD5E87A0099BDA6 /* Security-Fixer-Upper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 470943071DD5E87A0099BDA6 /* Build configuration list for PBXNativeTarget "Security Fixer-Upper" */;
+			buildConfigurationList = 470943071DD5E87A0099BDA6 /* Build configuration list for PBXNativeTarget "Security-Fixer-Upper" */;
 			buildPhases = (
 				470942F41DD5E87A0099BDA6 /* Sources */,
 				470942F51DD5E87A0099BDA6 /* Frameworks */,
@@ -148,9 +151,9 @@
 			);
 			dependencies = (
 			);
-			name = "Security Fixer-Upper";
+			name = "Security-Fixer-Upper";
 			productName = "PACT Mac Security App";
-			productReference = 470942F81DD5E87A0099BDA6 /* Security Fixer-Upper.app */;
+			productReference = 470942F81DD5E87A0099BDA6 /* Security-Fixer-Upper.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -170,7 +173,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 470942F31DD5E87A0099BDA6 /* Build configuration list for PBXProject "Security Fixer-Upper" */;
+			buildConfigurationList = 470942F31DD5E87A0099BDA6 /* Build configuration list for PBXProject "Security-Fixer-Upper" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -183,7 +186,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				470942F71DD5E87A0099BDA6 /* Security Fixer-Upper */,
+				470942F71DD5E87A0099BDA6 /* Security-Fixer-Upper */,
 			);
 		};
 /* End PBXProject section */
@@ -197,6 +200,7 @@
 				476007CD1DE496E0004FAADA /* autoupdatesoftware.sh in Resources */,
 				47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */,
 				47F089D51DDD5F9900171D0D /* template.sh in Resources */,
+				476007D81DE6BEE5004FAADA /* runWs.sh in Resources */,
 				476007CC1DE496E0004FAADA /* autologindisabled.sh in Resources */,
 				474663E31DDABA8D007FAC94 /* screensaver5sec.sh in Resources */,
 				476007D11DE496E0004FAADA /* firewallstealth.sh in Resources */,
@@ -382,7 +386,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		470942F31DD5E87A0099BDA6 /* Build configuration list for PBXProject "Security Fixer-Upper" */ = {
+		470942F31DD5E87A0099BDA6 /* Build configuration list for PBXProject "Security-Fixer-Upper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				470943051DD5E87A0099BDA6 /* Debug */,
@@ -391,7 +395,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		470943071DD5E87A0099BDA6 /* Build configuration list for PBXNativeTarget "Security Fixer-Upper" */ = {
+		470943071DD5E87A0099BDA6 /* Build configuration list for PBXNativeTarget "Security-Fixer-Upper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				470943081DD5E87A0099BDA6 /* Debug */,
