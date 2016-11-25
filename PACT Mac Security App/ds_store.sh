@@ -39,7 +39,7 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-    # Note: DOES NOT seem to need admin priv
+    # Note: DOES NOT NEED sudo
 	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
     exit 0
 fi

@@ -37,11 +37,22 @@ echo "RESTORING: firewallstealth (turning OFF)"
 echo "RESTORING: guestaccount (writing key: GuestEnabled to: NO)"
 defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool NO
 
-# Require password 5 seconds after sleep or screensaver is activated
+# networkguestshared.sh
+echo "RESTORING: networkguestshared (writing key: AppleFileServer guestAccess NO, deleting key: smb.server AllowGuestAccess"
+defaults write /Library/Preferences/com.apple.AppleFileServer guestAccess -bool NO
+defaults delete /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess
+
+# remotedesktopmanagement.sh
+echo "RESTORING: remotedesktopmanagement (kickstart -deactivate -stop)"
+/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
+
+# screensaver5sec.sh
 echo "RESTORING: screensaver5sec (setting to 5)"
 defaults write com.apple.screensaver askForPasswordDelay -int 5
 
-# Screensaver is set to activate after 10 minutes of inactivity
+# screensaver10min.sh
 echo "RESTORING: screensaver10min (setting to 1800)"
 defaults -currentHost write com.apple.screensaver idleTime 1800
 
+# screenturnoff.sh
+#echo "RESTORING: screenturnoff ()"

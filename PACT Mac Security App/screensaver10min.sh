@@ -39,6 +39,8 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
+    # Note: DOES NOT NEED sudo
     defaults -currentHost write com.apple.screensaver idleTime 600
-	exit 0
+
+    exit 0
 fi

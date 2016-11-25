@@ -10,18 +10,19 @@ import Cocoa
 
 class FixSecuritySettingsVC: NSViewController {
 
-    let settingsToQuery = ["screensaver5sec.sh",
-                           "screensaver10min.sh",
-                           "autologindisabled.sh",
-                           "autoupdatesoftware.sh",
-                           "bluetoothsharing.sh",
-                           "ds_store.sh",
-                           "firewallenabled.sh",
-                           "firewallstealth.sh",
-                           "guestaccount.sh",
-                           "networkguestshared.sh",
-                           "remotedesktopmanagement.sh"]
-    //let settingsToQuery = ["screensaver5sec.sh", "screensaver10min.sh", "autologindisabled.sh"]
+    let settingsToQuery = [
+        "autologindisabled.sh",
+        "autoupdatesoftware.sh",
+        "bluetoothsharing.sh",
+        "ds_store.sh",
+        "firewallenabled.sh",
+        "firewallstealth.sh",
+        "guestaccount.sh",
+        "networkguestshared.sh",
+        "remotedesktopmanagement.sh",
+        "screensaver5sec.sh",
+        "screensaver10min.sh"
+    ]
     
     @IBOutlet weak var settingsStackView: NSStackView!
     @IBOutlet weak var fixAllBtn: NSButton!

@@ -44,7 +44,10 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-	sudo defaults write /Library/Preferences/com.apple.AppleFileServer guestAccess -bool NO
-	sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess -bool NO
+    # Note: need to run this with administrator privileges!
+	defaults write /Library/Preferences/com.apple.AppleFileServer guestAccess -bool NO
+
+    # Note: need to run this with administrator privileges!
+	defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess -bool NO
     exit 0
 fi

@@ -29,7 +29,7 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [ "$1" == "-pf" ]; then
-	ga=$(defaults read  /Library/Preferences/com.apple.loginwindow GuestEnabled)
+	ga=$(defaults read /Library/Preferences/com.apple.loginwindow GuestEnabled)
 	if [ $ga == "0" ]; then
         echo "pass"
     else
@@ -39,7 +39,10 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
+    # Note: need to run this with administrator privileges!
 	defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool NO
-	/usr/bin/dscl . -mcxdelete /Users/Guest >/dev/null
+
+    # Note: need to run this with administrator privileges!
+    /usr/bin/dscl . -mcxdelete /Users/Guest >/dev/null
     exit 0
 fi
