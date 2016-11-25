@@ -31,8 +31,6 @@ fi
 if [ "$1" == "-pf" ]; then
 	cst=$(sudo pmset -g | awk '$1=="sleep" {print $2}')
 	dst=$(sudo pmset -g | awk '$1=="displaysleep" {print $2}')
-	echo "$cst"
-	echo "$dst"
 	if [[ $cst -le 5 ]] && [[ $dst -le 5  ]]; then
         echo "pass"
     else
