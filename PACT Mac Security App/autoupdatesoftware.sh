@@ -29,7 +29,9 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [ "$1" == "-pf" ]; then
-	asu=$(Sudo softwareupdate --schedule)
+    #asu=$(Sudo softwareupdate --schedule)
+    # Note: need to run this with administrator privileges!
+    asu=$(softwareupdate --schedule)
 	if [ "$asu" = "Automatic check is on" ]; then
         echo "pass"
 	else
@@ -39,6 +41,7 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
+	# Note: need to run this with administrator privileges!
 	softwareupdate --schedule on >/dev/null
     exit 0
 fi

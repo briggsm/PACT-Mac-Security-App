@@ -39,7 +39,10 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
+	# Note: need to run this with administrator privileges!
 	defaults delete /Library/Preferences/com.apple.loginwindow autoLoginUser
-	sudo rm /etc/kcpassword
+
+	# Note: need to run this with administrator privileges!
+	rm /etc/kcpassword
     exit 0
 fi

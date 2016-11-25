@@ -39,6 +39,7 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-	sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on >/dev/null
+    # Note: need to run this with administrator privileges!
+	/usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on >/dev/null
     exit 0
 fi
