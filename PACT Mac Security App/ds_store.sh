@@ -30,7 +30,7 @@ fi
 
 if [ "$1" == "-pf" ]; then
 	ds=$(defaults read com.apple.desktopservices DSDontWriteNetworkStores 2>&1)
-	if [[ $ds == *"does not exist" ]]; then
+	if [[ $ds == "1" ]]; then
         echo "pass"
     else
         echo "fail"

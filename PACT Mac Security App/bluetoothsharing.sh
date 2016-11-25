@@ -48,9 +48,9 @@ if [[ "$1" == "-w" ]]; then
 	osversionlong=$(uname -r)
 	osvers=${osversionlong/.*/}
 	if [[ ${osvers} -ge 12 ]]; then
-		sudo -u$USERNAME defaults -currentHost write com.apple.bluetooth PrefKeyServicesEnabled 0
+		defaults -currentHost write com.apple.bluetooth PrefKeyServicesEnabled 0
 	else
-  		sudo -u$USERNAME defaults -currentHost write com.apple.Bluetooth PrefKeyServicesEnabled 0
+  		defaults -currentHost write com.apple.Bluetooth PrefKeyServicesEnabled 0
 	fi
     exit 0
 fi
