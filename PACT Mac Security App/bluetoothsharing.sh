@@ -29,13 +29,7 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [[ "$1" == "-pf" ]]; then
-	osversionlong=$(uname -r)
-	osvers=${osversionlong/.*/}
-	if [[ ${osvers} -ge 12 ]]; then
 		ds=$(defaults -currentHost read com.apple.bluetooth PrefKeyServicesEnabled)
-	else
-		ds=$(defaults -currentHost read com.apple.Bluetooth PrefKeyServicesEnabled)
-	fi
 	if [[ $ds == "1" ]]; then
         echo "pass"
     else
@@ -45,12 +39,7 @@ if [[ "$1" == "-pf" ]]; then
 fi
 
 if [[ "$1" == "-w" ]]; then
-	osversionlong=$(uname -r)
-	osvers=${osversionlong/.*/}
-	if [[ ${osvers} -ge 12 ]]; then
-		sudo -u$USERNAME defaults -currentHost write com.apple.bluetooth PrefKeyServicesEnabled 0
-	else
-  		sudo -u$USERNAME defaults -currentHost write com.apple.Bluetooth PrefKeyServicesEnabled 0
-	fi
+		defaults -currentHost write com.apple.bluetooth PrefKeyServicesEnabled 0
+
     exit 0
 fi
