@@ -44,5 +44,6 @@ if [ "$1" == "-w" ]; then
 
 	# Note: need to run this with administrator privileges!
 	rm /etc/kcpassword
-    exit 0
+	
+	exit 0
 fi

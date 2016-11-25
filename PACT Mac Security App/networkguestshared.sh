@@ -49,5 +49,6 @@ if [ "$1" == "-w" ]; then
 
     # Note: need to run this with administrator privileges!
 	defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess -bool NO
+	
     exit 0
 fi

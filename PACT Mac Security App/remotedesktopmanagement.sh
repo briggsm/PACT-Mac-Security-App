@@ -41,5 +41,6 @@ fi
 if [ "$1" == "-w" ]; then
     # Note: need to run this with administrator privileges!
 	/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop >/dev/null
+	
     exit 0
 fi

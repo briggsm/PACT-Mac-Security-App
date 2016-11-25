@@ -43,5 +43,6 @@ fi
 if [ "$1" == "-w" ]; then
 	# Note: need to run this with administrator privileges!
 	softwareupdate --schedule on >/dev/null
-    exit 0
+	
+	exit 0
 fi

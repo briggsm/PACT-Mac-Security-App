@@ -39,7 +39,8 @@ if [[ "$1" == "-pf" ]]; then
 fi
 
 if [[ "$1" == "-w" ]]; then
-		defaults -currentHost write com.apple.bluetooth PrefKeyServicesEnabled 0
+    # Note: need to run this with administrator privileges!
+    defaults -currentHost write com.apple.bluetooth PrefKeyServicesEnabled 0
 
     exit 0
 fi

@@ -41,5 +41,6 @@ fi
 if [ "$1" == "-w" ]; then
     # Note: DOES NOT NEED sudo
 	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+	
     exit 0
 fi
