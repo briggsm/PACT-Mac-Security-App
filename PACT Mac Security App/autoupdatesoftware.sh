@@ -32,7 +32,7 @@ if [ "$1" == "-pf" ]; then
     #asu=$(Sudo softwareupdate --schedule)
     # Note: need to run this with administrator privileges!
     asu=$(softwareupdate --schedule)
-	if [ "$asu" = "Automatic check is on" ]; then
+	if [[ $asu == *"Automatic check is on"* ]]; then
         echo "pass"
 	else
         echo "fail"

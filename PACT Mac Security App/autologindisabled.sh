@@ -29,7 +29,13 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [ "$1" == "-pf" ]; then
-	ald=$(defaults read /Library/Preferences/com.apple.loginwindow autoLoginUser 2>&1)
+	ald=$(defaults read /Library/Preferences/com.apple.loginwindow autoLoginUser 2>&1 )
+	#echo "ald: $ald"
+	# if [[ ! -e /etc/kcpassword ]]; then
+# 		echo "file does NOT exist"
+# 	else
+# 		echo "file DOES exist"
+# 	fi
 	if [[ $ald == *"does not exist"* ]] && [[ ! -e /etc/kcpassword ]]; then
 		echo "pass"
 	else

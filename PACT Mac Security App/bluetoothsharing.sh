@@ -29,7 +29,7 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [[ "$1" == "-pf" ]]; then
-		ds=$(defaults -currentHost read com.apple.bluetooth PrefKeyServicesEnabled)
+	ds=$(defaults -currentHost read com.apple.bluetooth PrefKeyServicesEnabled)
 	if [[ $ds == "1" ]]; then
         echo "pass"
     else

@@ -124,6 +124,8 @@ class FixSecuritySettingsVC: NSViewController {
         ps.launchPath = path
         ps.arguments = arguments
         ps.standardOutput = outputPipe
+        //ps.standardError = outputPipe
+        //ps.standardError = ps.standardInput
         ps.launch()
         ps.waitUntilExit()
 
@@ -181,7 +183,7 @@ class FixSecuritySettingsVC: NSViewController {
             "tell application \"Finder\"\n" +
                 "   set myPath to container of (path to me) as string\n" +
                 "end tell\n" +
-        "do shell script (quoted form of (POSIX path of myPath)) & \"Security-Fixer-Upper.app/Contents/Resources/runWs.sh \(allFixItScriptsStr)\"\n"
+        "do shell script (quoted form of (POSIX path of myPath)) & \"Security-Fixer-Upper.app/Contents/Resources/runWs.sh \(allFixItScriptsStr)\" with administrator privileges"
         
         // Run AppleScript
         var error: NSDictionary?

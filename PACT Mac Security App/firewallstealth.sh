@@ -30,7 +30,7 @@ fi
 
 if [ "$1" == "-pf" ]; then
 	fs=$(/usr/libexec/ApplicationFirewall/socketfilterfw --getstealthmode)
-	if [ "$fs" = "Stealth mode enabled" ]; then
+	if [[ $fs == *"Stealth mode enabled"* ]]; then
         echo "pass"
     else
         echo "fail"
