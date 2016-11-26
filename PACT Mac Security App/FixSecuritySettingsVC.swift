@@ -107,12 +107,12 @@ class FixSecuritySettingsVC: NSViewController {
     func runTask(taskFilename: String, arguments: [String]) -> String {
         // Note: Running in Main thread because it's not going take long at all (if it does, something is majorly wrong).
         
-        print("runTask: \(taskFilename) \(arguments[0]) ", terminator: "")  // Finish this print statement at end of runTask() function
+        printLog("runTask: \(taskFilename) \(arguments[0]) ", terminator: "")  // Finish this print statement at end of runTask() function
 
         // Make sure we can find the script file. Return if not.
         let settingNameArr = taskFilename.components(separatedBy: ".")
         guard let path = Bundle.main.path(forResource: settingNameArr[0], ofType:settingNameArr[1]) else {
-            print("\n  Unable to locate: \(taskFilename)!")
+            printLog("\n  Unable to locate: \(taskFilename)!")
             return "Unable to locate: \(taskFilename)!"
         }
         
@@ -135,7 +135,7 @@ class FixSecuritySettingsVC: NSViewController {
         outputString = outputString.trimmingCharacters(in: .whitespacesAndNewlines)
         
         // Return the output
-        print("[output: \(outputString)]")
+        printLog("[output: \(outputString)]")
         return outputString
     }
     
@@ -168,7 +168,7 @@ class FixSecuritySettingsVC: NSViewController {
         }
         
         let allFixItScriptsStr = allFixItScriptsArr.joined(separator: " ")
-        print("allFixItScriptsStr: \(allFixItScriptsStr)")
+        printLog("allFixItScriptsStr: \(allFixItScriptsStr)")
 
         // Fix all these scripts with admin priv.
         fixAsRoot(allFixItScriptsStr: allFixItScriptsStr)
@@ -177,7 +177,7 @@ class FixSecuritySettingsVC: NSViewController {
     }
     
     func fixAsRoot(allFixItScriptsStr: String) {
-        print("-----")
+        printLog("-----")
         // Write AppleScript
         let appleScriptStr =
             "tell application \"Finder\"\n" +
@@ -191,12 +191,12 @@ class FixSecuritySettingsVC: NSViewController {
             let output: NSAppleEventDescriptor = scriptObject.executeAndReturnError(&error)
             
             if let err = error {
-                print("error: \(err)")
+                printLog("error: \(err)")
             } else {
-                print(output.stringValue ?? "Note!: Output has no stringValue")
+                printLog(output.stringValue ?? "Note!: Output has no stringValue")
             }
         }
-        print("----------")
+        printLog("----------")
     }
     
     func updateAllStatusImagesAndFixItBtns() {
@@ -288,5 +288,30 @@ class FixSecuritySettingsVC: NSViewController {
         alert.alertStyle = NSAlertStyle.informational
         alert.addButton(withTitle: NSLocalizedString("Quit", comment: ""))
         return alert.runModal() == NSAlertFirstButtonReturn
+    }
+    
+    func printLog(str: String) {
+        // Print's to log file & standard output
+        
+        // First get timestamp
+//        let date = Date()
+//        let calendar = NSCalendar.current
+//        let hour = calendar.component(.hour, from: date)
+//        let minutes = calendar.component(.minute, from: date)
+//        let seconds = calendar.component(.second, from: date)
+        let d = Date()
+        let df = DateFormatter()
+        df.dateFormat = "y-MM-dd H:m:ss.SSS"
+        let timestamp = df.string(from: d)
+        
+        // Setup the string to print
+        let strToPrint: String = "[" + timestamp + "] " + str
+        
+        print(strToPrint)
+        
+        // Also log to file
+        
+        
+        
     }
 }
