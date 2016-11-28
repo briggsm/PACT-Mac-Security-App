@@ -155,19 +155,21 @@ class FixSecuritySettingsVC: NSViewController {
     @IBAction func fixAllBtnClicked(_ sender: NSButton) {
         // Build list of all scripts which need to be fixed
         var allFixItScriptsArr = Array<String>()
-        for settingToQuery in settingsToQuery {
-            let aTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-a"])  // -a => Applicable given user's OS Version.
-            if aTaskOutput == "true" {
-                let pfTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-pf"])  // -pf => Return "pass" or "fail" security test
-                if pfTaskOutput != "pass" {
-                    //_ = runTask(taskFilename: settingToQuery, arguments: ["-w"])  // -w => Write Setting
-                    allFixItScriptsArr.append(settingToQuery)
+
+        for entryStackView in settingsStackView.views as! [NSStackView] {
+            if let statusImgView = entryStackView.views.first as! NSImageView? {
+                let settingToQuery = statusImgView.identifier ?? ""
+                if !settingToQuery.isEmpty {
+                    if let imgName = statusImgView.image?.name() {
+                        if imgName != "greenCheck" {
+                            allFixItScriptsArr.append(settingToQuery)
+                        }
+                    }
                 }
             }
         }
         
         let allFixItScriptsStr = allFixItScriptsArr.joined(separator: " ")
-        printLog(str: "allFixItScriptsStr: \(allFixItScriptsStr)")
 
         // Fix all these scripts with admin priv.
         fixAsRoot(allFixItScriptsStr: allFixItScriptsStr)
@@ -178,7 +180,7 @@ class FixSecuritySettingsVC: NSViewController {
     func fixAsRoot(allFixItScriptsStr: String) {
         printLog(str: "-----")
         
-        printLog(str: "allFixItScriptsStr: \(allFixItScriptsStr)")
+        printLog(str: "fixAsRoot - allFixItScriptsStr: \(allFixItScriptsStr)")
         
         
         
