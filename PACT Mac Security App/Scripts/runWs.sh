@@ -14,6 +14,7 @@ fi
 for scriptName in "$@"
 do
     echo "[runWs.sh] scriptName: $scriptName"
+    #echo "runWs-su: $SUDO_USER"
     #/bin/sh $scriptName -pf  # Just for testing
     /bin/sh $scriptName -w
 done

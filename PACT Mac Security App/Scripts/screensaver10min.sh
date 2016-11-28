@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# Note: when called from command-line prepended with "sudo":
+#   $USER ==> root
+#   $SUDO_USER ==> username
+# When called from AppleScript "with administrator privileges":
+#   $USER ==> username
+#   $SUDO_USER ==> ""
+
 if [ "$1" != "-a" ] && [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
     echo "Usage: $0 [-a|-d|-pf|-w]"
     exit 1
@@ -41,6 +48,11 @@ fi
 if [ "$1" == "-w" ]; then
     # Note: DOES NOT NEED sudo
     macUUID=`ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-62`
-    sudo -u $USER defaults write /users/$USER/Library/Preferences/ByHost/com.apple.screensaver.$macUUID idleTime 600
+    if [[ $SUDO_USER != "" ]]; then
+        userOfAdminPriv=$SUDO_USER  # sudo
+    else
+        userOfAdminPriv=$USER  # AppleScript 'with administrator privileges'
+    fi
+    sudo -u $userOfAdminPriv defaults write /users/$userOfAdminPriv/Library/Preferences/ByHost/com.apple.screensaver.$macUUID idleTime 600
     exit 0
 fi

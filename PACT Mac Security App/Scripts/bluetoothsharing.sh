@@ -41,6 +41,12 @@ fi
 if [[ "$1" == "-w" ]]; then
     # Note: need to run this with administrator privileges!
     macUUID=`ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-62`
-    sudo -u $USER defaults write /users/$USER/Library/Preferences/ByHost/com.apple.Bluetooth.$macUUID PrefKeyServicesEnabled 0
+    if [[ $SUDO_USER != "" ]]; then
+        userOfAdminPriv=$SUDO_USER  # sudo
+    else
+        userOfAdminPriv=$USER  # AppleScript 'with administrator privileges'
+    fi
+    #sudo -u $USER defaults write /users/$USER/Library/Preferences/ByHost/com.apple.Bluetooth.$macUUID PrefKeyServicesEnabled 0
+    sudo -u $userOfAdminPriv defaults write /users/$userOfAdminPriv/Library/Preferences/ByHost/com.apple.Bluetooth.$macUUID PrefKeyServicesEnabled 0
     exit 0
 fi
