@@ -29,7 +29,7 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [[ "$1" == "-pf" ]]; then
-	ds=$(defaults read /Library/Preferences/com.apple.Bluetooth PrefKeyServicesEnabled 2>&1)
+	ds=$(defaults -currentHost read com.apple.Bluetooth PrefKeyServicesEnabled 2>&1)
 	if [[ $ds == "0" ]]; then
         echo "pass"
     else
@@ -40,7 +40,7 @@ fi
 
 if [[ "$1" == "-w" ]]; then
     # Note: need to run this with administrator privileges!
-    defaults write /Library/Preferences/com.apple.Bluetooth PrefKeyServicesEnabled 0
-
+    macUUID=`ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-62`
+    defaults write /users/$SUDO_USER/Library/Preferences/ByHost/com.apple.Bluetooth.$macUUID PrefKeyServicesEnabled 0
     exit 0
 fi
