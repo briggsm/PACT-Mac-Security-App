@@ -41,6 +41,6 @@ fi
 if [ "$1" == "-w" ]; then
     # Note: DOES NOT NEED sudo
     macUUID=`ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-62`
-    sudo -u $SUDO_USER defaults write /users/$SUDO_USER/Library/Preferences/ByHost/com.apple.screensaver.$macUUID idleTime 600
+    sudo -u $USER defaults write /users/$USER/Library/Preferences/ByHost/com.apple.screensaver.$macUUID idleTime 600
     exit 0
 fi

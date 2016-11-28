@@ -41,10 +41,10 @@ fi
 
 if [ "$1" == "-w" ]; then
     # Note: DOES NOT NEED sudo
-    sudo -u $SUDO_USER defaults write com.apple.screensaver askForPassword -int 1
+    sudo -u $USER defaults write com.apple.screensaver askForPassword -int 1
 
     # Note: DOES NOT NEED sudo
-    sudo -u $SUDO_USER defaults write com.apple.screensaver askForPasswordDelay -int 0
+    sudo -u $USER defaults write com.apple.screensaver askForPasswordDelay -int 0
 
     exit 0
 fi
