@@ -29,10 +29,9 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [ "$1" == "-pf" ]; then
-    #asu=$(Sudo softwareupdate --schedule)
-    # Note: need to run this with administrator privileges!
-    asu=$(softwareupdate --schedule)
-	if [[ $asu == *"Automatic check is on"* ]]; then
+    asu=$(defaults read /Library/Preferences/com.apple.commerce AutoUpdate)
+    aurr=$(defaults read /Library/Preferences/com.apple.commerce AutoUpdateRestartRequired)
+	if [[ $asu == "1" ]] && [[ $aurr == "1" ]]; then
         echo "pass"
 	else
         echo "fail"
@@ -41,8 +40,9 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-	# Note: need to run this with administrator privileges!
-	softwareupdate --schedule on >/dev/null
+	# Note: # Note: DOES NOT NEED sudo but it can be
+	defaults write /Library/Preferences/com.apple.commerce AutoUpdate -bool TRUE
+	defaults write /Library/Preferences/com.apple.commerce AutoUpdateRestartRequired -bool TRUE
 	
 	exit 0
 fi
