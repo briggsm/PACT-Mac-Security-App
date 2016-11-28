@@ -124,6 +124,7 @@
 				476007D71DE6BEE5004FAADA /* runWs.sh */,
 			);
 			name = "Security Setting Scripts";
+			path = SecuritySettingScripts;
 			sourceTree = "<group>";
 		};
 		47F089D31DDCAA1300171D0D /* Misc Scripts */ = {
@@ -134,6 +135,7 @@
 				47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */,
 			);
 			name = "Misc Scripts";
+			path = MiscScripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
