@@ -29,7 +29,7 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [ "$1" == "-pf" ]; then
-	ds=$(defaults read com.apple.desktopservices DSDontWriteNetworkStores 2>&1)
+	ds=$(defaults read /Library/Preferences/com.apple.desktopservices DSDontWriteNetworkStores 2>&1)
 	if [[ $ds == "1" ]]; then
         echo "pass"
     else
@@ -39,8 +39,8 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-    # Note: DOES NOT NEED sudo
-	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+    # Note: need to run this with administrator privileges!
+	defaults write /Library/Preferences/com.apple.desktopservices DSDontWriteNetworkStores -bool true
 	
     exit 0
 fi
