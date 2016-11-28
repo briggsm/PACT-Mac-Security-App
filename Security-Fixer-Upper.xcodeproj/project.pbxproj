@@ -11,18 +11,7 @@
 		470943001DD5E87A0099BDA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 470942FF1DD5E87A0099BDA6 /* Assets.xcassets */; };
 		470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 470943011DD5E87A0099BDA6 /* Main.storyboard */; };
 		474663E11DDA3F06007FAC94 /* FixSecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */; };
-		474663E31DDABA8D007FAC94 /* screensaver5sec.sh in Resources */ = {isa = PBXBuildFile; fileRef = 474663E21DDABA8D007FAC94 /* screensaver5sec.sh */; };
-		474663E81DDB0824007FAC94 /* screensaver10min.sh in Resources */ = {isa = PBXBuildFile; fileRef = 474663E71DDB0824007FAC94 /* screensaver10min.sh */; };
-		476007CC1DE496E0004FAADA /* autologindisabled.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007C31DE496E0004FAADA /* autologindisabled.sh */; };
-		476007CD1DE496E0004FAADA /* autoupdatesoftware.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007C41DE496E0004FAADA /* autoupdatesoftware.sh */; };
-		476007CE1DE496E0004FAADA /* bluetoothsharing.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007C51DE496E0004FAADA /* bluetoothsharing.sh */; };
-		476007CF1DE496E0004FAADA /* ds_store.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007C61DE496E0004FAADA /* ds_store.sh */; };
-		476007D01DE496E0004FAADA /* firewallenabled.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007C71DE496E0004FAADA /* firewallenabled.sh */; };
-		476007D11DE496E0004FAADA /* firewallstealth.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007C81DE496E0004FAADA /* firewallstealth.sh */; };
-		476007D21DE496E0004FAADA /* guestaccount.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007C91DE496E0004FAADA /* guestaccount.sh */; };
-		476007D31DE496E0004FAADA /* networkguestshared.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007CA1DE496E0004FAADA /* networkguestshared.sh */; };
-		476007D41DE496E0004FAADA /* remotedesktopmanagement.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007CB1DE496E0004FAADA /* remotedesktopmanagement.sh */; };
-		476007D81DE6BEE5004FAADA /* runWs.sh in Resources */ = {isa = PBXBuildFile; fileRef = 476007D71DE6BEE5004FAADA /* runWs.sh */; };
+		47692E8F1DEC578100FA9281 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 47692E8E1DEC578100FA9281 /* Scripts */; };
 		479DC7C81DEA19BA005A488A /* log.txt in Resources */ = {isa = PBXBuildFile; fileRef = 479DC7C71DEA19BA005A488A /* log.txt */; };
 		47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */; };
 		47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */; };
@@ -38,18 +27,7 @@
 		470943021DD5E87A0099BDA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		470943041DD5E87A0099BDA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixSecuritySettingsVC.swift; sourceTree = "<group>"; };
-		474663E21DDABA8D007FAC94 /* screensaver5sec.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screensaver5sec.sh; sourceTree = "<group>"; };
-		474663E71DDB0824007FAC94 /* screensaver10min.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = screensaver10min.sh; sourceTree = "<group>"; };
-		476007C31DE496E0004FAADA /* autologindisabled.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = autologindisabled.sh; sourceTree = "<group>"; };
-		476007C41DE496E0004FAADA /* autoupdatesoftware.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = autoupdatesoftware.sh; sourceTree = "<group>"; };
-		476007C51DE496E0004FAADA /* bluetoothsharing.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = bluetoothsharing.sh; sourceTree = "<group>"; };
-		476007C61DE496E0004FAADA /* ds_store.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = ds_store.sh; sourceTree = "<group>"; };
-		476007C71DE496E0004FAADA /* firewallenabled.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = firewallenabled.sh; sourceTree = "<group>"; };
-		476007C81DE496E0004FAADA /* firewallstealth.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = firewallstealth.sh; sourceTree = "<group>"; };
-		476007C91DE496E0004FAADA /* guestaccount.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = guestaccount.sh; sourceTree = "<group>"; };
-		476007CA1DE496E0004FAADA /* networkguestshared.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = networkguestshared.sh; sourceTree = "<group>"; };
-		476007CB1DE496E0004FAADA /* remotedesktopmanagement.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = remotedesktopmanagement.sh; sourceTree = "<group>"; };
-		476007D71DE6BEE5004FAADA /* runWs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = runWs.sh; sourceTree = "<group>"; };
+		47692E8E1DEC578100FA9281 /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
 		479DC7C71DEA19BA005A488A /* log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = log.txt; sourceTree = "<group>"; };
 		47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = restoreMarksOrigSettings.sh; sourceTree = "<group>"; };
 		47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = viewCurrentSettings.sh; sourceTree = "<group>"; };
@@ -93,38 +71,18 @@
 			isa = PBXGroup;
 			children = (
 				474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */,
+				47692E8E1DEC578100FA9281 /* Scripts */,
 				47F08A0B1DE4543900171D0D /* InfoPlist.strings */,
 				47F08A051DE4543800171D0D /* Localizable.strings */,
 				470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */,
 				470942FF1DD5E87A0099BDA6 /* Assets.xcassets */,
 				470943011DD5E87A0099BDA6 /* Main.storyboard */,
-				47F089D21DDCA9E100171D0D /* Security Setting Scripts */,
 				47F089D31DDCAA1300171D0D /* Misc Scripts */,
 				470943041DD5E87A0099BDA6 /* Info.plist */,
 				479DC7C71DEA19BA005A488A /* log.txt */,
 			);
 			name = "Security-Fixer-Upper";
 			path = "PACT Mac Security App";
-			sourceTree = "<group>";
-		};
-		47F089D21DDCA9E100171D0D /* Security Setting Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				476007C31DE496E0004FAADA /* autologindisabled.sh */,
-				476007C41DE496E0004FAADA /* autoupdatesoftware.sh */,
-				476007C51DE496E0004FAADA /* bluetoothsharing.sh */,
-				476007C61DE496E0004FAADA /* ds_store.sh */,
-				476007C71DE496E0004FAADA /* firewallenabled.sh */,
-				476007C81DE496E0004FAADA /* firewallstealth.sh */,
-				476007C91DE496E0004FAADA /* guestaccount.sh */,
-				476007CA1DE496E0004FAADA /* networkguestshared.sh */,
-				476007CB1DE496E0004FAADA /* remotedesktopmanagement.sh */,
-				474663E21DDABA8D007FAC94 /* screensaver5sec.sh */,
-				474663E71DDB0824007FAC94 /* screensaver10min.sh */,
-				476007D71DE6BEE5004FAADA /* runWs.sh */,
-			);
-			name = "Security Setting Scripts";
-			path = SecuritySettingScripts;
 			sourceTree = "<group>";
 		};
 		47F089D31DDCAA1300171D0D /* Misc Scripts */ = {
@@ -198,25 +156,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				474663E81DDB0824007FAC94 /* screensaver10min.sh in Resources */,
-				476007CD1DE496E0004FAADA /* autoupdatesoftware.sh in Resources */,
 				47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */,
+				47692E8F1DEC578100FA9281 /* Scripts in Resources */,
 				47F089D51DDD5F9900171D0D /* template.sh in Resources */,
-				476007D81DE6BEE5004FAADA /* runWs.sh in Resources */,
-				476007CC1DE496E0004FAADA /* autologindisabled.sh in Resources */,
-				474663E31DDABA8D007FAC94 /* screensaver5sec.sh in Resources */,
-				476007D11DE496E0004FAADA /* firewallstealth.sh in Resources */,
 				47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */,
-				476007D41DE496E0004FAADA /* remotedesktopmanagement.sh in Resources */,
 				47F08A031DE4543800171D0D /* Localizable.strings in Resources */,
 				470943001DD5E87A0099BDA6 /* Assets.xcassets in Resources */,
 				47F08A091DE4543900171D0D /* InfoPlist.strings in Resources */,
-				476007D31DE496E0004FAADA /* networkguestshared.sh in Resources */,
-				476007D01DE496E0004FAADA /* firewallenabled.sh in Resources */,
 				479DC7C81DEA19BA005A488A /* log.txt in Resources */,
-				476007CE1DE496E0004FAADA /* bluetoothsharing.sh in Resources */,
-				476007D21DE496E0004FAADA /* guestaccount.sh in Resources */,
-				476007CF1DE496E0004FAADA /* ds_store.sh in Resources */,
 				470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

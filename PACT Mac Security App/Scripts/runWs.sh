@@ -1,5 +1,10 @@
 #!/bin/sh
 
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#  DO NOT DELETE THIS FILE  !
+#  IT NEEDS TO BE HERE      !
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 if [ "$1" == "" ]; then
     echo "Usage: $0 file1.sh file2.sh file3.sh ..."
     exit 1

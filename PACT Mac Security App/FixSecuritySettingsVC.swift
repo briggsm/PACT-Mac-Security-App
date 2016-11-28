@@ -10,19 +10,8 @@ import Cocoa
 
 class FixSecuritySettingsVC: NSViewController {
 
-    let settingsToQuery = [
-        "autologindisabled.sh",
-        "autoupdatesoftware.sh",
-        "bluetoothsharing.sh",
-        "ds_store.sh",
-        "firewallenabled.sh",
-        "firewallstealth.sh",
-        "guestaccount.sh",
-        "networkguestshared.sh",
-        "remotedesktopmanagement.sh",
-        "screensaver5sec.sh",
-        "screensaver10min.sh"
-    ]
+    var scriptsDirPath: String = ""
+    var scriptsToQuery = Array<String>()
     
     @IBOutlet weak var settingsStackView: NSStackView!
     @IBOutlet weak var fixAllBtn: NSButton!
@@ -34,7 +23,6 @@ class FixSecuritySettingsVC: NSViewController {
         self.view.window?.title = "\(appName) (v\(appVersion))"
         
         // Ask user their language preference
-        //setGuiLanguage(langInt: langSelectionButtonsAlert())
         langSelectionButtonsAlert()
         
         // Make sure user's OS is Mountain Lion or higher. Mountain Lion (10.8.x) [12.x.x]. If not, tell user & Quit App.
@@ -50,32 +38,38 @@ class FixSecuritySettingsVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Change current directory to script's dir for rest of App's lifetime
+        changeCurrentDirToScriptsDir()
+        
+        // Find all scripts/settings we need to query
+        setupScriptsToQueryArray()
+        
         // Output Timestamp
         let d = Date()
         let df = DateFormatter()
-        df.dateFormat = "y-MM-dd H:m:ss"
+        df.dateFormat = "y-MM-dd HH:mm:ss"
         let timestamp = df.string(from: d)
         printLog(str: "=====================")
         printLog(str: "[" + timestamp + "]")
         printLog(str: "=====================")
         
         // Build the list of Security Settings for the Main GUI
-        for settingToQuery in settingsToQuery {
+        for scriptToQuery in scriptsToQuery {
             
-            let aTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-a"])  // -a => Applicable given user's OS Version.
+            let aTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-a"])  // -a => Applicable given user's OS Version.
             if aTaskOutput == "true" {
 
                 // Setup Status Image
                 let statusImgView = NSImageView(image: NSImage(named: "greyQM")!)
-                statusImgView.identifier = settingToQuery
+                statusImgView.identifier = scriptToQuery
                 
                 // Setup Setting Description Label
-                let dTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-d", getCurrLangIso()])  // -d => Get Description, getCurrLangIso returns "en" or "tr" or "ru"
+                let dTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-d", getCurrLangIso()])  // -d => Get Description, getCurrLangIso returns "en" or "tr" or "ru"
                 let settingDescLabel = NSTextField(labelWithString: dTaskOutput)
 
                 // Setup FixIt Button
                 let fixItBtn = NSButton(title: NSLocalizedString("Fix It!", comment: "button text"), target: self, action: #selector(fixItBtnClicked))
-                fixItBtn.identifier = settingToQuery
+                fixItBtn.identifier = scriptToQuery
                 
                 // Create StackView
                 let entryStackView = NSStackView()  // Default is Horizontal
@@ -115,7 +109,7 @@ class FixSecuritySettingsVC: NSViewController {
 
         // Make sure we can find the script file. Return if not.
         let settingNameArr = taskFilename.components(separatedBy: ".")
-        guard let path = Bundle.main.path(forResource: settingNameArr[0], ofType:settingNameArr[1]) else {
+        guard let path = Bundle.main.path(forResource: "Scripts/" + settingNameArr[0], ofType:settingNameArr[1]) else {
             printLog(str: "\n  Unable to locate: \(taskFilename)!")
             return "Unable to locate: \(taskFilename)!"
         }
@@ -142,11 +136,11 @@ class FixSecuritySettingsVC: NSViewController {
     }
     
     func fixItBtnClicked(btn: NSButton) {
-        let settingToQuery = btn.identifier ?? ""
-        if !settingToQuery.isEmpty {
-            //_ = runTask(taskFilename: settingToQuery, arguments: ["-w"])  // -w => Write Setting
+        let scriptToQuery = btn.identifier ?? ""
+        if !scriptToQuery.isEmpty {
+            //_ = runTask(taskFilename: scriptToQuery, arguments: ["-w"])  // -w => Write Setting
             
-            fixAsRoot(allFixItScriptsStr: settingToQuery)
+            fixAsRoot(allFixItScriptsStr: scriptToQuery)
 
             updateAllStatusImagesAndFixItBtns()
         }
@@ -158,11 +152,11 @@ class FixSecuritySettingsVC: NSViewController {
 
         for entryStackView in settingsStackView.views as! [NSStackView] {
             if let statusImgView = entryStackView.views.first as! NSImageView? {
-                let settingToQuery = statusImgView.identifier ?? ""
-                if !settingToQuery.isEmpty {
+                let scriptToQuery = statusImgView.identifier ?? ""
+                if !scriptToQuery.isEmpty {
                     if let imgName = statusImgView.image?.name() {
                         if imgName != "greenCheck" {
-                            allFixItScriptsArr.append(settingToQuery)
+                            allFixItScriptsArr.append(scriptToQuery)
                         }
                     }
                 }
@@ -179,77 +173,13 @@ class FixSecuritySettingsVC: NSViewController {
     
     func fixAsRoot(allFixItScriptsStr: String) {
         printLog(str: "-----")
-        
         printLog(str: "fixAsRoot - allFixItScriptsStr: \(allFixItScriptsStr)")
-        
-        
-        
-        
-//        let currDir = FileManager.default.currentDirectoryPath
-//        printLog(str: "currDir: \(currDir)")
-        
-        
-//        // Change directory
-//        let filemgr = FileManager.default
-//        let dirPaths = filemgr.urls(for: .documentDirectory, in: .userDomainMask)
-//        let docsDir = dirPaths[0].path
-//        if filemgr.changeCurrentDirectoryPath(docsDir) {
-//            // Success
-//            printLog(str: "success")
-//        } else {
-//            // Failure
-//            printLog(str: "failure")
-//        }
-//        let currDir2 = FileManager.default.currentDirectoryPath
-//        printLog(str: "currDir2: \(currDir2)")
 
-        
-        guard let runWsPath = Bundle.main.path(forResource: "runWs", ofType:"sh") else {
-            printLog(str: "\n  Unable to locate: runWs.sh!")
-            return
-        }
-        //printLog(str: "runWsPath: \(runWsPath)")
-
-        let resourcesPath = String(runWsPath.characters.dropLast(8))
-        if FileManager.default.changeCurrentDirectoryPath(resourcesPath) {
-            //printLog(str: "success changing dir to: \(resourcesPath)")
-        } else {
-            printLog(str: "failure changing dir to: \(resourcesPath)")
-        }
-        
-//        let currDir2b = FileManager.default.currentDirectoryPath
-//        printLog(str: "currDir2b: \(currDir2b)")
-        
-        
-        
-        /*
-        //let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        do {
-            // Get the directory contents urls (including subfolders urls)
-            //let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil, options: [])
-            let directoryContents = try FileManager.default.contentsOfDirectory(atPath: currDir)
-            printLog(str: "currDirContents: \(directoryContents.description)")
-//            directoryContents = try FileManager.default.contentsOfDirectory(atPath: docsDir)
-//            printLog(str: "docsDir: \(directoryContents.description)")
-            
-//            // if you want to filter the directory contents you can do like this:
-//            let mp3Files = directoryContents.filter{ $0.pathExtension == "mp3" }
-//            print("mp3 urls:",mp3Files)
-//            let mp3FileNames = mp3Files.map{ $0.deletingPathExtension().lastPathComponent }
-//            print("mp3 list:", mp3FileNames)
-            
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-        */
-        
-        
         // Write AppleScript
         let appleScriptStr =
             "tell application \"Finder\"\n" +
             "   set myPath to container of (path to me) as string\n" +
             "end tell\n" +
-            //"do shell script (quoted form of (POSIX path of myPath)) & \"Security-Fixer-Upper.app/Contents/Resources/runWs.sh \(allFixItScriptsStr)\" with administrator privileges"
             "do shell script \"./runWs.sh \(allFixItScriptsStr)\" with administrator privileges"
         
         // Run AppleScript
@@ -272,9 +202,9 @@ class FixSecuritySettingsVC: NSViewController {
         // Iterate through all our entryStackViews, finding the image views and buttons.
         for entryStackView in settingsStackView.views as! [NSStackView] {
             if let statusImgView = entryStackView.views.first as! NSImageView? , let fixItBtn = entryStackView.views.last as! NSButton? {
-                let settingToQuery = statusImgView.identifier ?? ""
-                if !settingToQuery.isEmpty {
-                    let pfTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-pf"])  // -pf => Return "pass" or "fail" security test
+                let scriptToQuery = statusImgView.identifier ?? ""
+                if !scriptToQuery.isEmpty {
+                    let pfTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-pf"])  // -pf => Return "pass" or "fail" security test
                     
                     // Update statusImageView & fixItBtn
                     statusImgView.image = NSImage(named: getImgNameFor(pfString: pfTaskOutput))
@@ -374,7 +304,6 @@ class FixSecuritySettingsVC: NSViewController {
         if let cachesDirUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
             let logFilePathUrl = cachesDirUrl.appendingPathComponent("security-fixer-upper-log.txt")
             let logData = (prettyStr + terminator).data(using: .utf8, allowLossyConversion: false)!
-            //let data = strLog.data(using: String.Encoding.utf8, allowLossyConversion: false)!
 
             if FileManager.default.fileExists(atPath: logFilePathUrl.path) {
                 do {
@@ -392,6 +321,39 @@ class FixSecuritySettingsVC: NSViewController {
                     print("Can't write to new log file, at this path: \(logFilePathUrl.path)")
                 }
             }
+        }
+    }
+    
+    func changeCurrentDirToScriptsDir() {
+        guard let runWsPath = Bundle.main.path(forResource: "Scripts/runWs", ofType:"sh") else {
+            printLog(str: "\n  Unable to locate: Scripts/runWs.sh!")
+            return
+        }
+        printLog(str: "runWsPath: \(runWsPath)")
+        
+        scriptsDirPath = String(runWsPath.characters.dropLast(8))  // drop off: "runWs.sh"
+        if FileManager.default.changeCurrentDirectoryPath(scriptsDirPath) {
+            //printLog(str: "success changing dir to: \(scriptsDirPath)")
+        } else {
+            printLog(str: "failure changing dir to: \(scriptsDirPath)")
+        }
+    }
+    
+    func setupScriptsToQueryArray() {
+        do {
+            var scriptsDirContents = try FileManager.default.contentsOfDirectory(atPath: scriptsDirPath)
+
+            // Remove "runWs.sh" from the list of scripts.
+            if let index = scriptsDirContents.index(of: "runWs.sh") {
+                scriptsDirContents.remove(at: index)
+            }
+            
+            printLog(str: "scriptsDirContents: \(scriptsDirContents.description)")
+
+            scriptsToQuery = scriptsDirContents
+        } catch {
+            printLog(str: "Cannot get contents of Scripts dir: \(scriptsDirPath)")
+            //scriptsToQuery = [""]
         }
     }
 }
