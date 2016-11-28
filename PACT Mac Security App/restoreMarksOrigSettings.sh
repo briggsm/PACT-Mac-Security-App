@@ -21,15 +21,16 @@ softwareupdate --schedule on
 echo
 
 # bluetoothsharing.sh
-echo "* RESTORING: bluetoothsharing"
-echo "!!!!! Not sure what to do yet !!!!!"
-# sudo -u$USERNAME defaults -currentHost write com.apple.bluetooth PrefKeyServicesEnabled 0
+echo "* RESTORING: bluetoothsharing (deleting key: com.apple.Bluetooth PrefKeyServicesEnabled)"
+defaults delete /Library/Preferences/com.apple.Bluetooth PrefKeyServicesEnabled
 echo
 
 # ds_store.sh
 echo "* RESTORING: ds_store (deleting key: DSDontWriteNetworkStores)"
 # Note: DO NOT NEED sudo
-defaults delete com.apple.desktopservices DSDontWriteNetworkStores
+#defaults delete com.apple.desktopservices DSDontWriteNetworkStores
+# Note: DO NEED sudo
+defaults delete /Library/Preferences/com.apple.desktopservices DSDontWriteNetworkStores
 echo
 
 # firewallenabled.sh
