@@ -154,7 +154,6 @@ class FixSecuritySettingsVC: NSViewController {
 
     @IBAction func fixAllBtnClicked(_ sender: NSButton) {
         // Build list of all scripts which need to be fixed
-        let relPathToScripts = "./Security-Fixer-Upper.app/Contents/Resources/"
         var allFixItScriptsArr = Array<String>()
         for settingToQuery in settingsToQuery {
             let aTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-a"])  // -a => Applicable given user's OS Version.
@@ -162,7 +161,7 @@ class FixSecuritySettingsVC: NSViewController {
                 let pfTaskOutput = runTask(taskFilename: settingToQuery, arguments: ["-pf"])  // -pf => Return "pass" or "fail" security test
                 if pfTaskOutput != "pass" {
                     //_ = runTask(taskFilename: settingToQuery, arguments: ["-w"])  // -w => Write Setting
-                    allFixItScriptsArr.append(relPathToScripts + settingToQuery)
+                    allFixItScriptsArr.append(settingToQuery)
                 }
             }
         }
@@ -362,14 +361,17 @@ class FixSecuritySettingsVC: NSViewController {
 
     func printLog(str: String, terminator: String) {
     
+        // First tidy-up string a bit
+        var prettyStr = str.replacingOccurrences(of: "\r\n", with: "\n") // just incase
+        prettyStr = prettyStr.replacingOccurrences(of: "\r", with: "\n") // becasue AppleScript returns line endings with '\r'
+        
         // Normal print
-        print(str, terminator: terminator)
+        print(prettyStr, terminator: terminator)
         
         // Print to log file
         if let cachesDirUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
             let logFilePathUrl = cachesDirUrl.appendingPathComponent("security-fixer-upper-log.txt")
-            //let strLog = str + terminator
-            let logData = (str + terminator).data(using: .utf8, allowLossyConversion: false)!
+            let logData = (prettyStr + terminator).data(using: .utf8, allowLossyConversion: false)!
             //let data = strLog.data(using: String.Encoding.utf8, allowLossyConversion: false)!
 
             if FileManager.default.fileExists(atPath: logFilePathUrl.path) {
@@ -379,13 +381,13 @@ class FixSecuritySettingsVC: NSViewController {
                     logFileHandle.write(logData)
                     logFileHandle.closeFile()
                 } catch {
-                    printLog(str: "Unable to write to existing log file, at this path: \(logFilePathUrl.path)")
+                    print("Unable to write to existing log file, at this path: \(logFilePathUrl.path)")
                 }
             } else {
                 do {
                     try logData.write(to: logFilePathUrl)
                 } catch {
-                    printLog(str: "Can't write to new log file, at this path: \(logFilePathUrl.path)")
+                    print("Can't write to new log file, at this path: \(logFilePathUrl.path)")
                 }
             }
         }
