@@ -8,7 +8,7 @@ fi
 # Iterate through all arguments
 for scriptName in "$@"
 do
-    echo "scriptName: $scriptName"
+    echo "[runWs.sh] scriptName: $scriptName"
     #/bin/sh $scriptName -pf  # Just for testing
     /bin/sh $scriptName -w
 done

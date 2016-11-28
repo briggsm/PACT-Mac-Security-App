@@ -50,10 +50,14 @@ class FixSecuritySettingsVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        
-        
-        
+        // Output Timestamp
+        let d = Date()
+        let df = DateFormatter()
+        df.dateFormat = "y-MM-dd H:m:ss"
+        let timestamp = df.string(from: d)
+        printLog(str: "=====================")
+        printLog(str: "[" + timestamp + "]")
+        printLog(str: "=====================")
         
         // Build the list of Security Settings for the Main GUI
         for settingToQuery in settingsToQuery {
@@ -107,12 +111,12 @@ class FixSecuritySettingsVC: NSViewController {
     func runTask(taskFilename: String, arguments: [String]) -> String {
         // Note: Running in Main thread because it's not going take long at all (if it does, something is majorly wrong).
         
-        printLog("runTask: \(taskFilename) \(arguments[0]) ", terminator: "")  // Finish this print statement at end of runTask() function
+        printLog(str: "runTask: \(taskFilename) \(arguments[0]) ", terminator: "")  // Finish this print statement at end of runTask() function
 
         // Make sure we can find the script file. Return if not.
         let settingNameArr = taskFilename.components(separatedBy: ".")
         guard let path = Bundle.main.path(forResource: settingNameArr[0], ofType:settingNameArr[1]) else {
-            printLog("\n  Unable to locate: \(taskFilename)!")
+            printLog(str: "\n  Unable to locate: \(taskFilename)!")
             return "Unable to locate: \(taskFilename)!"
         }
         
@@ -124,8 +128,6 @@ class FixSecuritySettingsVC: NSViewController {
         ps.launchPath = path
         ps.arguments = arguments
         ps.standardOutput = outputPipe
-        //ps.standardError = outputPipe
-        //ps.standardError = ps.standardInput
         ps.launch()
         ps.waitUntilExit()
 
@@ -135,7 +137,7 @@ class FixSecuritySettingsVC: NSViewController {
         outputString = outputString.trimmingCharacters(in: .whitespacesAndNewlines)
         
         // Return the output
-        printLog("[output: \(outputString)]")
+        printLog(str: "[output: \(outputString)]")
         return outputString
     }
     
@@ -144,9 +146,7 @@ class FixSecuritySettingsVC: NSViewController {
         if !settingToQuery.isEmpty {
             //_ = runTask(taskFilename: settingToQuery, arguments: ["-w"])  // -w => Write Setting
             
-            let relPathToScripts = "./Security-Fixer-Upper.app/Contents/Resources/"
-            let allFixItScriptsStr = relPathToScripts + settingToQuery
-            fixAsRoot(allFixItScriptsStr: allFixItScriptsStr)
+            fixAsRoot(allFixItScriptsStr: settingToQuery)
 
             updateAllStatusImagesAndFixItBtns()
         }
@@ -168,7 +168,7 @@ class FixSecuritySettingsVC: NSViewController {
         }
         
         let allFixItScriptsStr = allFixItScriptsArr.joined(separator: " ")
-        printLog("allFixItScriptsStr: \(allFixItScriptsStr)")
+        printLog(str: "allFixItScriptsStr: \(allFixItScriptsStr)")
 
         // Fix all these scripts with admin priv.
         fixAsRoot(allFixItScriptsStr: allFixItScriptsStr)
@@ -177,13 +177,79 @@ class FixSecuritySettingsVC: NSViewController {
     }
     
     func fixAsRoot(allFixItScriptsStr: String) {
-        printLog("-----")
+        printLog(str: "-----")
+        
+        printLog(str: "allFixItScriptsStr: \(allFixItScriptsStr)")
+        
+        
+        
+        
+//        let currDir = FileManager.default.currentDirectoryPath
+//        printLog(str: "currDir: \(currDir)")
+        
+        
+//        // Change directory
+//        let filemgr = FileManager.default
+//        let dirPaths = filemgr.urls(for: .documentDirectory, in: .userDomainMask)
+//        let docsDir = dirPaths[0].path
+//        if filemgr.changeCurrentDirectoryPath(docsDir) {
+//            // Success
+//            printLog(str: "success")
+//        } else {
+//            // Failure
+//            printLog(str: "failure")
+//        }
+//        let currDir2 = FileManager.default.currentDirectoryPath
+//        printLog(str: "currDir2: \(currDir2)")
+
+        
+        guard let runWsPath = Bundle.main.path(forResource: "runWs", ofType:"sh") else {
+            printLog(str: "\n  Unable to locate: runWs.sh!")
+            return
+        }
+        //printLog(str: "runWsPath: \(runWsPath)")
+
+        let resourcesPath = String(runWsPath.characters.dropLast(8))
+        if FileManager.default.changeCurrentDirectoryPath(resourcesPath) {
+            //printLog(str: "success changing dir to: \(resourcesPath)")
+        } else {
+            printLog(str: "failure changing dir to: \(resourcesPath)")
+        }
+        
+//        let currDir2b = FileManager.default.currentDirectoryPath
+//        printLog(str: "currDir2b: \(currDir2b)")
+        
+        
+        
+        /*
+        //let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        do {
+            // Get the directory contents urls (including subfolders urls)
+            //let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil, options: [])
+            let directoryContents = try FileManager.default.contentsOfDirectory(atPath: currDir)
+            printLog(str: "currDirContents: \(directoryContents.description)")
+//            directoryContents = try FileManager.default.contentsOfDirectory(atPath: docsDir)
+//            printLog(str: "docsDir: \(directoryContents.description)")
+            
+//            // if you want to filter the directory contents you can do like this:
+//            let mp3Files = directoryContents.filter{ $0.pathExtension == "mp3" }
+//            print("mp3 urls:",mp3Files)
+//            let mp3FileNames = mp3Files.map{ $0.deletingPathExtension().lastPathComponent }
+//            print("mp3 list:", mp3FileNames)
+            
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        */
+        
+        
         // Write AppleScript
         let appleScriptStr =
             "tell application \"Finder\"\n" +
-                "   set myPath to container of (path to me) as string\n" +
-                "end tell\n" +
-        "do shell script (quoted form of (POSIX path of myPath)) & \"Security-Fixer-Upper.app/Contents/Resources/runWs.sh \(allFixItScriptsStr)\" with administrator privileges"
+            "   set myPath to container of (path to me) as string\n" +
+            "end tell\n" +
+            //"do shell script (quoted form of (POSIX path of myPath)) & \"Security-Fixer-Upper.app/Contents/Resources/runWs.sh \(allFixItScriptsStr)\" with administrator privileges"
+            "do shell script \"./runWs.sh \(allFixItScriptsStr)\" with administrator privileges"
         
         // Run AppleScript
         var error: NSDictionary?
@@ -191,12 +257,12 @@ class FixSecuritySettingsVC: NSViewController {
             let output: NSAppleEventDescriptor = scriptObject.executeAndReturnError(&error)
             
             if let err = error {
-                printLog("error: \(err)")
+                printLog(str: "AS Error: \(err)")
             } else {
-                printLog(output.stringValue ?? "Note!: Output has no stringValue")
+                printLog(str: output.stringValue ?? "Note!: AS Output has no stringValue")
             }
         }
-        printLog("----------")
+        printLog(str: "----------")
     }
     
     func updateAllStatusImagesAndFixItBtns() {
@@ -291,27 +357,37 @@ class FixSecuritySettingsVC: NSViewController {
     }
     
     func printLog(str: String) {
-        // Print's to log file & standard output
+        printLog(str: str, terminator: "\n")
+    }
+
+    func printLog(str: String, terminator: String) {
+    
+        // Normal print
+        print(str, terminator: terminator)
         
-        // First get timestamp
-//        let date = Date()
-//        let calendar = NSCalendar.current
-//        let hour = calendar.component(.hour, from: date)
-//        let minutes = calendar.component(.minute, from: date)
-//        let seconds = calendar.component(.second, from: date)
-        let d = Date()
-        let df = DateFormatter()
-        df.dateFormat = "y-MM-dd H:m:ss.SSS"
-        let timestamp = df.string(from: d)
-        
-        // Setup the string to print
-        let strToPrint: String = "[" + timestamp + "] " + str
-        
-        print(strToPrint)
-        
-        // Also log to file
-        
-        
-        
+        // Print to log file
+        if let cachesDirUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
+            let logFilePathUrl = cachesDirUrl.appendingPathComponent("security-fixer-upper-log.txt")
+            //let strLog = str + terminator
+            let logData = (str + terminator).data(using: .utf8, allowLossyConversion: false)!
+            //let data = strLog.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+
+            if FileManager.default.fileExists(atPath: logFilePathUrl.path) {
+                do {
+                    let logFileHandle = try FileHandle(forWritingTo: logFilePathUrl)
+                    logFileHandle.seekToEndOfFile()
+                    logFileHandle.write(logData)
+                    logFileHandle.closeFile()
+                } catch {
+                    printLog(str: "Unable to write to existing log file, at this path: \(logFilePathUrl.path)")
+                }
+            } else {
+                do {
+                    try logData.write(to: logFilePathUrl)
+                } catch {
+                    printLog(str: "Can't write to new log file, at this path: \(logFilePathUrl.path)")
+                }
+            }
+        }
     }
 }
