@@ -35,7 +35,7 @@ class FixSecuritySettingsVC: NSViewController {
         //NSApplication.shared().activate(ignoringOtherApps: true)
         //self.view.window?.level = Int(CGWindowLevelForKey(.floatingWindow))
         //self.view.window?.level = Int(CGWindowLevelForKey(.maximumWindow))  // But this even puts it over the dialog box!
-        self.view.window?.level = Int(CGWindowLevelForKey(.floatingWindow))
+        self.view.window?.level = Int(CGWindowLevelForKey(.floatingWindow))  // This forces window to ALWAYS be on top, even if don't want
         
         // Build the list of Security Settings for the Main GUI
         for scriptToQuery in scriptsToQuery {
@@ -105,13 +105,13 @@ class FixSecuritySettingsVC: NSViewController {
         } else if pfString == "fail" {
             return "redX"
         } else {
-            // Uh oh, unknow state. Shouldn't get here.
+            // Unknow state. Shouldn't get here.
             return "greyQM"
         }
     }
     
     func runTask(taskFilename: String, arguments: [String]) -> String {
-        // Note: Running in Main thread because it's not going take long at all (if it does, something is majorly wrong).
+        // Note: Purposely running in Main thread because it's not going take that long to run each of our tasks
         
         printLog(str: "runTask: \(taskFilename) \(arguments[0]) ", terminator: "")  // Finish this print statement at end of runTask() function
 
@@ -180,25 +180,22 @@ class FixSecuritySettingsVC: NSViewController {
     }
     
     func fixAsRoot(allFixItScriptsStr: String) {
-        printLog(str: "-----")
-        printLog(str: "fixAsRoot - allFixItScriptsStr: \(allFixItScriptsStr)")
+        printLog(str: "----------")
+        printLog(str: "fixAsRoot()")
 
         // Write AppleScript
-        let appleScriptStr =
-            "tell application \"Finder\"\n" +
-            "   set myPath to container of (path to me) as string\n" +
-            "end tell\n" +
-            "do shell script \"./runWs.sh \(allFixItScriptsStr)\" with administrator privileges"
+        let appleScriptStr = "do shell script \"./runWs.sh \(allFixItScriptsStr)\" with administrator privileges"
+        printLog(str: "appleScriptStr: \(appleScriptStr)")
         
         // Run AppleScript
-        var error: NSDictionary?
-        if let scriptObject = NSAppleScript(source: appleScriptStr) {
-            let output: NSAppleEventDescriptor = scriptObject.executeAndReturnError(&error)
+        var asError: NSDictionary?
+        if let asObject = NSAppleScript(source: appleScriptStr) {
+            let asOutput: NSAppleEventDescriptor = asObject.executeAndReturnError(&asError)
             
-            if let err = error {
-                printLog(str: "AS Error: \(err)")
+            if let err = asError {
+                printLog(str: "AppleScript Error: \(err)")
             } else {
-                printLog(str: output.stringValue ?? "Note!: AS Output has no stringValue")
+                printLog(str: asOutput.stringValue ?? "Note!: AS Output has 'nil' for stringValue")
             }
         }
         printLog(str: "----------")
