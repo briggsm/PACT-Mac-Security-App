@@ -40,18 +40,13 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
+    # Remember: -w ALWAYS gets run as root!
     if [[ $SUDO_USER != "" ]]; then
         userOfAdminPriv=$SUDO_USER  # sudo
     else
         userOfAdminPriv=$USER  # AppleScript 'with administrator privileges'
     fi
-    # Note: DOES NOT NEED sudo
-    #sudo -u $USER defaults write com.apple.screensaver askForPassword -int 1
     sudo -u $userOfAdminPriv defaults write com.apple.screensaver askForPassword -int 1
-
-    # Note: DOES NOT NEED sudo
-    #sudo -u $USER defaults write com.apple.screensaver askForPasswordDelay -int 0
     sudo -u $userOfAdminPriv defaults write com.apple.screensaver askForPasswordDelay -int 0
-
     exit 0
 fi

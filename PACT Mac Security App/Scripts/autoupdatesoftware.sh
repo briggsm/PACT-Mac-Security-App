@@ -40,9 +40,8 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-	# Note: # Note: DOES NOT NEED sudo but it can be
+	# Remember: -w ALWAYS gets run as root!
 	defaults write /Library/Preferences/com.apple.commerce AutoUpdate -bool TRUE
 	defaults write /Library/Preferences/com.apple.commerce AutoUpdateRestartRequired -bool TRUE
-	
 	exit 0
 fi

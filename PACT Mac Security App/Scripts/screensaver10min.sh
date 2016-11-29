@@ -1,12 +1,5 @@
 #!/bin/sh
 
-# Note: when called from command-line prepended with "sudo":
-#   $USER ==> root
-#   $SUDO_USER ==> username
-# When called from AppleScript "with administrator privileges":
-#   $USER ==> username
-#   $SUDO_USER ==> ""
-
 if [ "$1" != "-a" ] && [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
     echo "Usage: $0 [-a|-d|-pf|-w]"
     exit 1
@@ -46,7 +39,7 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-    # Note: DOES NOT NEED sudo
+    # Remember: -w ALWAYS gets run as root!
     macUUID=`ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-62`
     if [[ $SUDO_USER != "" ]]; then
         userOfAdminPriv=$SUDO_USER  # sudo

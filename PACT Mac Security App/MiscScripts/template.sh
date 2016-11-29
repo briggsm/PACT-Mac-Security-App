@@ -10,7 +10,14 @@
 #    -a,-d,-pf  must be run as the USER.
 #   -w          must always be run as ROOT.
 #
-#   If need to drop from root, the user of root/sudo:
+#  Note: when called from command-line prepended with "sudo":
+#    $USER ==> root
+#    $SUDO_USER ==> username
+#  When called from AppleScript "with administrator privileges":
+#    $USER ==> username
+#    $SUDO_USER ==> ""
+#
+#  If need to drop from root, the user of root/sudo:
 #    macUUID=`ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-62`
 #    if [[ $SUDO_USER != "" ]]; then
 #        userOfAdminPriv=$SUDO_USER  # sudo
@@ -19,23 +26,21 @@
 #    fi
 #    sudo -u $userOfAdminPriv defaults write ...
 #
+#  osvers is 10 for 10.6, 11 for 10.7, 12 for 10.8, 13 for 10.9 etc. 16 for 10.12
+#  osversionlong=$(uname -r)
+#  osvers=${osversionlong/.*/}
+#  if [[ ${osvers} -ge 16 ]]; then ...
+#
 ################################################################################################################
 if [ "$1" != "-a" ] && [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
     echo "Usage: $0 [-a | -d [en|tr|ru] | -pf | -w]"
     exit 1
 fi
 
-# osvers is 10 for 10.6, 11 for 10.7, 12 for 10.8, 13 for 10.9 etc. 16 for 10.12
 if [ "$1" == "-a" ]; then
     # -a => Applicable given user's OS Version.
 	# Must echo only "true" or "false". *Nothing* else!
-#	osversionlong=$(uname -r)
-#	osvers=${osversionlong/.*/}
-#	if [[ ${osvers} -ge 16 ]]; then
-    	echo "true"
-#    else
-#    	echo "false"
-#	fi
+    echo "true"
     exit 0
 fi
 
@@ -68,5 +73,7 @@ fi
 if [ "$1" == "-w" ]; then
 	# -w => Write the Setting to user's system (eg. "defaults write" command)
 	# Currently no need to echo anything. If anything is echo'd it's not currently used by the app
+
+    # Remember: -w ALWAYS gets run as root!
     exit 0
 fi

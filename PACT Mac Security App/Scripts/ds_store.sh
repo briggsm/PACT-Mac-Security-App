@@ -39,8 +39,7 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-    # Note: need to run this with administrator privileges!
+    # Remember: -w ALWAYS gets run as root!
 	defaults write /Library/Preferences/com.apple.desktopservices DSDontWriteNetworkStores -bool true
-	
     exit 0
 fi

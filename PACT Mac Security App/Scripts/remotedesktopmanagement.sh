@@ -39,8 +39,7 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-    # Note: need to run this with administrator privileges!
+    # Remember: -w ALWAYS gets run as root!
 	/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop >/dev/null
-	
     exit 0
 fi

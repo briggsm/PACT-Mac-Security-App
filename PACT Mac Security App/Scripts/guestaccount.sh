@@ -39,11 +39,8 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-    # Note: need to run this with administrator privileges!
+    # Remember: -w ALWAYS gets run as root!
 	defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool NO
-
-    # Note: need to run this with administrator privileges!
     /usr/bin/dscl . -mcxdelete /Users/Guest >/dev/null
-	
     exit 0
 fi
