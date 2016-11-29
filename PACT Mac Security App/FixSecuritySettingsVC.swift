@@ -17,22 +17,70 @@ class FixSecuritySettingsVC: NSViewController {
     @IBOutlet weak var fixAllBtn: NSButton!
     
     override func viewDidAppear() {
-        // Add (Version Number) to title of Main GUI's Window
-        let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
-        let appVersion = Bundle.main.infoDictionary![kCFBundleVersionKey as String] as! String
-        self.view.window?.title = "\(appName) (v\(appVersion))"
-        
-        // Ask user their language preference
-        langSelectionButtonsAlert()
-        
         // Make sure user's OS is Mountain Lion or higher. Mountain Lion (10.8.x) [12.x.x]. If not, tell user & Quit App.
         let minReqOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 8, patchVersion: 0)
         let userOsVer = ProcessInfo().operatingSystemVersion
-        
         if !ProcessInfo().isOperatingSystemAtLeast(minReqOsVer) {
             _ = osVerTooOldAlert(userOsVer: userOsVer)
             NSApplication.shared().terminate(self)  // Quit App no matter what.
         }
+        
+        // Add (Version Number) to title of Main GUI's Window
+        let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
+        let appVersion = Bundle.main.infoDictionary![kCFBundleVersionKey as String] as! String
+        self.view.window?.title = "\(appName) (v\(appVersion))"
+
+        // Bring window to front of all other windows, right now (including Xcode)
+        //NSApp.activate(ignoringOtherApps: true)  // Doesn't seem to bring to front when loading...
+        //NSApplication.shared().activate(ignoringOtherApps: true)
+        //self.view.window?.level = Int(CGWindowLevelForKey(.floatingWindow))
+        //self.view.window?.level = Int(CGWindowLevelForKey(.maximumWindow))  // But this even puts it over the dialog box!
+        self.view.window?.level = Int(CGWindowLevelForKey(.floatingWindow))
+        
+        // Build the list of Security Settings for the Main GUI
+        for scriptToQuery in scriptsToQuery {
+            
+            let aTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-a"])  // -a => Applicable given user's OS Version.
+            if aTaskOutput == "true" {
+                
+                // Setup Status Image
+                let statusImgView = NSImageView(image: NSImage(named: "greyQM")!)
+                statusImgView.identifier = scriptToQuery
+                
+                // Setup Setting Description Label
+                let dTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-d", getCurrLangIso()])  // -d => Get Description, getCurrLangIso returns "en" or "tr" or "ru"
+                let settingDescLabel = NSTextField(labelWithString: dTaskOutput)
+                
+                // Setup FixIt Button
+                let fixItBtn = NSButton(title: NSLocalizedString("Fix It!", comment: "button text"), target: self, action: #selector(fixItBtnClicked))
+                fixItBtn.identifier = scriptToQuery
+                
+                // Create StackView
+                let entryStackView = NSStackView()  // Default is Horizontal
+                entryStackView.alignment = .centerY
+                entryStackView.spacing = 10
+                entryStackView.distribution = .gravityAreas
+                
+                // Add Image, Label, and Button to StackView
+                entryStackView.addView(statusImgView, in: .leading)
+                entryStackView.addView(settingDescLabel, in: .leading)
+                entryStackView.addView(fixItBtn, in: .leading)
+                
+                // Add our entryStackView to the settingsStackView
+                settingsStackView.addView(entryStackView, in: NSStackViewGravity.top)
+                
+                // Force window update, so we can see it doing something
+                //self.view.window?.update()
+                //NSApplication.shared().updateWindows()
+            }
+        }
+        
+        // Update all Status Images & FixIt Button visibilities.
+        updateAllStatusImagesAndFixItBtns()
+        
+        
+        // Ask user their language preference
+        langSelectionButtonsAlert()
     }
     
     override func viewDidLoad() {
@@ -53,42 +101,7 @@ class FixSecuritySettingsVC: NSViewController {
         printLog(str: "[" + timestamp + "]")
         printLog(str: "=====================")
         
-        // Build the list of Security Settings for the Main GUI
-        for scriptToQuery in scriptsToQuery {
-            
-            let aTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-a"])  // -a => Applicable given user's OS Version.
-            if aTaskOutput == "true" {
-
-                // Setup Status Image
-                let statusImgView = NSImageView(image: NSImage(named: "greyQM")!)
-                statusImgView.identifier = scriptToQuery
-                
-                // Setup Setting Description Label
-                let dTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-d", getCurrLangIso()])  // -d => Get Description, getCurrLangIso returns "en" or "tr" or "ru"
-                let settingDescLabel = NSTextField(labelWithString: dTaskOutput)
-
-                // Setup FixIt Button
-                let fixItBtn = NSButton(title: NSLocalizedString("Fix It!", comment: "button text"), target: self, action: #selector(fixItBtnClicked))
-                fixItBtn.identifier = scriptToQuery
-                
-                // Create StackView
-                let entryStackView = NSStackView()  // Default is Horizontal
-                entryStackView.alignment = .centerY
-                entryStackView.spacing = 10
-                entryStackView.distribution = .gravityAreas
-
-                // Add Image, Label, and Button to StackView
-                entryStackView.addView(statusImgView, in: .leading)
-                entryStackView.addView(settingDescLabel, in: .leading)
-                entryStackView.addView(fixItBtn, in: .leading)
-                
-                // Add our entryStackView to the settingsStackView
-                settingsStackView.addView(entryStackView, in: NSStackViewGravity.top)
-            }
-        }
         
-        // Update all Status Images & FixIt Button visibilities.
-        updateAllStatusImagesAndFixItBtns()
     }
     
     func getImgNameFor(pfString: String) -> String {
