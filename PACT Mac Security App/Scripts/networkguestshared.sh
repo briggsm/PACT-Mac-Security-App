@@ -29,18 +29,17 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [ "$1" == "-pf" ]; then
-	gafs=$(defaults read /Library/Preferences/com.apple.AppleFileServer guestAccess 2>&1)
-	gsmb=$(defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess 2>&1)
-	#echo "gafs: $gafs"
-	#echo "gsmb: $gsmb"
-	if [[ $gafs == *"does not exist"* ]] || [[ $gafs == "0" ]]; then
-       if [[ $gsmb == *"does not exist"* ]] || [[ $gsmb == "0" ]]; then
-        	echo "pass"
-    	else
-        	echo "fail"
-    	fi
+    gafs=$(defaults read /Library/Preferences/com.apple.AppleFileServer guestAccess)
+    gsmb=$(defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess)
+
+    if [[ $gafs == "" ]] || [[ $gafs == "0" ]]; then
+        if [[ $gsmb == "" ]] || [[ $gsmb == "0" ]]; then
+            echo "pass"
+        else
+            echo "fail"
+        fi
     else
-    	echo "fail"
+        echo "fail"
     fi
     exit 0
 fi

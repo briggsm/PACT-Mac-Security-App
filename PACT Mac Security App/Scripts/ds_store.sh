@@ -29,7 +29,7 @@ if [ "$1" == "-d" ]; then
 fi
 
 if [ "$1" == "-pf" ]; then
-	ds=$(defaults read /Library/Preferences/com.apple.desktopservices DSDontWriteNetworkStores 2>&1)
+    ds=$(defaults read /Library/Preferences/com.apple.desktopservices DSDontWriteNetworkStores)
 	if [[ $ds == "1" ]]; then
         echo "pass"
     else

@@ -4,6 +4,22 @@
 # -pf = Pass Fail
 # -w = Write (changes the settings)
 
+################################################################################################################
+# Notes:
+#    2>&1 redirect doesn't work in Xcode Debug mode. But works in final Released app.
+#    -a,-d,-pf  must be run as the USER.
+#   -w          must always be run as ROOT.
+#
+#   If need to drop from root, the user of root/sudo:
+#    macUUID=`ioreg -rd1 -c IOPlatformExpertDevice | grep -i "UUID" | cut -c27-62`
+#    if [[ $SUDO_USER != "" ]]; then
+#        userOfAdminPriv=$SUDO_USER  # sudo
+#    else
+#        userOfAdminPriv=$USER  # AppleScript 'with administrator privileges'
+#    fi
+#    sudo -u $userOfAdminPriv defaults write ...
+#
+################################################################################################################
 if [ "$1" != "-a" ] && [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
     echo "Usage: $0 [-a | -d [en|tr|ru] | -pf | -w]"
     exit 1
