@@ -16,11 +16,29 @@ class FixSecuritySettingsVC: NSViewController {
     @IBOutlet weak var settingsStackView: NSStackView!
     @IBOutlet weak var fixAllBtn: NSButton!
     
-    override func viewDidAppear() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Change current directory to script's dir for rest of App's lifetime
+        changeCurrentDirToScriptsDir()
+        
+        // Find all scripts/settings we need to query
+        setupScriptsToQueryArray()
+        
+        // Output Timestamp
+        let d = Date()
+        let df = DateFormatter()
+        df.dateFormat = "y-MM-dd HH:mm:ss"
+        let timestamp = df.string(from: d)
+        printLog(str: "=====================")
+        printLog(str: "[" + timestamp + "]")
+        printLog(str: "=====================")
+        
         // Make sure user's OS is Mountain Lion or higher. Mountain Lion (10.8.x) [12.x.x]. If not, tell user & Quit App.
         let minReqOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 8, patchVersion: 0)
         let userOsVer = ProcessInfo().operatingSystemVersion
         if !ProcessInfo().isOperatingSystemAtLeast(minReqOsVer) {
+            printLog(str: "OS Version is TOO OLD: \(userOsVer)")
             _ = osVerTooOldAlert(userOsVer: userOsVer)
             NSApplication.shared().terminate(self)  // Quit App no matter what.
         }
@@ -29,13 +47,13 @@ class FixSecuritySettingsVC: NSViewController {
         let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
         let appVersion = Bundle.main.infoDictionary![kCFBundleVersionKey as String] as! String
         self.view.window?.title = "\(appName) (v\(appVersion))"
-
-        // Bring window to front of all other windows, right now (including Xcode)
+        
+        // Bring window to front of all other windows, right now (including Xcode) [can't do in viewDidLoad, and viewWillAppear() is called after minimizing and restoring window.]
         //NSApp.activate(ignoringOtherApps: true)  // Doesn't seem to bring to front when loading...
         //NSApplication.shared().activate(ignoringOtherApps: true)
         //self.view.window?.level = Int(CGWindowLevelForKey(.floatingWindow))
         //self.view.window?.level = Int(CGWindowLevelForKey(.maximumWindow))  // But this even puts it over the dialog box!
-        self.view.window?.level = Int(CGWindowLevelForKey(.floatingWindow))  // This forces window to ALWAYS be on top, even if don't want
+        //self.view.window?.level = Int(CGWindowLevelForKey(.floatingWindow))  // This forces window to ALWAYS be on top, even if don't want
         
         // Build the list of Security Settings for the Main GUI
         for scriptToQuery in scriptsToQuery {
@@ -66,7 +84,7 @@ class FixSecuritySettingsVC: NSViewController {
                 // Add our entryStackView to the settingsStackView
                 settingsStackView.addView(entryStackView, in: NSStackViewGravity.top)
                 
-                // Force window update, so we can see it doing something
+                // Force window update, so we can see it doing something [can't do this in viewDidLoad]
                 //self.view.window?.update()
                 //NSApplication.shared().updateWindows()
             }
@@ -80,23 +98,8 @@ class FixSecuritySettingsVC: NSViewController {
         langSelectionButtonsAlert()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Change current directory to script's dir for rest of App's lifetime
-        changeCurrentDirToScriptsDir()
-        
-        // Find all scripts/settings we need to query
-        setupScriptsToQueryArray()
-        
-        // Output Timestamp
-        let d = Date()
-        let df = DateFormatter()
-        df.dateFormat = "y-MM-dd HH:mm:ss"
-        let timestamp = df.string(from: d)
-        printLog(str: "=====================")
-        printLog(str: "[" + timestamp + "]")
-        printLog(str: "=====================")
+    @IBAction func quitBtnClicked(_ sender: NSButton) {
+        NSApplication.shared().terminate(self)
     }
     
     func getImgNameFor(pfString: String) -> String {
@@ -236,7 +239,12 @@ class FixSecuritySettingsVC: NSViewController {
     func langSelectionButtonsAlert() {
 
         var currLangPretty = ""
-        switch getCurrLangIso() {
+        var currLangIso = getCurrLangIso()
+        
+        // Chop off everything except 1st two characters
+        currLangIso = currLangIso.substring(to: currLangIso.index(currLangIso.startIndex, offsetBy: 2))
+        
+        switch currLangIso {
         case "en":
             currLangPretty = "English"
         case "tr":
@@ -244,7 +252,7 @@ class FixSecuritySettingsVC: NSViewController {
         case "ru":
             currLangPretty = "Русский"
         default:
-            currLangPretty = getCurrLangIso()
+            currLangPretty = currLangIso
         }
 
         let alert: NSAlert = NSAlert()
@@ -258,19 +266,19 @@ class FixSecuritySettingsVC: NSViewController {
         // Note on res: 1000 => 1st button (on far right), 1001 => 2nd button, 1002 => 3rd, etc
         switch res {
         case 1000:  // English
-            if getCurrLangIso() != "en" {
+            if currLangIso != "en" {
                 UserDefaults.standard.setValue(["en"], forKey: "AppleLanguages")
                 UserDefaults.standard.synchronize()
                 NSApplication.shared().terminate(self)
             }
         case 1001:  // Turkish
-            if getCurrLangIso() != "tr" {
+            if currLangIso != "tr" {
                 UserDefaults.standard.setValue(["tr"], forKey: "AppleLanguages")
                 UserDefaults.standard.synchronize()
                 NSApplication.shared().terminate(self)
             }
         case 1002:  // Russian
-            if getCurrLangIso() != "ru" {
+            if currLangIso != "ru" {
                 UserDefaults.standard.setValue(["ru"], forKey: "AppleLanguages")
                 UserDefaults.standard.synchronize()
                 NSApplication.shared().terminate(self)
