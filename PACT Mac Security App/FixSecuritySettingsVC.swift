@@ -14,10 +14,21 @@ class FixSecuritySettingsVC: NSViewController {
     var scriptsToQuery = Array<String>()
     
     @IBOutlet weak var settingsStackView: NSStackView!
+    @IBOutlet weak var quitBtn: NSButton!
     @IBOutlet weak var fixAllBtn: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Delay a bit, THEN initEverything, so we can see the animation in the GUI.
+        // Also makes it so Winodw is ALWAYS on top of other apps when starting the app.
+        let deadlineTime = DispatchTime.now() + 0.5
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.initEverything()
+        }
+    }
+    
+    func initEverything() {
         
         // Change current directory to script's dir for rest of App's lifetime
         changeCurrentDirToScriptsDir()
@@ -90,12 +101,20 @@ class FixSecuritySettingsVC: NSViewController {
             }
         }
         
+        
+        
         // Update all Status Images & FixIt Button visibilities.
         updateAllStatusImagesAndFixItBtns()
         
+        // Re-center the window on the screen
+        self.view.window?.center()
         
         // Ask user their language preference
         langSelectionButtonsAlert()
+        
+        // Focus: Quit Button (spacebar), FixAll Button (Return key)
+        self.view.window?.makeFirstResponder(quitBtn)
+        fixAllBtn.keyEquivalent = "\r"
     }
     
     @IBAction func quitBtnClicked(_ sender: NSButton) {
