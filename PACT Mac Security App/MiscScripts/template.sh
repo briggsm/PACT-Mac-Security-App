@@ -1,14 +1,13 @@
 #!/bin/sh
-# -a = OS Version check
-# -d = Discription
+# -d = Description (returns "" if setting not applicable given user's OS Version )
 # -pf = Pass Fail
 # -w = Write (changes the settings)
 
 ################################################################################################################
 # Notes:
 #    2>&1 redirect doesn't work in Xcode Debug mode. But works in final Released app.
-#    -a,-d,-pf  must be run as the USER.
-#   -w          must always be run as ROOT.
+#    -d,-pf  must be run/called as the USER.
+#    -w      must always be run/called as ROOT.
 #
 #  Note: when called from command-line prepended with "sudo":
 #    $USER ==> root
@@ -32,21 +31,16 @@
 #  if [[ ${osvers} -ge 16 ]]; then ...
 #
 ################################################################################################################
-if [ "$1" != "-a" ] && [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
-    echo "Usage: $0 [-a | -d [en|tr|ru] | -pf | -w]"
+if [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
+    echo "Usage: $0 [-d [en|tr|ru] | -pf | -w]"
     exit 1
-fi
-
-if [ "$1" == "-a" ]; then
-    # -a => Applicable given user's OS Version.
-	# Must echo only "true" or "false". *Nothing* else!
-    echo "true"
-    exit 0
 fi
 
 if [ "$1" == "-d" ]; then
 	# -d => This Security Setting's Description (will show up as the line-item in the GUI)
-	# Turkish
+    # Note: if this setting is N/A given user's OS Version, return "" (empty string)
+
+    # Turkish
 	if [ "$2" == "tr" ]; then
 		echo "[tr]Security Setting Description"
 		exit 0

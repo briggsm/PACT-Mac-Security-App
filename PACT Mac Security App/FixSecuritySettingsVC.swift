@@ -39,16 +39,13 @@ class FixSecuritySettingsVC: NSViewController {
         
         // Build the list of Security Settings for the Main GUI
         for scriptToQuery in scriptsToQuery {
-            
-            let aTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-a"])  // -a => Applicable given user's OS Version.
-            if aTaskOutput == "true" {
-                
+            let dTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-d", getCurrLangIso()])  // -d => Get Description, Note: getCurrLangIso returns "en" or "tr" or "ru"
+            if dTaskOutput != "" {
                 // Setup Status Image
                 let statusImgView = NSImageView(image: NSImage(named: "greyQM")!)
                 statusImgView.identifier = scriptToQuery
                 
                 // Setup Setting Description Label
-                let dTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-d", getCurrLangIso()])  // -d => Get Description, getCurrLangIso returns "en" or "tr" or "ru"
                 let settingDescLabel = NSTextField(labelWithString: dTaskOutput)
                 
                 // Setup FixIt Button
@@ -100,8 +97,6 @@ class FixSecuritySettingsVC: NSViewController {
         printLog(str: "=====================")
         printLog(str: "[" + timestamp + "]")
         printLog(str: "=====================")
-        
-        
     }
     
     func getImgNameFor(pfString: String) -> String {
@@ -342,7 +337,7 @@ class FixSecuritySettingsVC: NSViewController {
             printLog(str: "\n  Unable to locate: Scripts/runWs.sh!")
             return
         }
-        printLog(str: "runWsPath: \(runWsPath)")
+        //printLog(str: "runWsPath: \(runWsPath)")
         
         scriptsDirPath = String(runWsPath.characters.dropLast(8))  // drop off: "runWs.sh"
         if FileManager.default.changeCurrentDirectoryPath(scriptsDirPath) {
@@ -361,7 +356,7 @@ class FixSecuritySettingsVC: NSViewController {
                 scriptsDirContents.remove(at: index)
             }
             
-            printLog(str: "scriptsDirContents: \(scriptsDirContents.description)")
+            //printLog(str: "scriptsDirContents: \(scriptsDirContents.description)")
 
             scriptsToQuery = scriptsDirContents
         } catch {
