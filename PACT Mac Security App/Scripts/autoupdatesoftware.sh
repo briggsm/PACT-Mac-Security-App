@@ -8,13 +8,13 @@ fi
 if [ "$1" == "-d" ]; then
 	# Turkish
 	if [ "$2" == "tr" ]; then
-		echo "[tr]Software Update Enabled"
+		echo "Yazılım güncelleştirmesi etkin"
 		exit 0
 	fi
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "[ru]Software Update Enabled"
+		echo "Обновление программ включено"
 		exit 0
 	fi
 	

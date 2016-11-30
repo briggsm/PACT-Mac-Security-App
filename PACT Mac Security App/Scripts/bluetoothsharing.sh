@@ -8,13 +8,13 @@ fi
 if [ "$1" == "-d" ]; then
 	# Turkish
 	if [ "$2" == "tr" ]; then
-		echo "[tr]Bluetooth Sharing Disabled"
+		echo "Bluetooth paylaşımı kapalı"
 		exit 0
 	fi
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "[ru]Bluetooth Sharing Disabled"
+		echo "Общий доступ по блютуз выключен"
 		exit 0
 	fi
 	

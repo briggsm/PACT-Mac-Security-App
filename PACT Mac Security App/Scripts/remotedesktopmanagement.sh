@@ -8,13 +8,13 @@ fi
 if [ "$1" == "-d" ]; then
 	# Turkish
 	if [ "$2" == "tr" ]; then
-		echo "[tr]Remote Management Disabled"
+		echo "Uzaktan yönetim kapalıd"
 		exit 0
 	fi
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "[ru]Remote Management Disabled"
+		echo "Удаленное управление отключено"
 		exit 0
 	fi
 	

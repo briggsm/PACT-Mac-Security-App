@@ -8,13 +8,13 @@ fi
 if [ "$1" == "-d" ]; then
 	# Turkish
 	if [ "$2" == "tr" ]; then
-		echo "[tr]Network Guest Shared Disabled"
+		echo "Ziyaretçi Ağ paylaşımı kapalı"
 		exit 0
 	fi
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "[ru]Network Guest Shared Disabled"
+		echo "Общий доступ для гостей отключен"
 		exit 0
 	fi
 	
