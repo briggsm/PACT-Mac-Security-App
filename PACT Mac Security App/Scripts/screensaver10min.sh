@@ -8,13 +8,13 @@ fi
 if [ "$1" == "-d" ]; then
 	# Turkish
 	if [ "$2" == "tr" ]; then
-		echo "[tr]Screensaver is set to activate after 10 minutes of inactivity"
+		echo "Ekran koruyucu , 10 dakika boyunca işlem yapılmadığında etkinleştirilecek"
 		exit 0
 	fi
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "[ru]Screensaver is set to activate after 10 minutes of inactivity"
+		echo "Заставка будет включена через 10 минут отсутствия активности"
 		exit 0
 	fi
 	

@@ -8,13 +8,13 @@ fi
 if [ "$1" == "-d" ]; then
 	# Turkish
 	if [ "$2" == "tr" ]; then
-		echo "[tr]Network .DS_Store Disabled"
+		echo ".DS_Store Ağı kapalı"
 		exit 0
 	fi
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "[ru]Network .DS_Store Disabled"
+		echo "Сеть .DS_Store отключена"
 		exit 0
 	fi
 	

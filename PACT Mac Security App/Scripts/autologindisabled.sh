@@ -8,13 +8,13 @@ fi
 if [ "$1" == "-d" ]; then
 	# Turkish
 	if [ "$2" == "tr" ]; then
-		echo "[tr]Auto Login Disabled"
+		echo "Otomatik oturum devre dışı"
 		exit 0
 	fi
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "[ru]Auto Login Disabled"
+		echo "Автоматический вход отключен"
 		exit 0
 	fi
 	

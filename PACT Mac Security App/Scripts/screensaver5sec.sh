@@ -8,13 +8,13 @@ fi
 if [ "$1" == "-d" ]; then
 	# Turkish
     if [ "$2" == "tr" ]; then
-		echo "[tr]Require password 5 seconds or less after sleep or screensaver is activated"
+		echo "Ekran koruyucu veya uyku modu aktif olduğunda 5 sn içinde şifresiz girebilirsiniz"
 		exit 0
 	fi
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "[ru]Require password 5 seconds or less after sleep or screensaver is activated"
+		echo "Требовать пароль через 5 секунд после включения заставки или спящего режима"
 		exit 0
 	fi
 	
