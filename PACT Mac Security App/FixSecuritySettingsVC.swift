@@ -17,8 +17,27 @@ class FixSecuritySettingsVC: NSViewController {
     @IBOutlet weak var quitBtn: NSButton!
     @IBOutlet weak var fixAllBtn: NSButton!
     
+    override func loadView() {
+        // Adding this function so older OS's (eg <=10.9) can still call our viewDidLoad() function
+        // Seems this function is called for older OS's (eg 10.9) and newer ones as well (eg. 10.12)
+        printLog(str: "--- loadView() called ----")
+        super.loadView()
+        
+        if floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_9) {  // Is this check even necessary? Shouldn't hurt though.
+            printLog(str: "--- calling self.viewDidLoad() from loadView() ----")
+            self.viewDidLoad() // call viewDidLoad (added in 10.10)
+        }
+    }
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
+        printLog(str: "viewDidLoad() function")
+        if #available(OSX 10.10, *) {
+            printLog(str: "  super.viewDidLoad()")
+            super.viewDidLoad()
+        } else {
+            printLog(str: "  NOT calling super.viewDidLoad() [because 10.9 or lower is being used.")
+            // No need to do anything here because 10.9 and older will have went through the loadView() function & that calls super.loadView()
+        }
         
         // Delay a bit, THEN initEverything, so we can see the animation in the GUI.
         // Also makes it so Winodw is ALWAYS on top of other apps when starting the app.
@@ -45,13 +64,13 @@ class FixSecuritySettingsVC: NSViewController {
         printLog(str: "[" + timestamp + "]")
         printLog(str: "=====================")
         
-        // Make sure user's OS is Mountain Lion or higher. Mountain Lion (10.8.x) [12.x.x]. If not, tell user & Quit App.
-        let minReqOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 8, patchVersion: 0)
-        let userOsVer = ProcessInfo().operatingSystemVersion
-        if !ProcessInfo().isOperatingSystemAtLeast(minReqOsVer) {
-            printLog(str: "OS Version is TOO OLD: \(userOsVer)")
-            _ = osVerTooOldAlert(userOsVer: userOsVer)
-            NSApplication.shared().terminate(self)  // Quit App no matter what.
+        // Make sure user's OS is Mavericks or higher. Mavericks (10.9.x) [13.x.x]. If not, tell user & Quit App.
+        let minReqOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 9, patchVersion: 0)  // Mavericks
+        let userOsVer = getUserOsVersion()
+        if userOsVer.majorVersion < minReqOsVer.majorVersion {
+            alertTooOldAndQuit(userOsVer: userOsVer)
+        } else if (userOsVer.majorVersion == minReqOsVer.majorVersion) && (userOsVer.minorVersion < minReqOsVer.minorVersion) {
+            alertTooOldAndQuit(userOsVer: userOsVer)
         }
         
         // Add (Version Number) to title of Main GUI's Window
@@ -59,33 +78,54 @@ class FixSecuritySettingsVC: NSViewController {
         let appVersion = Bundle.main.infoDictionary![kCFBundleVersionKey as String] as! String
         self.view.window?.title = "\(appName) (v\(appVersion))"
         
-        // Bring window to front of all other windows, right now (including Xcode) [can't do in viewDidLoad, and viewWillAppear() is called after minimizing and restoring window.]
-        //NSApp.activate(ignoringOtherApps: true)  // Doesn't seem to bring to front when loading...
-        //NSApplication.shared().activate(ignoringOtherApps: true)
-        //self.view.window?.level = Int(CGWindowLevelForKey(.floatingWindow))
-        //self.view.window?.level = Int(CGWindowLevelForKey(.maximumWindow))  // But this even puts it over the dialog box!
-        //self.view.window?.level = Int(CGWindowLevelForKey(.floatingWindow))  // This forces window to ALWAYS be on top, even if don't want
-        
         // Build the list of Security Settings for the Main GUI
         for scriptToQuery in scriptsToQuery {
             let dTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-d", getCurrLangIso()])  // -d => Get Description, Note: getCurrLangIso returns "en" or "tr" or "ru"
             if dTaskOutput != "" {
                 // Setup Status Image
-                let statusImgView = NSImageView(image: NSImage(named: "greyQM")!)
+                var statusImgView:NSImageView
+                if #available(OSX 10.12, *) {
+                    statusImgView = NSImageView(image: NSImage(named: "greyQM")!)
+                } else {
+                    // Fallback on earlier versions
+                    statusImgView = NSImageView()
+                    statusImgView.image = NSImage(named: "greyQM")
+                }
                 statusImgView.identifier = scriptToQuery
                 
                 // Setup Setting Description Label
-                let settingDescLabel = NSTextField(labelWithString: dTaskOutput)
+                var settingDescLabel:NSTextField
+                if #available(OSX 10.12, *) {
+                    settingDescLabel = NSTextField(labelWithString: dTaskOutput)
+                } else {
+                    // Fallback on earlier versions
+                    settingDescLabel = NSTextField()
+                    settingDescLabel.stringValue = dTaskOutput
+                    settingDescLabel.isEditable = false
+                    settingDescLabel.isSelectable = false
+                    settingDescLabel.isBezeled = false
+                    settingDescLabel.backgroundColor = NSColor.clear
+                }
                 
                 // Setup FixIt Button
-                let fixItBtn = NSButton(title: NSLocalizedString("Fix It!", comment: "button text"), target: self, action: #selector(fixItBtnClicked))
+                var fixItBtn: NSButton
+                if #available(OSX 10.12, *) {
+                    fixItBtn = NSButton(title: NSLocalizedString("Fix It!", comment: "button text"), target: self, action: #selector(fixItBtnClicked))
+                } else {
+                    // Fallback on earlier versions
+                    fixItBtn = NSButton()
+                    fixItBtn.title = NSLocalizedString("Fix It!", comment: "button text")
+                    fixItBtn.target = self
+                    fixItBtn.action = #selector(fixItBtnClicked)
+                    fixItBtn.bezelStyle = NSBezelStyle.rounded
+                    fixItBtn.font = NSFont.systemFont(ofSize: 13.0)
+                }
                 fixItBtn.identifier = scriptToQuery
                 
                 // Create StackView
                 let entryStackView = NSStackView()  // Default is Horizontal
                 entryStackView.alignment = .centerY
                 entryStackView.spacing = 10
-                entryStackView.distribution = .gravityAreas
                 
                 // Add Image, Label, and Button to StackView
                 entryStackView.addView(statusImgView, in: .leading)
@@ -94,14 +134,8 @@ class FixSecuritySettingsVC: NSViewController {
                 
                 // Add our entryStackView to the settingsStackView
                 settingsStackView.addView(entryStackView, in: NSStackViewGravity.top)
-                
-                // Force window update, so we can see it doing something [can't do this in viewDidLoad]
-                //self.view.window?.update()
-                //NSApplication.shared().updateWindows()
             }
         }
-        
-        
         
         // Update all Status Images & FixIt Button visibilities.
         updateAllStatusImagesAndFixItBtns()
@@ -308,11 +342,17 @@ class FixSecuritySettingsVC: NSViewController {
         }
     }
     
+    func alertTooOldAndQuit(userOsVer: OperatingSystemVersion) {
+        printLog(str: "OS Version is TOO OLD: \(userOsVer)")
+        _ = osVerTooOldAlert(userOsVer: userOsVer)
+        NSApplication.shared().terminate(self)  // Quit App no matter what.
+    }
+    
     func osVerTooOldAlert(userOsVer: OperatingSystemVersion) -> Bool {
         let alert: NSAlert = NSAlert()
 
         alert.messageText = NSLocalizedString("Operating System Outdated", comment: "os outdated")
-        alert.informativeText = String.localizedStringWithFormat(NSLocalizedString("Your operating system is too old. It must first be updated to AT LEAST Mountain Lion (10.8) before this app will run. Your OS Version is: [%d.%d.%d]", comment: "os too old message"), userOsVer.majorVersion, userOsVer.minorVersion, userOsVer.patchVersion)
+        alert.informativeText = String.localizedStringWithFormat(NSLocalizedString("Your operating system is too old. It must first be updated to AT LEAST Mavericks (10.9) before this app will run. Your OS Version is: [%d.%d.%d]", comment: "os too old message"), userOsVer.majorVersion, userOsVer.minorVersion, userOsVer.patchVersion)
         
         alert.alertStyle = NSAlertStyle.informational
         alert.addButton(withTitle: NSLocalizedString("Quit", comment: ""))
@@ -325,7 +365,7 @@ class FixSecuritySettingsVC: NSViewController {
 
     func printLog(str: String, terminator: String) {
     
-        // First tidy-up string a bit
+        // First tidy-up str a bit
         var prettyStr = str.replacingOccurrences(of: "\r\n", with: "\n") // just incase
         prettyStr = prettyStr.replacingOccurrences(of: "\r", with: "\n") // becasue AppleScript returns line endings with '\r'
         
@@ -361,7 +401,6 @@ class FixSecuritySettingsVC: NSViewController {
             printLog(str: "\n  Unable to locate: Scripts/runWs.sh!")
             return
         }
-        //printLog(str: "runWsPath: \(runWsPath)")
         
         scriptsDirPath = String(runWsPath.characters.dropLast(8))  // drop off: "runWs.sh"
         if FileManager.default.changeCurrentDirectoryPath(scriptsDirPath) {
@@ -379,13 +418,34 @@ class FixSecuritySettingsVC: NSViewController {
             if let index = scriptsDirContents.index(of: "runWs.sh") {
                 scriptsDirContents.remove(at: index)
             }
-            
-            //printLog(str: "scriptsDirContents: \(scriptsDirContents.description)")
 
             scriptsToQuery = scriptsDirContents
         } catch {
             printLog(str: "Cannot get contents of Scripts dir: \(scriptsDirPath)")
-            //scriptsToQuery = [""]
         }
+    }
+    
+    func getUserOsVersion() -> OperatingSystemVersion {
+        var userOsVer:OperatingSystemVersion
+        if #available(OSX 10.10, *) {
+            userOsVer = ProcessInfo().operatingSystemVersion
+        } else {
+            // Fallback on earlier versions
+            if (floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_6)) {
+                //10.6.x or earlier systems
+                userOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 6, patchVersion: 0)
+            } else if (floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_7)) {
+                userOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 7, patchVersion: 0)
+            } else if (floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_8)) {
+                userOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 8, patchVersion: 0)
+            } else if (floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_9)) {
+                userOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 9, patchVersion: 0)
+            } else {
+                // Should never get here, but just in case
+                userOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 0, patchVersion: 0)
+            }
+        }
+        
+        return userOsVer
     }
 }

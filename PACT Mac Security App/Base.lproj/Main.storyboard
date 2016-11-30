@@ -105,7 +105,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="737" height="149"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="68v-8R-oZq">
+                            <stackView orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="68v-8R-oZq">
                                 <rect key="frame" x="20" y="61" width="697" height="43"/>
                             </stackView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bao-Ig-ics">
@@ -113,7 +113,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="U8Q-v1-wxa"/>
                                 </constraints>
-                                <buttonCell key="cell" type="push" title="Fix All" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fD8-jE-8Xg">
+                                <buttonCell key="cell" type="push" title="Fix All" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="fD8-jE-8Xg">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>

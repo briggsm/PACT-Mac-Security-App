@@ -70,13 +70,13 @@
 		470942FA1DD5E87A0099BDA6 /* Security-Fixer-Upper */ = {
 			isa = PBXGroup;
 			children = (
+				470943011DD5E87A0099BDA6 /* Main.storyboard */,
 				474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */,
 				47692E8E1DEC578100FA9281 /* Scripts */,
 				47F08A0B1DE4543900171D0D /* InfoPlist.strings */,
 				47F08A051DE4543800171D0D /* Localizable.strings */,
 				470942FB1DD5E87A0099BDA6 /* AppDelegate.swift */,
 				470942FF1DD5E87A0099BDA6 /* Assets.xcassets */,
-				470943011DD5E87A0099BDA6 /* Main.storyboard */,
 				47F089D31DDCAA1300171D0D /* Misc Scripts */,
 				470943041DD5E87A0099BDA6 /* Info.plist */,
 				479DC7C71DEA19BA005A488A /* log.txt */,
@@ -254,7 +254,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -297,7 +297,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -312,6 +312,7 @@
 				DEVELOPMENT_TEAM = FQ6JHNT6KD;
 				INFOPLIST_FILE = "PACT Mac Security App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "briggs-inc.security-fixer-upper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -326,6 +327,7 @@
 				DEVELOPMENT_TEAM = FQ6JHNT6KD;
 				INFOPLIST_FILE = "PACT Mac Security App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "briggs-inc.security-fixer-upper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
