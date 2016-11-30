@@ -14,7 +14,7 @@ if [ "$1" == "-d" ]; then
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "Gizlilik modunu etkinleştir"
+		echo "Включен режим невидимки"
 		exit 0
 	fi
 	
