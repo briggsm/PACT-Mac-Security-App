@@ -12,7 +12,6 @@
 		470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 470943011DD5E87A0099BDA6 /* Main.storyboard */; };
 		474663E11DDA3F06007FAC94 /* FixSecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */; };
 		47692E8F1DEC578100FA9281 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 47692E8E1DEC578100FA9281 /* Scripts */; };
-		479DC7C81DEA19BA005A488A /* log.txt in Resources */ = {isa = PBXBuildFile; fileRef = 479DC7C71DEA19BA005A488A /* log.txt */; };
 		47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */; };
 		47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */; };
 		47F089D51DDD5F9900171D0D /* template.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D41DDD5F9900171D0D /* template.sh */; };
@@ -28,7 +27,6 @@
 		470943041DD5E87A0099BDA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixSecuritySettingsVC.swift; sourceTree = "<group>"; };
 		47692E8E1DEC578100FA9281 /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
-		479DC7C71DEA19BA005A488A /* log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = log.txt; sourceTree = "<group>"; };
 		47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = restoreMarksOrigSettings.sh; sourceTree = "<group>"; };
 		47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = viewCurrentSettings.sh; sourceTree = "<group>"; };
 		47F089D41DDD5F9900171D0D /* template.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = template.sh; sourceTree = "<group>"; };
@@ -79,7 +77,6 @@
 				470942FF1DD5E87A0099BDA6 /* Assets.xcassets */,
 				47F089D31DDCAA1300171D0D /* Misc Scripts */,
 				470943041DD5E87A0099BDA6 /* Info.plist */,
-				479DC7C71DEA19BA005A488A /* log.txt */,
 			);
 			name = "Security-Fixer-Upper";
 			path = "PACT Mac Security App";
@@ -163,7 +160,6 @@
 				47F08A031DE4543800171D0D /* Localizable.strings in Resources */,
 				470943001DD5E87A0099BDA6 /* Assets.xcassets in Resources */,
 				47F08A091DE4543900171D0D /* InfoPlist.strings in Resources */,
-				479DC7C81DEA19BA005A488A /* log.txt in Resources */,
 				470943031DD5E87A0099BDA6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
