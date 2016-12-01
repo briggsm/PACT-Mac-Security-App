@@ -14,7 +14,7 @@ if [ "$1" == "-d" ]; then
 	
 	# Russian
 	if [ "$2" == "ru" ]; then
-		echo "Güvenlik duvarı etkin"
+		echo "Файерволл включен"
 		exit 0
 	fi
 	
