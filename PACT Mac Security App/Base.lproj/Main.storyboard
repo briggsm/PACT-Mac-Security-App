@@ -102,11 +102,11 @@
             <objects>
                 <viewController id="vC9-ws-6Xh" customClass="FixSecuritySettingsVC" customModule="Security_Fixer_Upper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ck1-hd-8x5">
-                        <rect key="frame" x="0.0" y="0.0" width="737" height="149"/>
+                        <rect key="frame" x="0.0" y="0.0" width="737" height="150"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="68v-8R-oZq">
-                                <rect key="frame" x="20" y="61" width="697" height="43"/>
+                                <rect key="frame" x="20" y="61" width="697" height="44"/>
                             </stackView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bao-Ig-ics">
                                 <rect key="frame" x="647" y="13" width="76" height="32"/>
@@ -122,7 +122,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iAZ-9e-uMI">
-                                <rect key="frame" x="18" y="110" width="701" height="19"/>
+                                <rect key="frame" x="18" y="111" width="701" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="19" id="oWe-z9-Azn"/>
                                 </constraints>
@@ -168,7 +168,7 @@
                 </viewController>
                 <customObject id="Us0-Cl-n4M" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="810.5" y="298.5"/>
+            <point key="canvasLocation" x="806" y="278"/>
         </scene>
     </scenes>
 </document>

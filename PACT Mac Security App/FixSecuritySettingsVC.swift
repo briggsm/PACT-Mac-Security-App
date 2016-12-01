@@ -20,17 +20,27 @@ class FixSecuritySettingsVC: NSViewController {
     override func loadView() {
         // Adding this function so older OS's (eg <=10.9) can still call our viewDidLoad() function
         // Seems this function is called for older OS's (eg 10.9) and newer ones as well (eg. 10.12)
-        printLog(str: "--- loadView() called ----")
+        
+        // Output Timestamp
+        let d = Date()
+        let df = DateFormatter()
+        df.dateFormat = "y-MM-dd HH:mm:ss"
+        let timestamp = df.string(from: d)
+        printLog(str: "=====================")
+        printLog(str: "[" + timestamp + "]")
+        printLog(str: "=====================")
+
+        printLog(str: "loadView()")
         super.loadView()
         
-        if floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_9) {  // Is this check even necessary? Shouldn't hurt though.
-            printLog(str: "--- calling self.viewDidLoad() from loadView() ----")
+        if floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_9) {  // This check is necessary, because even in 10.12 loadView() is called.
+            printLog(str: "  calling self.viewDidLoad() from loadView()")
             self.viewDidLoad() // call viewDidLoad (added in 10.10)
         }
     }
     
     override func viewDidLoad() {
-        printLog(str: "viewDidLoad() function")
+        printLog(str: "viewDidLoad()")
         if #available(OSX 10.10, *) {
             printLog(str: "  super.viewDidLoad()")
             super.viewDidLoad()
@@ -55,14 +65,8 @@ class FixSecuritySettingsVC: NSViewController {
         // Find all scripts/settings we need to query
         setupScriptsToQueryArray()
         
-        // Output Timestamp
-        let d = Date()
-        let df = DateFormatter()
-        df.dateFormat = "y-MM-dd HH:mm:ss"
-        let timestamp = df.string(from: d)
-        printLog(str: "=====================")
-        printLog(str: "[" + timestamp + "]")
-        printLog(str: "=====================")
+        // Re-center the window on the screen
+        self.view.window?.center()
         
         // Make sure user's OS is Mavericks or higher. Mavericks (10.9.x) [13.x.x]. If not, tell user & Quit App.
         let minReqOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 9, patchVersion: 0)  // Mavericks
@@ -90,6 +94,7 @@ class FixSecuritySettingsVC: NSViewController {
                     // Fallback on earlier versions
                     statusImgView = NSImageView()
                     statusImgView.image = NSImage(named: "greyQM")
+                    statusImgView.translatesAutoresizingMaskIntoConstraints = false  // NSStackView bug for 10.9 & 10.10
                 }
                 statusImgView.identifier = scriptToQuery
                 
@@ -105,6 +110,7 @@ class FixSecuritySettingsVC: NSViewController {
                     settingDescLabel.isSelectable = false
                     settingDescLabel.isBezeled = false
                     settingDescLabel.backgroundColor = NSColor.clear
+                    settingDescLabel.translatesAutoresizingMaskIntoConstraints = false  // NSStackView bug for 10.9 & 10.10
                 }
                 
                 // Setup FixIt Button
@@ -119,6 +125,7 @@ class FixSecuritySettingsVC: NSViewController {
                     fixItBtn.action = #selector(fixItBtnClicked)
                     fixItBtn.bezelStyle = NSBezelStyle.rounded
                     fixItBtn.font = NSFont.systemFont(ofSize: 13.0)
+                    fixItBtn.translatesAutoresizingMaskIntoConstraints = false  // NSStackView bug for 10.9 & 10.10
                 }
                 fixItBtn.identifier = scriptToQuery
                 
@@ -126,6 +133,7 @@ class FixSecuritySettingsVC: NSViewController {
                 let entryStackView = NSStackView()  // Default is Horizontal
                 entryStackView.alignment = .centerY
                 entryStackView.spacing = 10
+                entryStackView.translatesAutoresizingMaskIntoConstraints = false  // NSStackView bug for 10.9 & 10.10
                 
                 // Add Image, Label, and Button to StackView
                 entryStackView.addView(statusImgView, in: .leading)
@@ -134,14 +142,14 @@ class FixSecuritySettingsVC: NSViewController {
                 
                 // Add our entryStackView to the settingsStackView
                 settingsStackView.addView(entryStackView, in: NSStackViewGravity.top)
+                
+                // Re-center the window on the screen
+                self.view.window?.center()
             }
         }
         
         // Update all Status Images & FixIt Button visibilities.
         updateAllStatusImagesAndFixItBtns()
-        
-        // Re-center the window on the screen
-        self.view.window?.center()
         
         // Ask user their language preference
         langSelectionButtonsAlert()
