@@ -68,15 +68,6 @@ class FixSecuritySettingsVC: NSViewController {
         // Re-center the window on the screen
         self.view.window?.center()
         
-        // Make sure user's OS is Mavericks or higher. Mavericks (10.9.x) [13.x.x]. If not, tell user & Quit App.
-        let minReqOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 9, patchVersion: 0)  // Mavericks
-        let userOsVer = getUserOsVersion()
-        if userOsVer.majorVersion < minReqOsVer.majorVersion {
-            alertTooOldAndQuit(userOsVer: userOsVer)
-        } else if (userOsVer.majorVersion == minReqOsVer.majorVersion) && (userOsVer.minorVersion < minReqOsVer.minorVersion) {
-            alertTooOldAndQuit(userOsVer: userOsVer)
-        }
-        
         // Add (Version Number) to title of Main GUI's Window
         let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
         let appVersion = Bundle.main.infoDictionary![kCFBundleVersionKey as String] as! String
@@ -129,7 +120,7 @@ class FixSecuritySettingsVC: NSViewController {
                 }
                 fixItBtn.identifier = scriptToQuery
                 
-                // Create StackView
+                // Create Entry StackView
                 let entryStackView = NSStackView()  // Default is Horizontal
                 entryStackView.alignment = .centerY
                 entryStackView.spacing = 10
@@ -360,7 +351,7 @@ class FixSecuritySettingsVC: NSViewController {
         let alert: NSAlert = NSAlert()
 
         alert.messageText = NSLocalizedString("Operating System Outdated", comment: "os outdated")
-        alert.informativeText = String.localizedStringWithFormat(NSLocalizedString("Your operating system is too old. It must first be updated to AT LEAST Mavericks (10.9) before this app will run. Your OS Version is: [%d.%d.%d]", comment: "os too old message"), userOsVer.majorVersion, userOsVer.minorVersion, userOsVer.patchVersion)
+        alert.informativeText = String.localizedStringWithFormat(NSLocalizedString("Your operating system is too old. It must first be updated to AT LEAST Yosemite (10.10) before this app will run. Your OS Version is: [%d.%d.%d]", comment: "os too old message"), userOsVer.majorVersion, userOsVer.minorVersion, userOsVer.patchVersion)
         
         alert.alertStyle = NSAlertStyle.informational
         alert.addButton(withTitle: NSLocalizedString("Quit", comment: ""))
@@ -433,27 +424,4 @@ class FixSecuritySettingsVC: NSViewController {
         }
     }
     
-    func getUserOsVersion() -> OperatingSystemVersion {
-        var userOsVer:OperatingSystemVersion
-        if #available(OSX 10.10, *) {
-            userOsVer = ProcessInfo().operatingSystemVersion
-        } else {
-            // Fallback on earlier versions
-            if (floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_6)) {
-                //10.6.x or earlier systems
-                userOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 6, patchVersion: 0)
-            } else if (floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_7)) {
-                userOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 7, patchVersion: 0)
-            } else if (floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_8)) {
-                userOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 8, patchVersion: 0)
-            } else if (floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_9)) {
-                userOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 9, patchVersion: 0)
-            } else {
-                // Should never get here, but just in case
-                userOsVer = OperatingSystemVersion(majorVersion: 10, minorVersion: 0, patchVersion: 0)
-            }
-        }
-        
-        return userOsVer
-    }
 }
