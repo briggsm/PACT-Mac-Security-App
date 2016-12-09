@@ -143,7 +143,8 @@ class FixSecuritySettingsVC: NSViewController {
         updateAllStatusImagesAndFixItBtns()
         
         // Ask user their language preference
-        langSelectionButtonsAlert()
+        //langSelectionButtonsAlert()
+        performSegue(withIdentifier: "LanguageChooserVC", sender: self)
         
         // Focus: Quit Button (spacebar), FixAll Button (Return key)
         self.view.window?.makeFirstResponder(quitBtn)
@@ -423,5 +424,6 @@ class FixSecuritySettingsVC: NSViewController {
             printLog(str: "Cannot get contents of Scripts dir: \(scriptsDirPath)")
         }
     }
+    
     
 }

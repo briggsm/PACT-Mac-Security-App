@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -97,6 +96,62 @@
             </objects>
             <point key="canvasLocation" x="68" y="233"/>
         </scene>
+        <!--Language-->
+        <scene sceneID="Meh-NO-Cv1">
+            <objects>
+                <viewController title="Language" id="vUI-6Y-SjR" customClass="LanguageChooserVC" customModule="Security_Fixer_Upper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="3fz-nG-E6F">
+                        <rect key="frame" x="0.0" y="0.0" width="181" height="119"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JvO-0h-r94">
+                                <rect key="frame" x="18" y="75" width="146" height="26"/>
+                                <popUpButtonCell key="cell" type="push" title="English" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="0EJ-k9-PsX" id="rZ2-c8-Vyy">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="m9t-Pp-XzP">
+                                        <items>
+                                            <menuItem title="English" state="on" id="0EJ-k9-PsX">
+                                                <accessibility identifier="en"/>
+                                            </menuItem>
+                                            <menuItem title="Türkçe" id="5xh-A5-BXV">
+                                                <accessibility identifier="tr"/>
+                                            </menuItem>
+                                            <menuItem title="Русский" id="APc-5T-ggV">
+                                                <accessibility identifier="ru"/>
+                                            </menuItem>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gqY-0T-gUf">
+                                <rect key="frame" x="67" y="13" width="48" height="32"/>
+                                <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSMenuOnStateTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nse-QI-Vml">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="okBtnClicked:" target="vUI-6Y-SjR" id="fDa-P1-fb0"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="gqY-0T-gUf" firstAttribute="centerX" secondItem="3fz-nG-E6F" secondAttribute="centerX" id="NPi-fm-jT7"/>
+                            <constraint firstItem="JvO-0h-r94" firstAttribute="leading" secondItem="3fz-nG-E6F" secondAttribute="leading" constant="20" id="V1c-oJ-Fct"/>
+                            <constraint firstItem="JvO-0h-r94" firstAttribute="top" secondItem="3fz-nG-E6F" secondAttribute="top" constant="20" id="dcw-2e-bAk"/>
+                            <constraint firstAttribute="trailing" secondItem="JvO-0h-r94" secondAttribute="trailing" constant="20" id="sYC-o0-dIT"/>
+                            <constraint firstAttribute="bottom" secondItem="gqY-0T-gUf" secondAttribute="bottom" constant="20" id="wOa-RX-Zg9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="languagePUBtn" destination="JvO-0h-r94" id="FMG-LV-Qta"/>
+                        <outlet property="okBtn" destination="gqY-0T-gUf" id="9W4-r5-Abd"/>
+                    </connections>
+                </viewController>
+                <customObject id="Pvs-tx-nmV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="527.5" y="35.5"/>
+        </scene>
         <!--Fix Security SettingsVC-->
         <scene sceneID="bZD-k6-uf9">
             <objects>
@@ -164,6 +219,7 @@
                         <outlet property="fixAllBtn" destination="Bao-Ig-ics" id="kmx-5P-Nff"/>
                         <outlet property="quitBtn" destination="sHi-Mh-dHG" id="Iix-rB-I3j"/>
                         <outlet property="settingsStackView" destination="68v-8R-oZq" id="dPz-eX-Vmq"/>
+                        <segue destination="vUI-6Y-SjR" kind="modal" identifier="LanguageChooserVC" id="9wX-S5-PFg"/>
                     </connections>
                 </viewController>
                 <customObject id="Us0-Cl-n4M" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -171,4 +227,7 @@
             <point key="canvasLocation" x="806" y="278"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSMenuOnStateTemplate" width="12" height="12"/>
+    </resources>
 </document>
