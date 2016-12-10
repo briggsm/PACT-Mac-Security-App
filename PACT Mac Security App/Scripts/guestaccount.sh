@@ -1,29 +1,32 @@
 #!/bin/sh
 
-if [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
-    echo "Usage: $0 [-d|-pf|-w]"
+if [ "$1" != "-settingMeta" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
+    echo "Usage: $0 [-settingMeta [en|tr|ru] | -pf | -w]"
     exit 1
 fi
 
-if [ "$1" == "-d" ]; then
-	# Turkish
+if [ "$1" == "-settingMeta" ]; then
+    # Note: format is: (1)||(2)||(3)
+    #   All must be present, even if null!
+    # (1) - App Description (user-friendly name of the App)
+	# (2) - Run -pf as "root" or "user"
+	# (3) - Run -w  as "root" or "user"
+	
+	# Get Localized Description
 	if [ "$2" == "tr" ]; then
-		echo "Ziyaretçi hesabı kapalı"
-		exit 0
-	fi
+        desc="Ziyaretçi hesabı kapalı"
+	elif [ "$2" == "ru" ]; then
+		desc="Гостевой вход отключен"
+	else
+		desc="Guest Account Disabled"
+    fi
 	
-	# Russian
-	if [ "$2" == "ru" ]; then
-		echo "Гостевой вход отключен"
-		exit 0
-	fi
-	
-	# English
-    echo "Guest Account Disabled"
-    exit 0
+	echo "$desc||user||root"
+	exit 0
 fi
 
 if [ "$1" == "-pf" ]; then
+	# Run as "user"
 	ga=$(defaults read /Library/Preferences/com.apple.loginwindow GuestEnabled)
 	if [ $ga == "0" ]; then
         echo "pass"
@@ -34,7 +37,7 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-    # Remember: -w ALWAYS gets run as root!
+    # Run as "root"
 	defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool NO
     /usr/bin/dscl . -mcxdelete /Users/Guest >/dev/null
     exit 0

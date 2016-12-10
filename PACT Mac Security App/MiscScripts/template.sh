@@ -31,30 +31,30 @@
 #  if [[ ${osvers} -ge 16 ]]; then ...
 #
 ################################################################################################################
-if [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
-    echo "Usage: $0 [-d [en|tr|ru] | -pf | -w]"
+if [ "$1" != "-settingMeta" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
+    echo "Usage: $0 [-settingMeta [en|tr|ru] | -pf | -w]"
     exit 1
 fi
 
-if [ "$1" == "-d" ]; then
-	# -d => This Security Setting's Description (will show up as the line-item in the GUI)
-    # Note: if this setting is N/A given user's OS Version, return "" (empty string)
+if [ "$1" == "-settingMeta" ]; then
+    # Note: format is: (1)||(2)||(3)
+    #   All must be present, even if null!
+    # (1) - Setting Description (user-friendly name of the Setting)
+    # (2) - Run -pf as "root" or "user"
+    # (3) - Run -w  as "root" or "user"
+    # Note: if this setting is N/A given user's OS Version, return "" (empty string) for Setting Description
 
-    # Turkish
+    # Get Localized Description
 	if [ "$2" == "tr" ]; then
-		echo "[tr]Security Setting Description"
-		exit 0
+		desc="[tr]Security Setting Description"
+	elif [ "$2" == "ru" ]; then
+		desc="[ru]Security Setting Description"
+    else
+        desc="Security Setting Description"
 	fi
-	
-	# Russian
-	if [ "$2" == "ru" ]; then
-		echo "[ru]Security Setting Description"
-		exit 0
-	fi
-	
-	# English
-	echo "Security Setting Description"
-	exit 0
+
+    echo "$desc||user||root"
+    exit 0
 fi
 
 if [ "$1" == "-pf" ]; then

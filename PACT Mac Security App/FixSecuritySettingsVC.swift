@@ -8,6 +8,12 @@
 
 import Cocoa
 
+struct SettingMeta {
+    var settingDescription: String
+    var runPfUser: String  // "root" or "user"
+    var runWUser: String  // "root" or "user"
+}
+
 class FixSecuritySettingsVC: NSViewController {
 
     var scriptsDirPath: String = ""
@@ -16,6 +22,9 @@ class FixSecuritySettingsVC: NSViewController {
     @IBOutlet weak var settingsStackView: NSStackView!
     @IBOutlet weak var quitBtn: NSButton!
     @IBOutlet weak var fixAllBtn: NSButton!
+    
+    
+    var settingMetaDict = [String : SettingMeta]()
     
     override func loadView() {
         // Adding this function so older OS's (eg <=10.9) can still call our viewDidLoad() function
@@ -75,8 +84,32 @@ class FixSecuritySettingsVC: NSViewController {
         
         // Build the list of Security Settings for the Main GUI
         for scriptToQuery in scriptsToQuery {
-            let dTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-d", getCurrLangIso()])  // -d => Get Description, Note: getCurrLangIso returns "en" or "tr" or "ru"
-            if dTaskOutput != "" {
+            //let dTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-d", getCurrLangIso()])  // -d => Get Description, Note: getCurrLangIso returns "en" or "tr" or "ru"
+            //if dTaskOutput != "" {
+            
+            // Add to settingMetaDict. Continue loop if anything looks wrong.
+            // -settingMeta => [AppName||run -pf as root or user||run -w as root or user]
+            let settingMetaTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-settingMeta", getCurrLangIso()])
+            if settingMetaTaskOutput != "" {
+                let settingMetaArr = settingMetaTaskOutput.components(separatedBy: "||")
+                
+                // Sanity Checks
+                guard settingMetaArr.count == 3 else {
+                    printLog(str: "settingMetaArr.count is not equal to 3! Failing. Format for -settingMeta is e.g.: desc||user||root")
+                    continue  // to next iteration of for loop
+                }
+                guard settingMetaArr[1] == "root" || settingMetaArr[1] == "user" else {
+                    continue  // to next iteration of for loop
+                }
+                guard settingMetaArr[2] == "root" || settingMetaArr[2] == "user" else {
+                    continue  // to next iteration of for loop
+                }
+
+                // Add to dictionary
+                settingMetaDict[scriptToQuery] = SettingMeta(settingDescription: settingMetaArr[0], runPfUser: settingMetaArr[1], runWUser: settingMetaArr[2])
+            }
+            
+            if let settingMeta = settingMetaDict[scriptToQuery] {
                 // Setup Status Image
                 var statusImgView:NSImageView
                 if #available(OSX 10.12, *) {
@@ -92,11 +125,11 @@ class FixSecuritySettingsVC: NSViewController {
                 // Setup Setting Description Label
                 var settingDescLabel:NSTextField
                 if #available(OSX 10.12, *) {
-                    settingDescLabel = NSTextField(labelWithString: dTaskOutput)
+                    settingDescLabel = NSTextField(labelWithString: settingMeta.settingDescription)
                 } else {
                     // Fallback on earlier versions
                     settingDescLabel = NSTextField()
-                    settingDescLabel.stringValue = dTaskOutput
+                    settingDescLabel.stringValue = settingMeta.settingDescription
                     settingDescLabel.isEditable = false
                     settingDescLabel.isSelectable = false
                     settingDescLabel.isBezeled = false

@@ -1,29 +1,32 @@
 #!/bin/sh
 
-if [ "$1" != "-d" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
-    echo "Usage: $0 [-d|-pf|-w]"
+if [ "$1" != "-settingMeta" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
+    echo "Usage: $0 [-settingMeta [en|tr|ru] | -pf | -w]"
     exit 1
 fi
 
-if [ "$1" == "-d" ]; then
-	# Turkish
-    if [ "$2" == "tr" ]; then
-		echo "Ekran koruyucu veya uyku modu aktif olduğunda 5 sn içinde şifresiz girebilirsiniz"
-		exit 0
-	fi
+if [ "$1" == "-settingMeta" ]; then
+    # Note: format is: (1)||(2)||(3)
+    #   All must be present, even if null!
+    # (1) - App Description (user-friendly name of the App)
+	# (2) - Run -pf as "root" or "user"
+	# (3) - Run -w  as "root" or "user"
 	
-	# Russian
-	if [ "$2" == "ru" ]; then
-		echo "Требовать пароль через 5 секунд после включения заставки или спящего режима"
-		exit 0
-	fi
+	# Get Localized Description
+	if [ "$2" == "tr" ]; then
+        desc="Ekran koruyucu veya uyku modu aktif olduğunda 5 sn içinde şifresiz girebilirsiniz"
+	elif [ "$2" == "ru" ]; then
+		desc="Требовать пароль через 5 секунд после включения заставки или спящего режима"
+	else
+		desc="Require password 5 seconds or less after sleep or screensaver is activated"
+    fi
 	
-	# English
-	echo "Require password 5 seconds or less after sleep or screensaver is activated"
-    exit 0
+	echo "$desc||user||root"
+	exit 0
 fi
 
 if [ "$1" == "-pf" ]; then
+	# Run as "user"
 	afp=$(defaults read com.apple.screensaver askForPassword)
 	afpd=$(defaults read com.apple.screensaver askForPasswordDelay)
     if [ $afp == "1" ] && [ $afpd -le "5" ]; then
@@ -35,7 +38,7 @@ if [ "$1" == "-pf" ]; then
 fi
 
 if [ "$1" == "-w" ]; then
-    # Remember: -w ALWAYS gets run as root!
+    # Run as "root"
     if [[ $SUDO_USER != "" ]]; then
         userOfAdminPriv=$SUDO_USER  # sudo
     else
