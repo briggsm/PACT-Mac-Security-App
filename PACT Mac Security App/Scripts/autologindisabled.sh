@@ -21,7 +21,7 @@ if [ "$1" == "-settingMeta" ]; then
 		desc="Auto Login Disabled"
     fi
 	
-	echo "$desc||user||root"
+	echo "$desc||root||root"
 	exit 0
 fi
 

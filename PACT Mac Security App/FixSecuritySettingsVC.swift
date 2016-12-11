@@ -26,6 +26,9 @@ class FixSecuritySettingsVC: NSViewController {
     
     var settingMetaDict = [String : SettingMeta]()
     
+    var statusImageViewDict = [String : NSImageView]()
+    var fixItBtnDict = [String : NSButton]()
+    
     override func loadView() {
         // Adding this function so older OS's (eg <=10.9) can still call our viewDidLoad() function
         // Seems this function is called for older OS's (eg 10.9) and newer ones as well (eg. 10.12)
@@ -88,7 +91,7 @@ class FixSecuritySettingsVC: NSViewController {
             //if dTaskOutput != "" {
             
             // Add to settingMetaDict. Continue loop if anything looks wrong.
-            // -settingMeta => [AppName||run -pf as root or user||run -w as root or user]
+            // -settingMeta => [AppName||runPfUser||runWUser]
             let settingMetaTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-settingMeta", getCurrLangIso()])
             if settingMetaTaskOutput != "" {
                 let settingMetaArr = settingMetaTaskOutput.components(separatedBy: "||")
@@ -121,6 +124,7 @@ class FixSecuritySettingsVC: NSViewController {
                     statusImgView.translatesAutoresizingMaskIntoConstraints = false  // NSStackView bug for 10.9 & 10.10
                 }
                 statusImgView.identifier = scriptToQuery
+                statusImageViewDict[scriptToQuery] = statusImgView
                 
                 // Setup Setting Description Label
                 var settingDescLabel:NSTextField
@@ -152,6 +156,7 @@ class FixSecuritySettingsVC: NSViewController {
                     fixItBtn.translatesAutoresizingMaskIntoConstraints = false  // NSStackView bug for 10.9 & 10.10
                 }
                 fixItBtn.identifier = scriptToQuery
+                fixItBtnDict[scriptToQuery] = fixItBtn
                 
                 // Create Entry StackView
                 let entryStackView = NSStackView()  // Default is Horizontal
@@ -235,11 +240,16 @@ class FixSecuritySettingsVC: NSViewController {
     func fixItBtnClicked(btn: NSButton) {
         let scriptToQuery = btn.identifier ?? ""
         if !scriptToQuery.isEmpty {
-            //_ = runTask(taskFilename: scriptToQuery, arguments: ["-w"])  // -w => Write Setting
-            
-            fixAsRoot(allFixItScriptsStr: scriptToQuery)
-
-            updateAllStatusImagesAndFixItBtns()
+            if let settingMeta = settingMetaDict[scriptToQuery] {
+                if settingMeta.runWUser == "root" {
+                    //fixAsRoot(allFixItScriptsStr: scriptToQuery)
+                    queryAsRoot(allScriptsArr: [scriptToQuery], args: ["-w"])
+                } else {
+                    // "user"
+                    _ = runTask(taskFilename: scriptToQuery, arguments: ["-w"])
+                }
+                updateAllStatusImagesAndFixItBtns()
+            }
         }
     }
 
@@ -248,26 +258,30 @@ class FixSecuritySettingsVC: NSViewController {
         var allFixItScriptsArr = Array<String>()
 
         for entryStackView in settingsStackView.views as! [NSStackView] {
-            if let statusImgView = entryStackView.views.first as! NSImageView? {
-                let scriptToQuery = statusImgView.identifier ?? ""
+            if let statusImgView = entryStackView.views.first as! NSImageView?, let scriptToQuery = statusImgView.identifier, let imgName = statusImgView.image?.name(), let settingMeta = settingMetaDict[scriptToQuery] {
                 if !scriptToQuery.isEmpty {
-                    if let imgName = statusImgView.image?.name() {
-                        if imgName != "greenCheck" {
+                    if imgName != "greenCheck" {
+                        if settingMeta.runWUser == "root" {
+                            // "root", so append to list, to run all at once, later.
                             allFixItScriptsArr.append(scriptToQuery)
+                        } else {
+                            // "user", so run it right now
+                            _ = runTask(taskFilename: scriptToQuery, arguments: ["-w"])
                         }
                     }
                 }
             }
         }
         
-        let allFixItScriptsStr = allFixItScriptsArr.joined(separator: " ")
+        //let allFixItScriptsStr = allFixItScriptsArr.joined(separator: " ")
 
-        // Fix all these scripts with admin priv.
-        fixAsRoot(allFixItScriptsStr: allFixItScriptsStr)
+        // Now run all the scripts which need "root"
+        //fixAsRoot(allFixItScriptsStr: allFixItScriptsStr)
+        queryAsRoot(allScriptsArr: allFixItScriptsArr, args: ["-w"])
         
         updateAllStatusImagesAndFixItBtns()
     }
-    
+    /*
     func fixAsRoot(allFixItScriptsStr: String) {
         printLog(str: "----------")
         printLog(str: "fixAsRoot()")
@@ -289,23 +303,100 @@ class FixSecuritySettingsVC: NSViewController {
         }
         printLog(str: "----------")
     }
+    */
+    func queryAsRoot(allScriptsArr: [String], args: [String]) -> [String : String]? {
+        printLog(str: "----------")
+        printLog(str: "queryAsRoot()")
+        
+        // Write AppleScript
+        let allScriptsStr = allScriptsArr.joined(separator: " ")
+        let argsStr = args.joined(separator: " ")
+        let appleScriptStr = "do shell script \"./runAllAsRoot.sh '\(argsStr)' \(allScriptsStr)\" with administrator privileges"
+        printLog(str: "appleScriptStr: \(appleScriptStr)")
+        
+        // Run AppleScript
+        var asError: NSDictionary?
+        if let asObject = NSAppleScript(source: appleScriptStr) {
+            let asOutput: NSAppleEventDescriptor = asObject.executeAndReturnError(&asError)
+            
+            if let err = asError {
+                printLog(str: "AppleScript Error: \(err)")
+            } else {
+                printLog(str: asOutput.stringValue ?? "Note!: AS Output has 'nil' for stringValue")
+                
+                // First tidy-up str a bit
+                if let asOutputRaw = asOutput.stringValue {
+                    var asOutputStr = asOutputRaw.replacingOccurrences(of: "\r\n", with: "\n") // just incase
+                    asOutputStr = asOutputStr.replacingOccurrences(of: "\r", with: "\n") // becasue AppleScript returns line endings with '\r'
+                    
+                    let asOutputArr = asOutputStr.components(separatedBy: "\n")
+                    //printLog(str: "asOutputArr.count: \(asOutputArr.count)")
+                    
+                    var asOutputDict = [String : String]()
+                    var idx = 0
+                    for scriptToQuery in allScriptsArr {
+                        asOutputDict[scriptToQuery] = asOutputArr[idx]
+                        idx += 1
+                    }
+                    return asOutputDict
+
+                    
+//                    if asOutputArr.count >= allScriptsArr.count {
+//                        for scriptToQuery in allScriptsArr {
+//                            
+//                        }
+//                    }
+                }
+            }
+        }
+        printLog(str: "----------")
+        return nil
+    }
     
     func updateAllStatusImagesAndFixItBtns() {
+        // Build list of all scripts which need to be queried
+        var allScriptsToQueryAsRootArr = Array<String>()
+        
         var allSettingsFixed = true
         
         // Iterate through all our entryStackViews, finding the image views and buttons.
         for entryStackView in settingsStackView.views as! [NSStackView] {
-            if let statusImgView = entryStackView.views.first as! NSImageView? , let fixItBtn = entryStackView.views.last as! NSButton? {
-                let scriptToQuery = statusImgView.identifier ?? ""
+            if let statusImgView = entryStackView.views.first as! NSImageView? , let fixItBtn = entryStackView.views.last as! NSButton?, let scriptToQuery = statusImgView.identifier, let settingMeta = settingMetaDict[scriptToQuery] {
                 if !scriptToQuery.isEmpty {
-                    let pfTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-pf"])  // -pf => Return "pass" or "fail" security test
-                    
+                    //...!!!!!!!!!!!!!!
+                    if settingMeta.runPfUser == "root" {
+                        allScriptsToQueryAsRootArr.append(scriptToQuery)
+                    } else {
+                        // "user"
+                        let pfTaskOutput = runTask(taskFilename: scriptToQuery, arguments: ["-pf"])  // -pf => Return "pass" or "fail" security test
+                        
+                        // Update statusImageView & fixItBtn
+                        statusImgView.image = NSImage(named: getImgNameFor(pfString: pfTaskOutput))
+                        fixItBtn.isHidden = pfTaskOutput == "pass"
+                        
+                        if pfTaskOutput != "pass" {
+                            allSettingsFixed = false
+                        }
+                    }
+                }
+            }
+        }
+        
+        if allScriptsToQueryAsRootArr.count > 0 {
+            //let allScriptsToQueryAsRootStr = allScriptsToQueryAsRootArr.joined(separator: " ")
+            
+            // Now run all the scripts which need "root"
+            //fixAsRoot(allFixItScriptsStr: allScriptsToQueryAsRootStr)
+            if let queryOutputDict = queryAsRoot(allScriptsArr: allScriptsToQueryAsRootArr, args: ["-pf"]) {
+                for scriptToQuery in allScriptsToQueryAsRootArr {
                     // Update statusImageView & fixItBtn
-                    statusImgView.image = NSImage(named: getImgNameFor(pfString: pfTaskOutput))
-                    fixItBtn.isHidden = pfTaskOutput == "pass"
-                    
-                    if pfTaskOutput != "pass" {
-                        allSettingsFixed = false
+                    if let statusImgView = statusImageViewDict[scriptToQuery], let fixItBtn = fixItBtnDict[scriptToQuery], let queryOutput = queryOutputDict[scriptToQuery] {
+                        statusImgView.image = NSImage(named: getImgNameFor(pfString: queryOutput))
+                        fixItBtn.isHidden = queryOutput == "pass"
+                        
+                        if queryOutput != "pass" {
+                            allSettingsFixed = false
+                        }
                     }
                 }
             }
@@ -449,6 +540,11 @@ class FixSecuritySettingsVC: NSViewController {
 
             // Remove "runWs.sh" from the list of scripts.
             if let index = scriptsDirContents.index(of: "runWs.sh") {
+                scriptsDirContents.remove(at: index)
+            }
+            
+            // Remove "runAllAsRoot.sh" from the list of scripts.
+            if let index = scriptsDirContents.index(of: "runAllAsRoot.sh") {
                 scriptsDirContents.remove(at: index)
             }
 

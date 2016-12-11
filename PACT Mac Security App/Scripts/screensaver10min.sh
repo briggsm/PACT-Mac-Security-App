@@ -21,7 +21,7 @@ if [ "$1" == "-settingMeta" ]; then
 		desc="Screensaver is set to activate after 10 minutes of inactivity"
     fi
 	
-	echo "$desc||user||root"
+	echo "$desc||root||root"
 	exit 0
 fi
 
