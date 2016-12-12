@@ -31,12 +31,12 @@
 #  if [[ ${osvers} -ge 16 ]]; then ...
 #
 ################################################################################################################
-if [ "$1" != "-settingMeta" ] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
+if [[ "$1" != "-settingMeta"* ]] && [ "$1" != "-pf" ] && [ "$1" != "-w" ]; then
     echo "Usage: $0 [-settingMeta [en|tr|ru] | -pf | -w]"
     exit 1
 fi
 
-if [ "$1" == "-settingMeta" ]; then
+if [[ "$1" == "-settingMeta"* ]]; then
     # Note: format is: (1)||(2)||(3)
     #   All must be present, even if null!
     # (1) - Setting Description (user-friendly name of the Setting)
@@ -45,9 +45,9 @@ if [ "$1" == "-settingMeta" ]; then
     # Note: if this setting is N/A given user's OS Version, return "" (empty string) for Setting Description
 
     # Get Localized Description
-	if [ "$2" == "tr" ]; then
+	if [ "$1" == "-settingMeta tr" ]; then
 		desc="[tr]Security Setting Description"
-	elif [ "$2" == "ru" ]; then
+	elif [ "$1" == "-settingMeta ru" ]; then
 		desc="[ru]Security Setting Description"
     else
         desc="Security Setting Description"
