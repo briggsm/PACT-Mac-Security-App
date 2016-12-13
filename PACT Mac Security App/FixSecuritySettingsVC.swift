@@ -305,13 +305,15 @@ class FixSecuritySettingsVC: NSViewController {
     
     func handle(theseScripts: [String], outputArr: [String], withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
         if let outputHandler = withOutputHandler {
+            var outputDict = [String : String]()
+            
             guard outputArr.count == theseScripts.count else {
                 self.printLog(str: "*ERROR: outputArray.count (\(outputArr.count)) is not equal to scripts.count (\(theseScripts.count))")
                 self.printLog(str: "*  outputArr: \(outputArr)")
+                outputHandler(outputDict)
                 return
             }
             
-            var outputDict = [String : String]()
             var idx = 0
             for script in theseScripts {
                 outputDict[script] = outputArr[idx]
