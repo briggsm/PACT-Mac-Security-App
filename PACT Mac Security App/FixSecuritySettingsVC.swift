@@ -26,19 +26,21 @@ enum RunScriptOnThread {
 
 class FixSecuritySettingsVC: NSViewController {
 
+    // MARK: Scripts
     var scriptsDirPath: String = ""
     var scriptsToQuery = [String]()
     
+    // MARK: Dictionaries
+    var settingMetaDict = [String : SettingMeta]()
+    var statusImgViewDict = [String : NSImageView]()
+    var fixItBtnDict = [String : NSButton]()
+    
+    // MARK: Outlets
     @IBOutlet weak var settingsStackView: NSStackView!
     @IBOutlet weak var quitBtn: NSButton!
     @IBOutlet weak var fixAllBtn: NSButton!
     
-    
-    var settingMetaDict = [String : SettingMeta]()
-    
-    var statusImgViewDict = [String : NSImageView]()
-    var fixItBtnDict = [String : NSButton]()
-    
+    // MARK: - Initial Loading Functions
     override func loadView() {
         // Adding this function so older OS's (eg <=10.9) can still call our viewDidLoad() function
         // Seems this function is called for older OS's (eg 10.9) and newer ones as well (eg. 10.12)
@@ -196,26 +198,16 @@ class FixSecuritySettingsVC: NSViewController {
         }
         
         // Update all Status Images & FixIt Button visibilities.
-        updateAllStatusImagesAndFixItBtns()
+        refreshAllGuiViews()
         
         // Focus: Quit Button (spacebar), FixAll Button (Return key)
         self.view.window?.makeFirstResponder(quitBtn)
         fixAllBtn.keyEquivalent = "\r"
     }
     
+    // MARK: IB Actions
     @IBAction func quitBtnClicked(_ sender: NSButton) {
         NSApplication.shared().terminate(self)
-    }
-    
-    func getImgNameFor(pfString: String) -> String {
-        if pfString == "pass" {
-            return "greenCheck"
-        } else if pfString == "fail" {
-            return "redX"
-        } else {
-            // Unknow state. Shouldn't get here.
-            return "greyQM"
-        }
     }
     
     func fixItBtnClicked(btn: NSButton) {
@@ -227,7 +219,7 @@ class FixSecuritySettingsVC: NSViewController {
                 } else {  // .User
                     run(theseScripts: [scriptToQuery], withArgs: ["-w"], asUser: .User, onThread: .Main, withOutputHandler: nil)
                 }
-                updateAllStatusImagesAndFixItBtns()
+                refreshAllGuiViews()
             }
         }
     }
@@ -251,127 +243,16 @@ class FixSecuritySettingsVC: NSViewController {
 
         if allScriptsToQueryAsUserArr.count > 0 {
             run(theseScripts: allScriptsToQueryAsUserArr, withArgs: ["-w"], asUser: .User, onThread: .Main, withOutputHandler: nil)
-            updateAllStatusImagesAndFixItBtns()  // do it here, so we can visually see the change before the Root PW dialog box pops up.
+            refreshAllGuiViews()  // do it here, so we can visually see the change before the Root PW dialog box pops up.
         }
 
         if allScriptsToQueryAsRootArr.count > 0 {
             run(theseScripts: allScriptsToQueryAsRootArr, withArgs: ["-w"], asUser: .Root, onThread: .Main, withOutputHandler: nil)
-            updateAllStatusImagesAndFixItBtns()
+            refreshAllGuiViews()
         }
     }
 
-    func updateAllStatusImagesAndFixItBtns() {
-        // Build list of all scripts which need to be queried
-        var allScriptsToQueryAsRootArr = [String]()
-        var allScriptsToQueryAsUserArr = [String]()
-        
-        for script in scriptsToQuery {
-            if let settingMeta = settingMetaDict[script] {
-                if settingMeta.runPfUser == .Root {
-                    allScriptsToQueryAsRootArr.append(script)
-                } else {  // .User
-                    allScriptsToQueryAsUserArr.append(script)
-                }
-            }
-        }
-        
-        let outputHandler: ([String : String]) -> (Void) = { outputDict in
-            for (script, output) in outputDict {
-                if output != "" {
-                    // Update statusImageView & fixItBtn
-                    if let statusImgView = self.statusImgViewDict[script], let fixItBtn = self.fixItBtnDict[script] {
-                        statusImgView.image = NSImage(named: self.getImgNameFor(pfString: output))
-                        fixItBtn.isHidden = output == "pass"
-                    }
-                }
-            }
-        }
-        if allScriptsToQueryAsUserArr.count > 0 {
-            //run(theseScripts: allScriptsToQueryAsUserArr, withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
-            // Note: if want to run 1 at a time (so user can see a bit of animation)
-            printLog(str: "====================")
-            for script in allScriptsToQueryAsUserArr {
-                run(theseScripts: [script], withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
-            }
-            printLog(str: "====================")
-        }
-        if allScriptsToQueryAsRootArr.count > 0 {
-            run(theseScripts: allScriptsToQueryAsRootArr, withArgs: ["-pf"], asUser: .Root, onThread: .Main, withOutputHandler: outputHandler)
-        }
-    }
-    
-    func getCurrLangIso() -> String {
-        let currLangArr = UserDefaults.standard.value(forKey: "AppleLanguages") as! Array<String>
-        return currLangArr[0]
-    }
-    
-    func printLog(str: String) {
-        printLog(str: str, terminator: "\n")
-    }
-
-    func printLog(str: String, terminator: String) {
-    
-        // First tidy-up str a bit
-        var prettyStr = str.replacingOccurrences(of: "\r\n", with: "\n") // just incase
-        prettyStr = prettyStr.replacingOccurrences(of: "\r", with: "\n") // becasue AppleScript returns line endings with '\r'
-        
-        // Normal print
-        print(prettyStr, terminator: terminator)
-        
-        // Print to log file
-        if let cachesDirUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
-            let logFilePathUrl = cachesDirUrl.appendingPathComponent("security-fixer-upper-log.txt")
-            let logData = (prettyStr + terminator).data(using: .utf8, allowLossyConversion: false)!
-
-            if FileManager.default.fileExists(atPath: logFilePathUrl.path) {
-                do {
-                    let logFileHandle = try FileHandle(forWritingTo: logFilePathUrl)
-                    logFileHandle.seekToEndOfFile()
-                    logFileHandle.write(logData)
-                    logFileHandle.closeFile()
-                } catch {
-                    print("Unable to write to existing log file, at this path: \(logFilePathUrl.path)")
-                }
-            } else {
-                do {
-                    try logData.write(to: logFilePathUrl)
-                } catch {
-                    print("Can't write to new log file, at this path: \(logFilePathUrl.path)")
-                }
-            }
-        }
-    }
-    
-    func changeCurrentDirToScriptsDir() {
-        guard let runScriptsPath = Bundle.main.path(forResource: "Scripts/runScripts", ofType:"sh") else {
-            printLog(str: "\n  Unable to locate: Scripts/runScripts.sh!")
-            return
-        }
-        
-        scriptsDirPath = String(runScriptsPath.characters.dropLast(13))  // drop off: "runScripts.sh"
-        if FileManager.default.changeCurrentDirectoryPath(scriptsDirPath) {
-            //printLog(str: "success changing dir to: \(scriptsDirPath)")
-        } else {
-            printLog(str: "failure changing dir to: \(scriptsDirPath)")
-        }
-    }
-    
-    func setupScriptsToQueryArray() {
-        do {
-            var scriptsDirContents = try FileManager.default.contentsOfDirectory(atPath: scriptsDirPath)
-
-            // Remove "runScripts.sh" from the list of scripts.
-            if let index = scriptsDirContents.index(of: "runScripts.sh") {
-                scriptsDirContents.remove(at: index)
-            }
-
-            scriptsToQuery = scriptsDirContents
-        } catch {
-            printLog(str: "Cannot get contents of Scripts dir: \(scriptsDirPath)")
-            scriptsToQuery = []
-        }
-    }
-    
+    // MARK: Run Scripts
     // Note: This is the function the code is expected to call when wanting to run/query any script(s)
     func run(theseScripts: [String], withArgs: [String], asUser: RunScriptAs, onThread: RunScriptOnThread, withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
         printLog(str: "----------")
@@ -485,6 +366,130 @@ class FixSecuritySettingsVC: NSViewController {
             }
             
             outputHandler(outputDict)
+        }
+    }
+    
+    // MARK: Misc
+    func refreshAllGuiViews() {
+        // Build list of all scripts which need to be queried
+        var allScriptsToQueryAsRootArr = [String]()
+        var allScriptsToQueryAsUserArr = [String]()
+        
+        for script in scriptsToQuery {
+            if let settingMeta = settingMetaDict[script] {
+                if settingMeta.runPfUser == .Root {
+                    allScriptsToQueryAsRootArr.append(script)
+                } else {  // .User
+                    allScriptsToQueryAsUserArr.append(script)
+                }
+            }
+        }
+        
+        let outputHandler: ([String : String]) -> (Void) = { outputDict in
+            for (script, output) in outputDict {
+                if output != "" {
+                    // Update statusImageView & fixItBtn
+                    if let statusImgView = self.statusImgViewDict[script], let fixItBtn = self.fixItBtnDict[script] {
+                        statusImgView.image = NSImage(named: self.getImgNameFor(pfString: output))
+                        fixItBtn.isHidden = output == "pass"
+                    }
+                }
+            }
+        }
+        if allScriptsToQueryAsUserArr.count > 0 {
+            //run(theseScripts: allScriptsToQueryAsUserArr, withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
+            // Note: if want to run 1 at a time (so user can see a bit of animation)
+            printLog(str: "====================")
+            for script in allScriptsToQueryAsUserArr {
+                run(theseScripts: [script], withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
+            }
+            printLog(str: "====================")
+        }
+        if allScriptsToQueryAsRootArr.count > 0 {
+            run(theseScripts: allScriptsToQueryAsRootArr, withArgs: ["-pf"], asUser: .Root, onThread: .Main, withOutputHandler: outputHandler)
+        }
+    }
+    
+    func getCurrLangIso() -> String {
+        let currLangArr = UserDefaults.standard.value(forKey: "AppleLanguages") as! [String]
+        return currLangArr[0]
+    }
+    
+    func printLog(str: String) {
+        printLog(str: str, terminator: "\n")
+    }
+    
+    func printLog(str: String, terminator: String) {
+        
+        // First tidy-up str a bit
+        var prettyStr = str.replacingOccurrences(of: "\r\n", with: "\n") // just incase
+        prettyStr = prettyStr.replacingOccurrences(of: "\r", with: "\n") // becasue AppleScript returns line endings with '\r'
+        
+        // Normal print
+        print(prettyStr, terminator: terminator)
+        
+        // Print to log file
+        if let cachesDirUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
+            let logFilePathUrl = cachesDirUrl.appendingPathComponent("security-fixer-upper-log.txt")
+            let logData = (prettyStr + terminator).data(using: .utf8, allowLossyConversion: false)!
+            
+            if FileManager.default.fileExists(atPath: logFilePathUrl.path) {
+                do {
+                    let logFileHandle = try FileHandle(forWritingTo: logFilePathUrl)
+                    logFileHandle.seekToEndOfFile()
+                    logFileHandle.write(logData)
+                    logFileHandle.closeFile()
+                } catch {
+                    print("Unable to write to existing log file, at this path: \(logFilePathUrl.path)")
+                }
+            } else {
+                do {
+                    try logData.write(to: logFilePathUrl)
+                } catch {
+                    print("Can't write to new log file, at this path: \(logFilePathUrl.path)")
+                }
+            }
+        }
+    }
+    
+    func changeCurrentDirToScriptsDir() {
+        guard let runScriptsPath = Bundle.main.path(forResource: "Scripts/runScripts", ofType:"sh") else {
+            printLog(str: "\n  Unable to locate: Scripts/runScripts.sh!")
+            return
+        }
+        
+        scriptsDirPath = String(runScriptsPath.characters.dropLast(13))  // drop off: "runScripts.sh"
+        if FileManager.default.changeCurrentDirectoryPath(scriptsDirPath) {
+            //printLog(str: "success changing dir to: \(scriptsDirPath)")
+        } else {
+            printLog(str: "failure changing dir to: \(scriptsDirPath)")
+        }
+    }
+    
+    func setupScriptsToQueryArray() {
+        do {
+            var scriptsDirContents = try FileManager.default.contentsOfDirectory(atPath: scriptsDirPath)
+            
+            // Remove "runScripts.sh" from the list of scripts.
+            if let index = scriptsDirContents.index(of: "runScripts.sh") {
+                scriptsDirContents.remove(at: index)
+            }
+            
+            scriptsToQuery = scriptsDirContents
+        } catch {
+            printLog(str: "Cannot get contents of Scripts dir: \(scriptsDirPath)")
+            scriptsToQuery = []
+        }
+    }
+    
+    func getImgNameFor(pfString: String) -> String {
+        if pfString == "pass" {
+            return "greenCheck"
+        } else if pfString == "fail" {
+            return "redX"
+        } else {
+            // Unknow state. Shouldn't get here.
+            return "greyQM"
         }
     }
 }
