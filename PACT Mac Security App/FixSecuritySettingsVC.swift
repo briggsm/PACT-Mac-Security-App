@@ -111,9 +111,11 @@ class FixSecuritySettingsVC: NSViewController {
                         continue  // to next iteration of for loop
                     }
                     guard settingMetaArr[1] == "root" || settingMetaArr[1] == "user" else {
+                        self.printLog(str: "ERROR: settingMeta[1] is not equal to 'root' or 'user'!")
                         continue  // to next iteration of for loop
                     }
                     guard settingMetaArr[2] == "root" || settingMetaArr[2] == "user" else {
+                        self.printLog(str: "ERROR: settingMeta[2] is not equal to 'root' or 'user'!")
                         continue  // to next iteration of for loop
                     }
                     
@@ -123,13 +125,6 @@ class FixSecuritySettingsVC: NSViewController {
             }
         }
         run(theseScripts: scriptsToQuery, withArgs: ["-settingMeta \(getCurrLangIso())"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
-        //Note: If want to do 1 at a time:
-        /*printLog(str: "====================")
-        for script in scriptsToQuery {
-            run(theseScripts: [script], withArgs: ["-settingMeta \(getCurrLangIso())"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
-        }
-        printLog(str: "====================")*/
-        
         
         for scriptToQuery in scriptsToQuery {
             if let settingMeta = settingMetaDict[scriptToQuery] {
@@ -283,7 +278,6 @@ class FixSecuritySettingsVC: NSViewController {
             // Run AppleScript
             var asError: NSDictionary?
             let asOutput: NSAppleEventDescriptor = asObject.executeAndReturnError(&asError)
-            //self.printLog(str: " [asOutput(root,Bg/Main): \(asOutput.stringValue ?? "")]")
             self.printLog(str: " [asOutput: \(asOutput.stringValue ?? "")]")
             
             // Parse & Handle AppleScript output
@@ -371,7 +365,13 @@ class FixSecuritySettingsVC: NSViewController {
     
     func getCurrLangIso() -> String {
         let currLangArr = UserDefaults.standard.value(forKey: "AppleLanguages") as! [String]
-        return currLangArr[0]
+        
+        var currLangIso = currLangArr[0]
+        
+        // Chop off everything except 1st two characters
+        currLangIso = currLangIso.substring(to: currLangIso.index(currLangIso.startIndex, offsetBy: 2))
+        
+        return currLangIso
     }
     
     func printLog(str: String) {

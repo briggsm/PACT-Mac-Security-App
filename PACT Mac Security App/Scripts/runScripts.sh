@@ -21,7 +21,6 @@ fi
 for scriptName in "$@"
 do
 	if [[ $scriptName != "$1" ]]; then  # Skip $1 arg (arg1, arg2, ...)
-        #echo "exec: $scriptName $1"
 		/bin/sh $scriptName "$1"
 	fi
 done
