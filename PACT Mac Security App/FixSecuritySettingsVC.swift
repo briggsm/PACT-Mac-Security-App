@@ -258,40 +258,33 @@ class FixSecuritySettingsVC: NSViewController {
         printLog(str: "----------")
         printLog(str: "runScripts: \(theseScripts), withArgs: \(withArgs), asUser: \(asUser), onThread: \(onThread)")
         
-        if asUser == .Root {
-            if onThread == .Bg {
-                let taskQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
-                taskQueue.async {
-                    self.runAsRoot(theseScripts: theseScripts, withArgs: withArgs, withOutputHandler: withOutputHandler)
-                }
-            } else {  // .Main
-                runAsRoot(theseScripts: theseScripts, withArgs: withArgs, withOutputHandler: withOutputHandler)
+        if onThread == .Bg {
+            let taskQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
+            taskQueue.async {
+                self.run(theseScripts: theseScripts, withArgs: withArgs, asUser: asUser, withOutputHandler: withOutputHandler)
             }
-        } else {  // .User
-            if onThread == .Bg {
-                let taskQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
-                taskQueue.async {
-                    self.runAsUser(theseScripts: theseScripts, withArgs: withArgs, withOutputHandler: withOutputHandler)
-                }
-            } else {  // .Main
-                runAsUser(theseScripts: theseScripts, withArgs: withArgs, withOutputHandler: withOutputHandler)
-            }
+        } else {  // .Main
+            run(theseScripts: theseScripts, withArgs: withArgs, asUser: asUser, withOutputHandler: withOutputHandler)
         }
     }
     
-    func runAsRoot(theseScripts: [String], withArgs: [String], withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
+    func run(theseScripts: [String], withArgs: [String], asUser: RunScriptAs, withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
         // Note: only meant to be called from: run(theseScriptsWithArgsAsUserOnThreadWithOutputHandler)
         // Write AppleScript
         let allScriptsStr = theseScripts.joined(separator: " ")
         let argsStr = withArgs.joined(separator: " ")
-        let appleScriptStr = "do shell script \"./runScripts.sh '\(argsStr)' \(allScriptsStr)\" with administrator privileges"
+        var appleScriptStr = "do shell script \"./runScripts.sh '\(argsStr)' \(allScriptsStr)\""
+        if asUser == .Root {
+            appleScriptStr += " with administrator privileges"
+        }
         printLog(str: " appleScriptStr: \(appleScriptStr)")
         
         if let asObject = NSAppleScript(source: appleScriptStr) {
             // Run AppleScript
             var asError: NSDictionary?
             let asOutput: NSAppleEventDescriptor = asObject.executeAndReturnError(&asError)
-            self.printLog(str: " [asOutput(root,Bg/Main): \(asOutput.stringValue ?? "")]")
+            //self.printLog(str: " [asOutput(root,Bg/Main): \(asOutput.stringValue ?? "")]")
+            self.printLog(str: " [asOutput: \(asOutput.stringValue ?? "")]")
             
             // Parse & Handle AppleScript output
             let outputArr = self.parseAppleScript(asOutput: asOutput, asError: asError)
@@ -299,40 +292,6 @@ class FixSecuritySettingsVC: NSViewController {
         }
     }
     
-    func runAsUser(theseScripts: [String], withArgs: [String], withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
-        // Note: only meant to be called from: run(theseScriptsWithArgsAsUserOnThreadWithOutputHandler)
-        var allArgs = [String]()
-        let withArgsStr = withArgs.joined(separator: " ")
-        allArgs.append(withArgsStr)
-        allArgs.append(contentsOf: theseScripts)
-        
-        guard let path = Bundle.main.path(forResource: "Scripts/" + "runScripts", ofType:"sh") else {
-            printLog(str: "\n  Unable to locate: runScripts.sh!")
-            return
-        }
-        
-        // Init outputPipe
-        let outputPipe = Pipe()
-        
-        // Setup & Launch our process
-        let ps: Process = Process()
-        ps.launchPath = path
-        ps.arguments = allArgs
-        ps.standardOutput = outputPipe
-        
-        ps.launch()
-        ps.waitUntilExit()
-        
-        // Read everything the outputPipe captured from stdout
-        let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
-        var outputStr = String(data: data, encoding: String.Encoding.utf8) ?? ""
-        outputStr = outputStr.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.printLog(str: " [output(user,Bg/Main): \(outputStr)]")
-        
-        let outputArr = outputStr.components(separatedBy: "\n")
-        handle(theseScripts: theseScripts, outputArr: outputArr, withOutputHandler: withOutputHandler)
-    }
-
     func parseAppleScript(asOutput: NSAppleEventDescriptor, asError: NSDictionary?) -> [String] {
         if let err = asError {
             printLog(str: "AppleScript Error: \(err)")
@@ -397,13 +356,13 @@ class FixSecuritySettingsVC: NSViewController {
             }
         }
         if allScriptsToQueryAsUserArr.count > 0 {
-            //run(theseScripts: allScriptsToQueryAsUserArr, withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
+            run(theseScripts: allScriptsToQueryAsUserArr, withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
             // Note: if want to run 1 at a time (so user can see a bit of animation)
-            printLog(str: "====================")
+            /*printLog(str: "====================")
             for script in allScriptsToQueryAsUserArr {
                 run(theseScripts: [script], withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
             }
-            printLog(str: "====================")
+            printLog(str: "====================")*/
         }
         if allScriptsToQueryAsRootArr.count > 0 {
             run(theseScripts: allScriptsToQueryAsRootArr, withArgs: ["-pf"], asUser: .Root, onThread: .Main, withOutputHandler: outputHandler)
