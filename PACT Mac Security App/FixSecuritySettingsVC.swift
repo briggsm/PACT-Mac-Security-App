@@ -120,8 +120,14 @@ class FixSecuritySettingsVC: NSViewController {
                 }
             }
         }
-        run(scripts: scriptsToQuery, allAtOnce: false, withArgs: ["-settingMeta \(getCurrLangIso())"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
-        //run(scripts: scriptsToQuery, allAtOnce: true, withArgs: ["-settingMeta \(getCurrLangIso())"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
+        run(theseScripts: scriptsToQuery, withArgs: ["-settingMeta \(getCurrLangIso())"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
+        //Note: If want to do 1 at a time:
+        /*printLog(str: "====================")
+        for script in scriptsToQuery {
+            run(theseScripts: [script], withArgs: ["-settingMeta \(getCurrLangIso())"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
+        }
+        printLog(str: "====================")*/
+        
         
         for scriptToQuery in scriptsToQuery {
             if let settingMeta = settingMetaDict[scriptToQuery] {
@@ -217,9 +223,9 @@ class FixSecuritySettingsVC: NSViewController {
         if !scriptToQuery.isEmpty {
             if let settingMeta = settingMetaDict[scriptToQuery] {
                 if settingMeta.runWUser == .Root {
-                    run(scripts: [scriptToQuery], allAtOnce: true, withArgs: ["-w"], asUser: .Root, onThread: .Main, withOutputHandler: nil)
+                    run(theseScripts: [scriptToQuery], withArgs: ["-w"], asUser: .Root, onThread: .Main, withOutputHandler: nil)
                 } else {  // .User
-                    run(scripts: [scriptToQuery], allAtOnce: false, withArgs: ["-w"], asUser: .User, onThread: .Main, withOutputHandler: nil)
+                    run(theseScripts: [scriptToQuery], withArgs: ["-w"], asUser: .User, onThread: .Main, withOutputHandler: nil)
                 }
                 updateAllStatusImagesAndFixItBtns()
             }
@@ -244,15 +250,14 @@ class FixSecuritySettingsVC: NSViewController {
         }
 
         if allScriptsToQueryAsUserArr.count > 0 {
-            run(scripts: allScriptsToQueryAsUserArr, allAtOnce: true, withArgs: ["-w"], asUser: .User, onThread: .Main, withOutputHandler: nil)
-            //run(scripts: allScriptsToQueryAsUserArr, allAtOnce: false, withArgs: ["-w"], asUser: .User, onThread: .Main, withOutputHandler: nil)
+            run(theseScripts: allScriptsToQueryAsUserArr, withArgs: ["-w"], asUser: .User, onThread: .Main, withOutputHandler: nil)
+            updateAllStatusImagesAndFixItBtns()  // do it here, so we can visually see the change before the Root PW dialog box pops up.
         }
 
         if allScriptsToQueryAsRootArr.count > 0 {
-            run(scripts: allScriptsToQueryAsRootArr, allAtOnce: true, withArgs: ["-w"], asUser: .Root, onThread: .Main, withOutputHandler: nil)
+            run(theseScripts: allScriptsToQueryAsRootArr, withArgs: ["-w"], asUser: .Root, onThread: .Main, withOutputHandler: nil)
+            updateAllStatusImagesAndFixItBtns()
         }
-        
-        updateAllStatusImagesAndFixItBtns()
     }
 
     func updateAllStatusImagesAndFixItBtns() {
@@ -282,11 +287,16 @@ class FixSecuritySettingsVC: NSViewController {
             }
         }
         if allScriptsToQueryAsUserArr.count > 0 {
-            run(scripts: allScriptsToQueryAsUserArr, allAtOnce: false, withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
-            //run(scripts: allScriptsToQueryAsUserArr, allAtOnce: true, withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
+            //run(theseScripts: allScriptsToQueryAsUserArr, withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
+            // Note: if want to run 1 at a time (so user can see a bit of animation)
+            printLog(str: "====================")
+            for script in allScriptsToQueryAsUserArr {
+                run(theseScripts: [script], withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
+            }
+            printLog(str: "====================")
         }
         if allScriptsToQueryAsRootArr.count > 0 {
-            run(scripts: allScriptsToQueryAsRootArr, allAtOnce: true, withArgs: ["-pf"], asUser: .Root, onThread: .Main, withOutputHandler: outputHandler)
+            run(theseScripts: allScriptsToQueryAsRootArr, withArgs: ["-pf"], asUser: .Root, onThread: .Main, withOutputHandler: outputHandler)
         }
     }
     
@@ -362,217 +372,86 @@ class FixSecuritySettingsVC: NSViewController {
         }
     }
     
-    func run(scripts: [String], allAtOnce: Bool, withArgs: [String], asUser: RunScriptAs, onThread: RunScriptOnThread, withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
-        // Notes:
-        //  If user is "Root", then "allAtOnce" is treated as TRUE, no matter what it's passed in value (because we never want to ask user their PW more than is necessary)
-        
-        printLog(str: "runScripts: \(scripts), allAtOnce: \(allAtOnce), withArgs: \(withArgs), asUser: \(asUser), onThread: \(onThread)")
-        var outputDict = [String : String]()
+    // Note: This is the function the code is expected to call when wanting to run/query any script(s)
+    func run(theseScripts: [String], withArgs: [String], asUser: RunScriptAs, onThread: RunScriptOnThread, withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
+        printLog(str: "----------")
+        printLog(str: "runScripts: \(theseScripts), withArgs: \(withArgs), asUser: \(asUser), onThread: \(onThread)")
         
         if asUser == .Root {
-            // Write AppleScript
-            let allScriptsStr = scripts.joined(separator: " ")
-            let argsStr = withArgs.joined(separator: " ")
-            let appleScriptStr = "do shell script \"./runScripts.sh '\(argsStr)' \(allScriptsStr)\" with administrator privileges"
-            printLog(str: "appleScriptStr: \(appleScriptStr)")
-            
-            var asError: NSDictionary?
-            if let asObject = NSAppleScript(source: appleScriptStr) {
-                
-                if onThread == .Bg {
-                    let taskQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
-                    taskQueue.async {
-                        // Run AppleScript
-                        let asOutput: NSAppleEventDescriptor = asObject.executeAndReturnError(&asError)
-                        self.printLog(str: " [asOutput(root,allAtOnce!,Bg): \(asOutput.stringValue)]")
-
-                        if let outputHandler = withOutputHandler {
-                            // Parse & Handle AppleScript output
-                            let asOutputArr = self.parseAppleScript(asOutput: asOutput, asError: asError)
-                            
-                            guard asOutputArr.count == scripts.count else {
-                                self.printLog(str: "*ERROR: asOutputArray.count (\(asOutputArr.count)) is not equal to scripts.count (\(scripts.count))")
-                                self.printLog(str: "*  asOutputArr: \(asOutputArr)")
-                                return
-                            }
-                            
-                            var idx = 0
-                            for script in scripts {
-                                outputDict[script] = asOutputArr[idx]
-                                idx += 1
-                            }
-                            
-                            outputHandler(outputDict)
-                        }
-                    }
-                } else {  // .Main
-                    // Run AppleScript
-                    let asOutput: NSAppleEventDescriptor = asObject.executeAndReturnError(&asError)
-                    printLog(str: " [asOutput(root,allAtOnce!,Main): \(asOutput.stringValue ?? "")]")
-                    if let outputHandler = withOutputHandler {
-                        // Parse & Handle AppleScript output
-                        let asOutputArr = self.parseAppleScript(asOutput: asOutput, asError: asError)
-                        
-                        guard asOutputArr.count == scripts.count else {
-                            self.printLog(str: "*ERROR: asOutputArray.count (\(asOutputArr.count)) is not equal to scripts.count (\(scripts.count))")
-                            self.printLog(str: "*  asOutputArr: \(asOutputArr)")
-                            return
-                        }
-                        
-                        var idx = 0
-                        for script in scripts {
-                            outputDict[script] = asOutputArr[idx]
-                            idx += 1
-                        }
-                        
-                        outputHandler(outputDict)
-                    }
+            if onThread == .Bg {
+                let taskQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
+                taskQueue.async {
+                    self.runAsRoot(theseScripts: theseScripts, withArgs: withArgs, withOutputHandler: withOutputHandler)
                 }
+            } else {  // .Main
+                runAsRoot(theseScripts: theseScripts, withArgs: withArgs, withOutputHandler: withOutputHandler)
             }
         } else {  // .User
-            if allAtOnce {
-                var allArgs = [String]()
-                let withArgsStr = withArgs.joined(separator: " ")
-                allArgs.append(withArgsStr)
-                allArgs.append(contentsOf: scripts)
-                
-                guard let path = Bundle.main.path(forResource: "Scripts/" + "runScripts", ofType:"sh") else {
-                    printLog(str: "\n  Unable to locate: runScripts.sh!")
-                    return
+            if onThread == .Bg {
+                let taskQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
+                taskQueue.async {
+                    self.runAsUser(theseScripts: theseScripts, withArgs: withArgs, withOutputHandler: withOutputHandler)
                 }
-                
-                // Init outputPipe
-                let outputPipe = Pipe()
-                
-                // Setup & Launch our process
-                let ps: Process = Process()
-                ps.launchPath = path
-                ps.arguments = allArgs
-                ps.standardOutput = outputPipe
-                
-                if onThread == .Bg {
-                    // Setup & Launch our process Asynchronously
-                    let taskQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
-                    
-                    taskQueue.async {
-                        ps.launch()
-                        ps.waitUntilExit()
-                        
-                        // Read everything the outputPipe captured from stdout
-                        let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                        var outputStr = String(data: data, encoding: String.Encoding.utf8) ?? ""
-                        outputStr = outputStr.trimmingCharacters(in: .whitespacesAndNewlines)
-                        
-                        // Return the output
-                        self.printLog(str: " [output(user,allAtOnce,Bg): \(outputStr)]")
-                        if let outputHandler = withOutputHandler {
-                            let outputArr = outputStr.components(separatedBy: "\n")
-                            
-                            guard outputArr.count == scripts.count else {
-                                self.printLog(str: "*ERROR: outputArray.count (\(outputArr.count)) is not equal to scripts.count (\(scripts.count))")
-                                self.printLog(str: "*  outputArr: \(outputArr)")
-                                return
-                            }
-                            
-                            var idx = 0
-                            for script in scripts {
-                                outputDict[script] = outputArr[idx]
-                                idx += 1
-                            }
-                        
-                            outputHandler(outputDict)
-                        }
-                    }
-                } else {  // .Main
-                    ps.launch()
-                    ps.waitUntilExit()
-                    
-                    // Read everything the outputPipe captured from stdout
-                    let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                    var outputStr = String(data: data, encoding: String.Encoding.utf8) ?? ""
-                    outputStr = outputStr.trimmingCharacters(in: .whitespacesAndNewlines)
-                    
-                    printLog(str: " [output(user,allAtOnce,Main): \(outputStr)]")
-                    
-                    if let outputHandler = withOutputHandler {
-                        let outputArr = outputStr.components(separatedBy: "\n")
-                        
-                        guard outputArr.count == scripts.count else {
-                            printLog(str: "*ERROR: outputArray.count (\(outputArr.count)) is not equal to scripts.count (\(scripts.count))")
-                            printLog(str: "*  outputArr: \(outputArr)")
-                            return
-                        }
-                        
-                        var idx = 0
-                        for script in scripts {
-                            outputDict[script] = outputArr[idx]
-                            idx += 1
-                        }
-                    
-                        outputHandler(outputDict)
-                    }
-                }
-            } else {  // One at a time
-                for script in scripts {
-                    let scriptArr = script.components(separatedBy: ".")
-                    guard let path = Bundle.main.path(forResource: "Scripts/" + scriptArr[0], ofType:scriptArr[1]) else {
-                        printLog(str: "\n  Unable to locate: \(script)!")
-                        return
-                    }
-                    
-                    // .User
-                    // Init outputPipe
-                    let outputPipe = Pipe()
-                    
-                    // Setup & Launch our process
-                    let ps: Process = Process()
-                    ps.launchPath = path
-                    ps.arguments = withArgs
-                    ps.standardOutput = outputPipe
-                    
-                    if onThread == .Bg {
-                        // Setup & Launch our process Asynchronously
-                        let taskQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
-                        
-                        taskQueue.async {
-                            ps.launch()
-                            ps.waitUntilExit()
-                            
-                            // Read everything the outputPipe captured from stdout
-                            let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                            var outputString = String(data: data, encoding: String.Encoding.utf8) ?? ""
-                            outputString = outputString.trimmingCharacters(in: .whitespacesAndNewlines)
-                            
-                            // Return the output
-                            self.printLog(str: " [output(user,oneAtATime,Bg): \(outputString)]")
-                            
-                            if let outputHandler = withOutputHandler {
-                                outputDict[script] = outputString
-                                outputHandler(outputDict)
-                            }
-                        }
-                    } else {  // .Main
-                        ps.launch()
-                        ps.waitUntilExit()
-                        
-                        // Read everything the outputPipe captured from stdout
-                        let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                        var outputString = String(data: data, encoding: String.Encoding.utf8) ?? ""
-                        outputString = outputString.trimmingCharacters(in: .whitespacesAndNewlines)
-                        
-                        // Return the output
-                        printLog(str: " [output(user,oneAtATime,Main): \(outputString)]")
-                        if let outputHandler = withOutputHandler {
-                            var currOutputDict = [String : String]()
-                            currOutputDict[script] = outputString
-                            outputHandler(currOutputDict)
-                        }
-                    }
-                }
+            } else {  // .Main
+                runAsUser(theseScripts: theseScripts, withArgs: withArgs, withOutputHandler: withOutputHandler)
             }
         }
     }
     
+    func runAsRoot(theseScripts: [String], withArgs: [String], withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
+        // Note: only meant to be called from: run(theseScriptsWithArgsAsUserOnThreadWithOutputHandler)
+        // Write AppleScript
+        let allScriptsStr = theseScripts.joined(separator: " ")
+        let argsStr = withArgs.joined(separator: " ")
+        let appleScriptStr = "do shell script \"./runScripts.sh '\(argsStr)' \(allScriptsStr)\" with administrator privileges"
+        printLog(str: " appleScriptStr: \(appleScriptStr)")
+        
+        if let asObject = NSAppleScript(source: appleScriptStr) {
+            // Run AppleScript
+            var asError: NSDictionary?
+            let asOutput: NSAppleEventDescriptor = asObject.executeAndReturnError(&asError)
+            self.printLog(str: " [asOutput(root,Bg/Main): \(asOutput.stringValue ?? "")]")
+            
+            // Parse & Handle AppleScript output
+            let outputArr = self.parseAppleScript(asOutput: asOutput, asError: asError)
+            handle(theseScripts: theseScripts, outputArr: outputArr, withOutputHandler: withOutputHandler)
+        }
+    }
+    
+    func runAsUser(theseScripts: [String], withArgs: [String], withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
+        // Note: only meant to be called from: run(theseScriptsWithArgsAsUserOnThreadWithOutputHandler)
+        var allArgs = [String]()
+        let withArgsStr = withArgs.joined(separator: " ")
+        allArgs.append(withArgsStr)
+        allArgs.append(contentsOf: theseScripts)
+        
+        guard let path = Bundle.main.path(forResource: "Scripts/" + "runScripts", ofType:"sh") else {
+            printLog(str: "\n  Unable to locate: runScripts.sh!")
+            return
+        }
+        
+        // Init outputPipe
+        let outputPipe = Pipe()
+        
+        // Setup & Launch our process
+        let ps: Process = Process()
+        ps.launchPath = path
+        ps.arguments = allArgs
+        ps.standardOutput = outputPipe
+        
+        ps.launch()
+        ps.waitUntilExit()
+        
+        // Read everything the outputPipe captured from stdout
+        let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
+        var outputStr = String(data: data, encoding: String.Encoding.utf8) ?? ""
+        outputStr = outputStr.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.printLog(str: " [output(user,Bg/Main): \(outputStr)]")
+        
+        let outputArr = outputStr.components(separatedBy: "\n")
+        handle(theseScripts: theseScripts, outputArr: outputArr, withOutputHandler: withOutputHandler)
+    }
+
     func parseAppleScript(asOutput: NSAppleEventDescriptor, asError: NSDictionary?) -> [String] {
         if let err = asError {
             printLog(str: "AppleScript Error: \(err)")
@@ -588,5 +467,24 @@ class FixSecuritySettingsVC: NSViewController {
         }
         
         return [""]
+    }
+    
+    func handle(theseScripts: [String], outputArr: [String], withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
+        if let outputHandler = withOutputHandler {
+            guard outputArr.count == theseScripts.count else {
+                self.printLog(str: "*ERROR: outputArray.count (\(outputArr.count)) is not equal to scripts.count (\(theseScripts.count))")
+                self.printLog(str: "*  outputArr: \(outputArr)")
+                return
+            }
+            
+            var outputDict = [String : String]()
+            var idx = 0
+            for script in theseScripts {
+                outputDict[script] = outputArr[idx]
+                idx += 1
+            }
+            
+            outputHandler(outputDict)
+        }
     }
 }
