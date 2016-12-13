@@ -268,8 +268,8 @@ class FixSecuritySettingsVC: NSViewController {
         }
     }
     
+    // Note: could call this function directly, but it's more clear if called from: run(theseScriptsWithArgsAsUserOnThreadWithOutputHandler)
     func run(theseScripts: [String], withArgs: [String], asUser: RunScriptAs, withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
-        // Note: only meant to be called from: run(theseScriptsWithArgsAsUserOnThreadWithOutputHandler)
         // Write AppleScript
         let allScriptsStr = theseScripts.joined(separator: " ")
         let argsStr = withArgs.joined(separator: " ")
