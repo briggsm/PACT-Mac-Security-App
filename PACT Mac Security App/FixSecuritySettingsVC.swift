@@ -50,26 +50,26 @@ class FixSecuritySettingsVC: NSViewController {
         let df = DateFormatter()
         df.dateFormat = "y-MM-dd HH:mm:ss"
         let timestamp = df.string(from: d)
-        printLog(str: "=====================")
-        printLog(str: "[" + timestamp + "]")
-        printLog(str: "=====================")
+        Fn.printLog(str: "=====================")
+        Fn.printLog(str: "[" + timestamp + "]")
+        Fn.printLog(str: "=====================")
 
-        printLog(str: "loadView()")
+        Fn.printLog(str: "loadView()")
         super.loadView()
         
         if floor(NSAppKitVersionNumber) <= Double(NSAppKitVersionNumber10_9) {  // This check is necessary, because even in 10.12 loadView() is called.
-            printLog(str: "  calling self.viewDidLoad() from loadView()")
+            Fn.printLog(str: "  calling self.viewDidLoad() from loadView()")
             self.viewDidLoad() // call viewDidLoad (added in 10.10)
         }
     }
     
     override func viewDidLoad() {
-        printLog(str: "viewDidLoad()")
+        Fn.printLog(str: "viewDidLoad()")
         if #available(OSX 10.10, *) {
-            printLog(str: "  super.viewDidLoad()")
+            Fn.printLog(str: "  super.viewDidLoad()")
             super.viewDidLoad()
         } else {
-            printLog(str: "  NOT calling super.viewDidLoad() [because 10.9 or lower is being used.")
+            Fn.printLog(str: "  NOT calling super.viewDidLoad() [because 10.9 or lower is being used.")
             // No need to do anything here because 10.9 and older will have went through the loadView() function & that calls super.loadView()
         }
         
@@ -107,15 +107,15 @@ class FixSecuritySettingsVC: NSViewController {
                     
                     // Sanity Checks
                     guard settingMetaArr.count == 3 else {
-                        self.printLog(str: "settingMetaArr.count (\(settingMetaArr.count)) is not equal to 3! Failing. Format for -settingMeta is e.g.: desc||user||root")
+                        Fn.printLog(str: "settingMetaArr.count (\(settingMetaArr.count)) is not equal to 3! Failing. Format for -settingMeta is e.g.: desc||user||root")
                         continue  // to next iteration of for loop
                     }
                     guard settingMetaArr[1] == "root" || settingMetaArr[1] == "user" else {
-                        self.printLog(str: "ERROR: settingMeta[1] is not equal to 'root' or 'user'!")
+                        Fn.printLog(str: "ERROR: settingMeta[1] is not equal to 'root' or 'user'!")
                         continue  // to next iteration of for loop
                     }
                     guard settingMetaArr[2] == "root" || settingMetaArr[2] == "user" else {
-                        self.printLog(str: "ERROR: settingMeta[2] is not equal to 'root' or 'user'!")
+                        Fn.printLog(str: "ERROR: settingMeta[2] is not equal to 'root' or 'user'!")
                         continue  // to next iteration of for loop
                     }
                     
@@ -124,7 +124,7 @@ class FixSecuritySettingsVC: NSViewController {
                 }
             }
         }
-        run(theseScripts: scriptsToQuery, withArgs: ["-settingMeta \(getCurrLangIso())"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
+        run(theseScripts: scriptsToQuery, withArgs: ["-settingMeta \(Fn.getCurrLangIso())"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
         
         for scriptToQuery in scriptsToQuery {
             if let settingMeta = settingMetaDict[scriptToQuery] {
@@ -250,8 +250,8 @@ class FixSecuritySettingsVC: NSViewController {
     // MARK: Run Scripts
     // Note: This is the function the code is expected to call when wanting to run/query any script(s)
     func run(theseScripts: [String], withArgs: [String], asUser: RunScriptAs, onThread: RunScriptOnThread, withOutputHandler: ((_ outputDict: [String : String]) -> Void)?) {
-        printLog(str: "----------")
-        printLog(str: "runScripts: \(theseScripts), withArgs: \(withArgs), asUser: \(asUser), onThread: \(onThread)")
+        Fn.printLog(str: "----------")
+        Fn.printLog(str: "runScripts: \(theseScripts), withArgs: \(withArgs), asUser: \(asUser), onThread: \(onThread)")
         
         if onThread == .Bg {
             let taskQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
@@ -272,13 +272,13 @@ class FixSecuritySettingsVC: NSViewController {
         if asUser == .Root {
             appleScriptStr += " with administrator privileges"
         }
-        printLog(str: " appleScriptStr: \(appleScriptStr)")
+        Fn.printLog(str: " appleScriptStr: \(appleScriptStr)")
         
         if let asObject = NSAppleScript(source: appleScriptStr) {
             // Run AppleScript
             var asError: NSDictionary?
             let asOutput: NSAppleEventDescriptor = asObject.executeAndReturnError(&asError)
-            self.printLog(str: " [asOutput: \(asOutput.stringValue ?? "")]")
+            Fn.printLog(str: " [asOutput: \(asOutput.stringValue ?? "")]")
             
             // Parse & Handle AppleScript output
             let outputArr = self.parseAppleScript(asOutput: asOutput, asError: asError)
@@ -288,7 +288,7 @@ class FixSecuritySettingsVC: NSViewController {
     
     func parseAppleScript(asOutput: NSAppleEventDescriptor, asError: NSDictionary?) -> [String] {
         if let err = asError {
-            printLog(str: "AppleScript Error: \(err)")
+            Fn.printLog(str: "AppleScript Error: \(err)")
             return []
         } else {
             // First tidy-up str a bit
@@ -308,8 +308,8 @@ class FixSecuritySettingsVC: NSViewController {
             var outputDict = [String : String]()
             
             guard outputArr.count == theseScripts.count else {
-                self.printLog(str: "*ERROR: outputArray.count (\(outputArr.count)) is not equal to scripts.count (\(theseScripts.count))")
-                self.printLog(str: "*  outputArr: \(outputArr)")
+                Fn.printLog(str: "*ERROR: outputArray.count (\(outputArr.count)) is not equal to scripts.count (\(theseScripts.count))")
+                Fn.printLog(str: "*  outputArr: \(outputArr)")
                 outputHandler(outputDict)
                 return
             }
@@ -354,76 +354,28 @@ class FixSecuritySettingsVC: NSViewController {
         if allScriptsToQueryAsUserArr.count > 0 {
             run(theseScripts: allScriptsToQueryAsUserArr, withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
             // Note: if want to run 1 at a time (so user can see a bit of animation)
-            /*printLog(str: "====================")
+            /*Fn.printLog(str: "====================")
             for script in allScriptsToQueryAsUserArr {
                 run(theseScripts: [script], withArgs: ["-pf"], asUser: .User, onThread: .Main, withOutputHandler: outputHandler)
             }
-            printLog(str: "====================")*/
+            Fn.printLog(str: "====================")*/
         }
         if allScriptsToQueryAsRootArr.count > 0 {
             run(theseScripts: allScriptsToQueryAsRootArr, withArgs: ["-pf"], asUser: .Root, onThread: .Main, withOutputHandler: outputHandler)
         }
     }
     
-    func getCurrLangIso() -> String {
-        let currLangArr = UserDefaults.standard.value(forKey: "AppleLanguages") as! [String]
-        
-        var currLangIso = currLangArr[0]
-        
-        // Chop off everything except 1st two characters
-        currLangIso = currLangIso.substring(to: currLangIso.index(currLangIso.startIndex, offsetBy: 2))
-        
-        return currLangIso
-    }
-    
-    func printLog(str: String) {
-        printLog(str: str, terminator: "\n")
-    }
-    
-    func printLog(str: String, terminator: String) {
-        
-        // First tidy-up str a bit
-        var prettyStr = str.replacingOccurrences(of: "\r\n", with: "\n") // just incase
-        prettyStr = prettyStr.replacingOccurrences(of: "\r", with: "\n") // becasue AppleScript returns line endings with '\r'
-        
-        // Normal print
-        print(prettyStr, terminator: terminator)
-        
-        // Print to log file
-        if let cachesDirUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
-            let logFilePathUrl = cachesDirUrl.appendingPathComponent("security-fixer-upper-log.txt")
-            let logData = (prettyStr + terminator).data(using: .utf8, allowLossyConversion: false)!
-            
-            if FileManager.default.fileExists(atPath: logFilePathUrl.path) {
-                do {
-                    let logFileHandle = try FileHandle(forWritingTo: logFilePathUrl)
-                    logFileHandle.seekToEndOfFile()
-                    logFileHandle.write(logData)
-                    logFileHandle.closeFile()
-                } catch {
-                    print("Unable to write to existing log file, at this path: \(logFilePathUrl.path)")
-                }
-            } else {
-                do {
-                    try logData.write(to: logFilePathUrl)
-                } catch {
-                    print("Can't write to new log file, at this path: \(logFilePathUrl.path)")
-                }
-            }
-        }
-    }
-    
     func changeCurrentDirToScriptsDir() {
         guard let runScriptsPath = Bundle.main.path(forResource: "Scripts/runScripts", ofType:"sh") else {
-            printLog(str: "\n  Unable to locate: Scripts/runScripts.sh!")
+            Fn.printLog(str: "\n  Unable to locate: Scripts/runScripts.sh!")
             return
         }
         
         scriptsDirPath = String(runScriptsPath.characters.dropLast(13))  // drop off: "runScripts.sh"
         if FileManager.default.changeCurrentDirectoryPath(scriptsDirPath) {
-            //printLog(str: "success changing dir to: \(scriptsDirPath)")
+            //Fn.printLog(str: "success changing dir to: \(scriptsDirPath)")
         } else {
-            printLog(str: "failure changing dir to: \(scriptsDirPath)")
+            Fn.printLog(str: "failure changing dir to: \(scriptsDirPath)")
         }
     }
     
@@ -438,7 +390,7 @@ class FixSecuritySettingsVC: NSViewController {
             
             scriptsToQuery = scriptsDirContents
         } catch {
-            printLog(str: "Cannot get contents of Scripts dir: \(scriptsDirPath)")
+            Fn.printLog(str: "Cannot get contents of Scripts dir: \(scriptsDirPath)")
             scriptsToQuery = []
         }
     }

@@ -13,6 +13,7 @@
 		474663E11DDA3F06007FAC94 /* FixSecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */; };
 		47692E8F1DEC578100FA9281 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 47692E8E1DEC578100FA9281 /* Scripts */; };
 		47846B411DFB2771001564BC /* LanguageChooserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47846B401DFB2771001564BC /* LanguageChooserVC.swift */; };
+		47EB38E91E02B4A100E4E87B /* Fn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB38E81E02B4A100E4E87B /* Fn.swift */; };
 		47F089CF1DDC9A9000171D0D /* restoreMarksOrigSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */; };
 		47F089D11DDC9BB200171D0D /* viewCurrentSettings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */; };
 		47F089D51DDD5F9900171D0D /* template.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47F089D41DDD5F9900171D0D /* template.sh */; };
@@ -29,6 +30,7 @@
 		474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixSecuritySettingsVC.swift; sourceTree = "<group>"; };
 		47692E8E1DEC578100FA9281 /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
 		47846B401DFB2771001564BC /* LanguageChooserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageChooserVC.swift; sourceTree = "<group>"; };
+		47EB38E81E02B4A100E4E87B /* Fn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fn.swift; sourceTree = "<group>"; };
 		47F089CE1DDC9A9000171D0D /* restoreMarksOrigSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = restoreMarksOrigSettings.sh; sourceTree = "<group>"; };
 		47F089D01DDC9BB200171D0D /* viewCurrentSettings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = viewCurrentSettings.sh; sourceTree = "<group>"; };
 		47F089D41DDD5F9900171D0D /* template.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = template.sh; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				470943011DD5E87A0099BDA6 /* Main.storyboard */,
 				474663E01DDA3F06007FAC94 /* FixSecuritySettingsVC.swift */,
 				47846B401DFB2771001564BC /* LanguageChooserVC.swift */,
+				47EB38E81E02B4A100E4E87B /* Fn.swift */,
 				47692E8E1DEC578100FA9281 /* Scripts */,
 				47F08A0B1DE4543900171D0D /* InfoPlist.strings */,
 				47F08A051DE4543800171D0D /* Localizable.strings */,
@@ -177,6 +180,7 @@
 				474663E11DDA3F06007FAC94 /* FixSecuritySettingsVC.swift in Sources */,
 				470942FC1DD5E87A0099BDA6 /* AppDelegate.swift in Sources */,
 				47846B411DFB2771001564BC /* LanguageChooserVC.swift in Sources */,
+				47EB38E91E02B4A100E4E87B /* Fn.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
