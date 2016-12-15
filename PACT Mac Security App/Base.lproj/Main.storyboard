@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -111,15 +111,9 @@
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="m9t-Pp-XzP">
                                         <items>
-                                            <menuItem title="English" state="on" id="0EJ-k9-PsX">
-                                                <accessibility identifier="en"/>
-                                            </menuItem>
-                                            <menuItem title="Türkçe" id="5xh-A5-BXV">
-                                                <accessibility identifier="tr"/>
-                                            </menuItem>
-                                            <menuItem title="Русский" id="APc-5T-ggV">
-                                                <accessibility identifier="ru"/>
-                                            </menuItem>
+                                            <menuItem title="English" state="on" toolTip="en" id="0EJ-k9-PsX"/>
+                                            <menuItem title="Türkçe" toolTip="tr" id="5xh-A5-BXV"/>
+                                            <menuItem title="Русский" toolTip="ru" id="APc-5T-ggV"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>

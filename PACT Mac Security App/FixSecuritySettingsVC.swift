@@ -188,12 +188,15 @@ class FixSecuritySettingsVC: NSViewController {
                 settingsStackView.addView(entryStackView, in: NSStackViewGravity.top)
                 
                 // Re-center the window on the screen
-                self.view.window?.center()
+                //self.view.window?.center()
             }
         }
         
         // Update all Status Images & FixIt Button visibilities.
         refreshAllGuiViews()
+        
+        // Re-center the window on the screen
+        self.view.window?.center()
         
         // Focus: Quit Button (spacebar), FixAll Button (Return key)
         self.view.window?.makeFirstResponder(quitBtn)

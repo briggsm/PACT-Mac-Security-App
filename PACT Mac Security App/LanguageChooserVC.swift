@@ -30,7 +30,7 @@ class LanguageChooserVC: NSViewController {
     }
     
     @IBAction func okBtnClicked(_ sender: NSButton) {
-        if let selectedId = languagePUBtn.selectedItem?.accessibilityIdentifier() {
+        if let selectedId = languagePUBtn.selectedItem?.toolTip {
             if selectedId == Fn.getCurrLangIso() {
                 // Dismiss this modal View Controller
                 self.dismiss(self)
