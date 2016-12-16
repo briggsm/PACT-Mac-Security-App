@@ -82,8 +82,13 @@ class FixSecuritySettingsVC: NSViewController {
     }
     
     func initEverything() {
-        // Ask user their language preference
-        performSegue(withIdentifier: "LanguageChooserVC", sender: self)
+        
+        let skipLangDB = UserDefaults.standard.bool(forKey: "SkipLanguageDialogBoxOnNextStartup")
+        if !skipLangDB {
+            // Show Language Dialog box
+            performSegue(withIdentifier: "LanguageChooserVC", sender: self)
+        }
+        UserDefaults.standard.setValue(false, forKey: "SkipLanguageDialogBoxOnNextStartup")
         
         // Change current directory to script's dir for rest of App's lifetime
         changeCurrentDirToScriptsDir()
