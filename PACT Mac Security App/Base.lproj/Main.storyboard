@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -87,6 +88,9 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="CSp-gt-CfG"/>
+                        </connections>
                     </window>
                     <connections>
                         <segue destination="vC9-ws-6Xh" kind="relationship" relationship="window.shadowedContentViewController" id="ujb-rz-8CT"/>
@@ -154,14 +158,14 @@ DQ
             <objects>
                 <viewController id="vC9-ws-6Xh" customClass="FixSecuritySettingsVC" customModule="Security_Fixer_Upper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ck1-hd-8x5">
-                        <rect key="frame" x="0.0" y="0.0" width="737" height="150"/>
+                        <rect key="frame" x="0.0" y="0.0" width="773" height="274"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="68v-8R-oZq">
-                                <rect key="frame" x="20" y="61" width="697" height="44"/>
+                                <rect key="frame" x="20" y="61" width="733" height="168"/>
                             </stackView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bao-Ig-ics">
-                                <rect key="frame" x="647" y="13" width="76" height="32"/>
+                                <rect key="frame" x="683" y="13" width="76" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="U8Q-v1-wxa"/>
                                 </constraints>
@@ -173,8 +177,8 @@ DQ
                                     <action selector="fixAllBtnClicked:" target="vC9-ws-6Xh" id="ppu-Aw-Y82"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iAZ-9e-uMI">
-                                <rect key="frame" x="18" y="111" width="701" height="19"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iAZ-9e-uMI">
+                                <rect key="frame" x="18" y="235" width="737" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="19" id="oWe-z9-Azn"/>
                                 </constraints>
@@ -221,7 +225,7 @@ DQ
                 </viewController>
                 <customObject id="Us0-Cl-n4M" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="806" y="278"/>
+            <point key="canvasLocation" x="787.5" y="340"/>
         </scene>
     </scenes>
     <resources>
