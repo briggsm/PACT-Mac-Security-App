@@ -158,12 +158,9 @@ DQ
             <objects>
                 <viewController id="vC9-ws-6Xh" customClass="FixSecuritySettingsVC" customModule="Security_Fixer_Upper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ck1-hd-8x5">
-                        <rect key="frame" x="0.0" y="0.0" width="773" height="274"/>
+                        <rect key="frame" x="0.0" y="0.0" width="773" height="475"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="68v-8R-oZq">
-                                <rect key="frame" x="20" y="61" width="733" height="168"/>
-                            </stackView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bao-Ig-ics">
                                 <rect key="frame" x="683" y="13" width="76" height="32"/>
                                 <constraints>
@@ -178,7 +175,7 @@ DQ
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iAZ-9e-uMI">
-                                <rect key="frame" x="18" y="235" width="737" height="19"/>
+                                <rect key="frame" x="18" y="436" width="737" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="19" id="oWe-z9-Azn"/>
                                 </constraints>
@@ -201,18 +198,43 @@ DQ
                                     <action selector="quitBtnClicked:" target="vC9-ws-6Xh" id="Mzz-1i-LCt"/>
                                 </connections>
                             </button>
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5e-jZ-v6c">
+                                <rect key="frame" x="19" y="45" width="750" height="386"/>
+                                <clipView key="contentView" id="zLl-V3-qio">
+                                    <rect key="frame" x="1" y="1" width="733" height="369"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <stackView orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="68v-8R-oZq" customClass="SettingsStackView" customModule="Security_Fixer_Upper" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="369" width="0.0" height="0.0"/>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="68v-8R-oZq" firstAttribute="leading" secondItem="zLl-V3-qio" secondAttribute="leading" id="NJs-Se-vaY"/>
+                                        <constraint firstItem="68v-8R-oZq" firstAttribute="top" secondItem="zLl-V3-qio" secondAttribute="top" id="dKm-lU-3FD"/>
+                                    </constraints>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="r8c-nk-HzU">
+                                    <rect key="frame" x="1" y="370" width="733" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="GOw-I2-aSe">
+                                    <rect key="frame" x="734" y="1" width="15" height="369"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="68v-8R-oZq" firstAttribute="top" secondItem="iAZ-9e-uMI" secondAttribute="bottom" constant="6" id="0yR-CC-4AR"/>
+                            <constraint firstItem="z5e-jZ-v6c" firstAttribute="top" secondItem="iAZ-9e-uMI" secondAttribute="bottom" constant="5" id="0UW-XT-Wz6"/>
                             <constraint firstAttribute="bottom" secondItem="sHi-Mh-dHG" secondAttribute="bottom" constant="20" id="94i-LJ-SwK"/>
+                            <constraint firstItem="z5e-jZ-v6c" firstAttribute="leading" secondItem="ck1-hd-8x5" secondAttribute="leading" constant="19" id="Eiu-so-Etq"/>
                             <constraint firstAttribute="trailing" secondItem="iAZ-9e-uMI" secondAttribute="trailing" constant="20" id="PNK-uR-9Aq"/>
                             <constraint firstAttribute="bottom" secondItem="Bao-Ig-ics" secondAttribute="bottom" constant="20" id="XQ0-tG-3cV"/>
                             <constraint firstItem="sHi-Mh-dHG" firstAttribute="leading" secondItem="ck1-hd-8x5" secondAttribute="leading" constant="20" id="bXp-b1-p3V"/>
                             <constraint firstAttribute="trailing" secondItem="Bao-Ig-ics" secondAttribute="trailing" constant="20" id="cxa-mJ-1gw"/>
-                            <constraint firstItem="68v-8R-oZq" firstAttribute="leading" secondItem="ck1-hd-8x5" secondAttribute="leading" constant="20" id="niH-jF-mVT"/>
+                            <constraint firstAttribute="trailing" secondItem="z5e-jZ-v6c" secondAttribute="trailing" constant="4" id="fJG-Jj-ZZZ"/>
                             <constraint firstItem="iAZ-9e-uMI" firstAttribute="leading" secondItem="ck1-hd-8x5" secondAttribute="leading" constant="20" id="pPs-CG-CPv"/>
-                            <constraint firstItem="Bao-Ig-ics" firstAttribute="top" secondItem="68v-8R-oZq" secondAttribute="bottom" constant="20" id="rt7-vf-9N3"/>
-                            <constraint firstAttribute="trailing" secondItem="68v-8R-oZq" secondAttribute="trailing" constant="20" id="vgL-v4-OOc"/>
+                            <constraint firstItem="Bao-Ig-ics" firstAttribute="top" secondItem="z5e-jZ-v6c" secondAttribute="bottom" constant="4" id="qTz-jc-U5k"/>
                             <constraint firstItem="iAZ-9e-uMI" firstAttribute="top" secondItem="ck1-hd-8x5" secondAttribute="top" constant="20" id="ywp-n6-cBT"/>
                         </constraints>
                     </view>
@@ -225,7 +247,7 @@ DQ
                 </viewController>
                 <customObject id="Us0-Cl-n4M" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="787.5" y="340"/>
+            <point key="canvasLocation" x="787.5" y="440.5"/>
         </scene>
     </scenes>
     <resources>

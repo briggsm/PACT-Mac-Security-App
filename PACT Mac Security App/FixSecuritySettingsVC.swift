@@ -203,7 +203,7 @@ class FixSecuritySettingsVC: NSViewController {
         refreshAllGuiViews()
         
         // Re-center the window on the screen
-        self.view.window?.center()
+        //self.view.window?.center()
         
         // Focus: Quit Button (spacebar), FixAll Button (Return key)
         self.view.window?.makeFirstResponder(quitBtn)
